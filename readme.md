@@ -12,19 +12,19 @@ Poker
 ### Configuration ###
 --------------------------------------------------------------
 
-+ DB
+1. DB
 
-DB name:     poker
-DB username: poker
-DB password: poker
+  DB name:     poker
+  DB username: poker
+  DB password: poker
 
-*db配置性不强,需要修改libs/db.php来配置数据库.(TOBE FIX)*
+  *db配置性不强,需要修改libs/db.php来配置数据库.(TOBE FIX)*
 
-+ Smarty
+2. Smarty
 
-PHP Environment + Directories Permissions.
+  PHP Environment + Directories Permissions.
 
-`make power` PLZ.
+  `make power` PLZ.
 
 
 ### Author ###
