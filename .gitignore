@@ -1,2 +1,3 @@
 *.conf.php
 templates_c/*.tpl.php
+*.swp
