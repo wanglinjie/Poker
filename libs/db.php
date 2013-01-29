@@ -6,9 +6,9 @@
 
 define('DB_LIB_PATH', 'DB/db_mysql.inc');
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'pure');
-define('DB_USER', 'pure');
-define('DB_PASS', 'pure');
+define('DB_NAME', 'poker');
+define('DB_USER', 'poker');
+define('DB_PASS', 'poker');
 
 require_once(DB_LIB_PATH);
 

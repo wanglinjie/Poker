@@ -1,6 +1,6 @@
 main:
 	@echo "============================================"
-	@echo "Welcome to Pure!!!"
+	@echo "Welcome to Poker!!!"
 	@echo "          work by xiaomo(wxm4ever@gmail.com)"
 	@echo "============================================"
 
