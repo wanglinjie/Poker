@@ -2,6 +2,7 @@ Poker
 =====
 
 ### Why Poker ###
+--------------------------------------------------------------
 
 过年放假、为什么还要被强迫给学校写东西？
 
@@ -9,8 +10,9 @@ Poker
 
 
 ### Configuration ###
+--------------------------------------------------------------
 
-1. DB
++ DB
 
 DB name:     poker
 DB username: poker
@@ -18,7 +20,7 @@ DB password: poker
 
 *db配置性不强,需要修改libs/db.php来配置数据库.(TOBE FIX)*
 
-2. Smarty
++ Smarty
 
 PHP Environment + Directories Permissions.
 
@@ -26,5 +28,6 @@ PHP Environment + Directories Permissions.
 
 
 ### Author ###
+--------------------------------------------------------------
 
 xiaomo(wxm4ever@gmail.com)
