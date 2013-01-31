@@ -4,9 +4,22 @@ img     { width: 100%; }
 a       { color: white; font-weight: bold; }
 a:hover { color: white; font-weight: bold; }
 table   { font-size: 9pt; }
+tr,td   { vertical-align: middle; }
+input[type="text"] {
+  text-decoration: none;
+  border-width: 1px;
+  font-size: 12px;
+  padding: 1px 0px;
+  width: 120px;
+}
+textarea {
+  width: 430px;
+  height: 120px;
+}
 
 .quit   { color: red; }
 .msg    { color: red; text-align: center; font-size: 14pt; height: 40px; }
+.m      { display: inline-block; }
 
 .container {
   width: 1024px;
@@ -92,6 +105,9 @@ table   { font-size: 9pt; }
 .table-title {
   background-color: #335EA8; color: #FFFFFF;
   border: 1px #F6F6F6 solid;
+}
+.table-msg {
+  color: red;
 }
 .table-body {
   background-color: #FFFFFF;

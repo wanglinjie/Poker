@@ -1,4 +1,4 @@
-main:
+main: update
 	@echo "============================================"
 	@echo "Welcome to Poker!!!"
 	@echo "          work by xiaomo(wxm4ever@gmail.com)"
@@ -13,5 +13,8 @@ power:
 less:
 	lessc --yui-compress static/less/main.less static/css/main.css
 
-update: less
+coffee:
+	coffee --compile -o static/js static/coffee
+
+update: less coffee
 	@echo "Updateing Static Files"
