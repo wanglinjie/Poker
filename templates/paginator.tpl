@@ -20,8 +20,8 @@
 $(function(){
     var paginator = $('.paginator');
     var paging_op = $('.paging_op');
-    var paging_page = paginator.find('.paging_page').text().trim();
-    var paging_total = paginator.find('.paging_total').text().trim();
+    var paging_page = parseInt(paginator.find('.paging_page').text().trim());
+    var paging_total = parseInt(paginator.find('.paging_total').text().trim());
 
     paging_op.on('click', '.first', function(e){
       e.preventDefault();

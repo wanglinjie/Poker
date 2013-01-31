@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="{#STATIC_DIR#}/css/libs/bootstrap.min.css" media="screen">
 <script type="text/javascript" src="{#STATIC_DIR#}/js/libs/jquery.min.js"></script>
 <script type="text/javascript" src="{#STATIC_DIR#}/js/libs/bootstrap.min.js"></script>
-<script type="text/javascript" src="{#STATIC_DIR#}/js/libs/underscore-min.js"></script>
 <!-- IE6 -->
 <!--[if lte IE 6]>
 <script>

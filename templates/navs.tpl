@@ -16,9 +16,9 @@
       <div class="nav right">
         <ul>
           <li><a href="#">学校网站首页</a></li>
-          <li><a href="#">后勤管理首页</a></li>
-          <li><a href="#">在线报修</a></li>
-          <li><a href="#" class="quit">退出系统</a></li>
+          <li><a href="index.php">后勤管理首页</a></li>
+          <li><a href="update.php">在线报修</a></li>
+          <li><a href="#" class="quit_system">退出系统</a></li>
         </ul>
       </div>
     </div>
