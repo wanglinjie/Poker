@@ -25,7 +25,7 @@
                           </tr>
                           {foreach from=$shires item=shire}
                           <tr>
-                            <td width="10%" height=30 class="table-body" align="center">{$shire.shire_id}</td>
+                            <td width="10%" height=30 class="table-body" align="center">#2013{$shire.shire_id}</td>
                             <td width="14%" height=30 class="table-body" align="center">{$shire.department}</td>
                             <td width="13%" height=30 class="table-body" align="center">{$shire.place}</td>
                             <td width="13%" height=30 class="table-body" align="center">{$shire.reason}</td>
@@ -55,4 +55,5 @@
       </tbody>
     </table>
   </div>
+{include file="paginator.tpl"}
 {include file="footer.tpl"}
