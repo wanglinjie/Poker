@@ -5,7 +5,13 @@ main:
 	@echo "============================================"
 
 
-.PHONY:power
+.PHONY:power less update
 
 power:
 	chmod a+w cache templates_c
+
+less:
+	lessc --yui-compress static/less/main.less static/css/main.css
+
+update: less
+	@echo "Updateing Static Files"

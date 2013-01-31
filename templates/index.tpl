@@ -25,19 +25,20 @@
                           </tr>
                           {foreach from=$shires item=shire}
                           <tr>
-                            <td width="10%" height=30 class="table-body" align="center"><strong>{$shire.shire_id}</strong></td>
-                            <td width="14%" height=30 class="table-body" align="center"><strong>{$shire.department}</strong></td>
-                            <td width="13%" height=30 class="table-body" align="center"><strong>{$shire.place}</strong></td>
-                            <td width="13%" height=30 class="table-body" align="center"><strong>{$shire.reason}</strong></td>
-                            <td width="10%" height=30 class="table-body" align="center"><strong>{$shire.broken_item}</strong></td>
-                            <td width="10%" height=30 class="table-body" align="center"><strong>{$shire.report_time}</strong></td>
+                            <td width="10%" height=30 class="table-body" align="center">#2013{$shire.shire_id}</td>
+                            <td width="14%" height=30 class="table-body" align="center">{$shire.department}</td>
+                            <td width="13%" height=30 class="table-body" align="center">{$shire.place}</td>
+                            <td width="13%" height=30 class="table-body" align="center">{$shire.reason}</td>
+                            <td width="10%" height=30 class="table-body" align="center">{$shire.broken_item}</td>
+                            <td width="10%" height=30 class="table-body" align="center">{$shire.report_time}</td>
                             {if $shire.state != 2}
-                              <td width="6%" height=30 class="table-body" align="center"><strong>{$shire.decode_state}</strong></td>
+                              <td width="6%" height=30 class="table-body" align="center">{$shire.decode_state}</td>
+                              <td width="8%" height=30 class="table-body" align="center">{$shire.decode_state}</td>
                             {else}
-                              <td width="6%" height=30 class="table-body" align="center"><strong>{$shire.state_context}</strong></td>
+                              <td width="6%" height=30 class="table-body" align="center">{$shire.state_context}</td>
+                              <td width="8%" height=30 class="table-body" align="center">{$shire.repair_time}</td>
                             {/if}
-                            <td width="8%" height=30 class="table-body" align="center"><strong>{$shire.repair_time}</strong></td>
-                            <td width="16%" height=30 class="table-body" align="center"><strong>{$shire.feedback}</strong></td>
+                            <td width="16%" height=30 class="table-body" align="center">{$shire.feedback}</td>
                           </tr>
                           {foreachelse}
                             <tr><td colspan=9 class="msg">恭喜，没有报修数据!</td></tr>
@@ -54,4 +55,5 @@
       </tbody>
     </table>
   </div>
+{include file="paginator.tpl"}
 {include file="footer.tpl"}
