@@ -1,5 +1,12 @@
 <?php
 
+function get_url_domain(){
+    $document_root_length = strlen($_SERVER['DOCUMENT_ROOT']);
+    $script_filename = substr($_SERVER['SCRIPT_FILENAME'], $document_root_length);
+    $index = stripos($script_filename, '/app/');
+    return substr($script_filename, 0, $index);
+}
+
 function escape($data){
     return mysql_real_escape_string(trim($data));
 }
@@ -68,5 +75,15 @@ function update_shire($reporter, $report_time, $contact_num, $department, $place
     $db = new DB;
     $db->connect();
     $db->query($sql);
+}
+
+function consumer_check($consumer, $password){
+    $sql = "SELECT consumer, password FROM barrack WHERE "
+         . "consumer='$consumer' AND password='" . md5($password) . "';";
+    $db = new DB;
+    $db->connect();
+    $db->query($sql);
+    $db->next_record();
+    return $db->f('consumer');
 }
 ?>

@@ -5,7 +5,7 @@ a       { color: white; font-weight: bold; }
 a:hover { color: white; font-weight: bold; }
 table   { font-size: 9pt; }
 tr,td   { vertical-align: middle; }
-input[type="text"] {
+input {
   text-decoration: none;
   border-width: 1px;
   font-size: 12px;
@@ -17,9 +17,9 @@ textarea {
   height: 120px;
 }
 
-.quit   { color: red; }
-.msg    { color: red; text-align: center; font-size: 14pt; height: 40px; }
-.m      { display: inline-block; }
+.quit_system { color: red; }
+.msg         { color: red; text-align: center; font-size: 14pt; height: 40px; }
+.m           { display: inline-block; }
 
 .container {
   width: 1024px;
@@ -38,13 +38,13 @@ textarea {
       color: white;
       font-weight: bold;
 
-      .date { width: 60%; float: left; background-color: inherit; } 
+      .date { width: 65%; float: left; background-color: inherit; } 
       .nav  { 
-        width: 40%; float: right; background-color: inherit;
+        width: 35%; float: right; background-color: inherit;
+        text-align: right;
         ul {
           list-style: none;
           margin-top: -5px;
-          margin-right: -10px;
           
           li {
             float: left;
@@ -56,13 +56,20 @@ textarea {
 
     .note {
       width: 100%;
-      height: 80px;
+      height: 70px;
       background-color: #CCC;
     }
   }
 
   .content {
     min-height: 335px;
+    background-color: white;
+
+    .login-form {
+      width: 40%;
+      margin-left: 25%;
+      padding-top: 50px;
+    }
   }
 
   .footer {
@@ -70,6 +77,11 @@ textarea {
     font-size: 10pt;
     color: grey;
     text-align: center;
+
+    a {
+      color: black;
+      font-weight: normal;
+    }
   }
 }
 
