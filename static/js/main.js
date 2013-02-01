@@ -5,6 +5,11 @@
     baseUrl: "static/js"
   });
 
-  require(['jquery'], function($) {});
+  require(['jquery'], function($) {
+    return $(".goto_home").on('click', function(e) {
+      window.location = $('.home').attr('href');
+      return false;
+    });
+  });
 
 }).call(this);

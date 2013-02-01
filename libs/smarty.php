@@ -3,11 +3,14 @@
 //smarty.php
 //  load the smarty libs and initialize the smarty class.
 
-define('SMARTY_LIB_PATH', 'Smarty/Smarty.class.php');
-define('SMARTY_TEMPLATE_PATH', '../templates/');
-define('SMARTY_COMPILE_PATH', '../templates_c/');
-define('SMARTY_CONFIG_PATH', '../configs/');
-define('SMARTY_CACHE_PATH', '../cache/');
+$libs_path = dirname(__FILE__);
+$smarty_root = dirname($libs_path);
+
+define('SMARTY_LIB_PATH', $libs_path . '/Smarty/Smarty.class.php');
+define('SMARTY_TEMPLATE_PATH', $smarty_root . '/templates/');
+define('SMARTY_COMPILE_PATH', $smarty_root . '/templates_c/');
+define('SMARTY_CONFIG_PATH', $smarty_root . '/configs/');
+define('SMARTY_CACHE_PATH', $smarty_root . '/cache/');
 
 require_once(SMARTY_LIB_PATH);
 
