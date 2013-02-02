@@ -86,4 +86,33 @@ function consumer_check($consumer, $password){
     $db->next_record();
     return $db->f('consumer');
 }
+
+function update_consumer_password($consumer, $origin_password, $password){
+    $db = new DB;
+    $db->connect();
+    $db->query("SELECT consumer FROM barrack WHERE consumer='$consumer' AND "
+              ."password='" . md5($origin_password) . "';");
+    $db->next_record();
+    if($db->f('consumer')){
+        $db->query("UPDATE barrack SET password='" . md5($password) . "' WHERE "
+                  ."consumer='$consumer';");
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function add_new_consumer($consumer, $password){
+    $db = new DB;
+    $db->connect();
+    $db->query("SELECT consumer FROM barrack WHERE consumer='$consumer';");
+    $db->next_record();
+    if($db->f('consumer')){
+        return false;
+    }else{
+        $db->query("INSERT INTO barrack(consumer, password) VALUES('$consumer', "
+                  ."'" . md5($password) . "');");
+        return true;
+    }
+}
 ?>

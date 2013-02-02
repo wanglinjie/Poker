@@ -1,8 +1,6 @@
 *       { margin:0; padding:0; }
 body    { background-color: #CAD7F7; }
 img     { width: 100%; }
-a       { color: white; font-weight: bold; }
-a:hover { color: white; font-weight: bold; }
 table   { font-size: 9pt; }
 tr,td   { vertical-align: middle; }
 input {
@@ -17,9 +15,10 @@ textarea {
   height: 120px;
 }
 
-.quit_system { color: red; }
+.quit_system { color: red !important; }
 .msg         { color: red; text-align: center; font-size: 14pt; height: 40px; }
 .m           { display: inline-block; }
+.fix         { fixed: both; }
 
 .container {
   width: 1024px;
@@ -49,6 +48,9 @@ textarea {
           li {
             float: left;
             padding: 4px 5px 1px 5px;
+
+            a       { color: white; font-weight: bold; }
+            a:hover { color: white; font-weight: bold; }
           }
         }
       }
@@ -69,6 +71,25 @@ textarea {
       width: 40%;
       margin-left: 25%;
       padding-top: 50px;
+    }
+
+    .admin_navs {
+      float: left;
+      padding-left: 20px;
+      width: 20%;
+    }
+    .admin_content {
+      float: left;
+      width: 76%;
+      padding-top: 5px;
+
+      .server_msg {
+        width: 100%;
+        text-align: center;
+        color: red;
+        font-size: 14pt;
+        font-weight: bold;
+      }
     }
   }
 
