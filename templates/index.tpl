@@ -31,14 +31,21 @@
                             <td width="13%" height=30 class="table-body" align="center">{$shire.reason}</td>
                             <td width="10%" height=30 class="table-body" align="center">{$shire.broken_item}</td>
                             <td width="10%" height=30 class="table-body" align="center">{$shire.report_time}</td>
-                            {if $shire.state != 2}
-                              <td width="6%" height=30 class="table-body" align="center">{$shire.decode_state}</td>
+                            <td width="6%" height=30 class="table-body" align="center">{$shire.decode_state}</td>
+                            {if $shire.state == 0}
                               <td width="8%" height=30 class="table-body" align="center">{$shire.decode_state}</td>
-                            {else}
-                              <td width="6%" height=30 class="table-body" align="center">{$shire.state_context}</td>
+                            {elseif $shire.state == 2}
                               <td width="8%" height=30 class="table-body" align="center">{$shire.repair_time}</td>
+                            {else}
+                              <td width="8%" height=30 class="table-body" align="center">&nbsp;</td>
                             {/if}
-                            <td width="16%" height=30 class="table-body" align="center">{$shire.feedback}</td>
+                            {if $shire.state == -1}
+                              <td width="16%" height=30 class="table-body" align="center">{$shire.state_context}</td>
+                            {elseif $shire.state == 2}
+                              <td width="16%" height=30 class="table-body" align="center">{$shire.feedback}</td>
+                            {else}
+                              <td width="16%" height=30 class="table-body" align="center">&nbsp;</td>
+                            {/if}
                           </tr>
                           {foreachelse}
                             <tr><td colspan=9 class="msg">恭喜，没有报修数据!</td></tr>
@@ -55,5 +62,5 @@
       </tbody>
     </table>
   </div>
-{include file="paginator.tpl"}
+  {include file="paginator.tpl"}
 {include file="footer.tpl"}
