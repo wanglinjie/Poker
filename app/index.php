@@ -1,7 +1,7 @@
 <?php
 include('core.php');
 
-$page = $_GET && $_GET['p'];
+$page = $_GET['p'];
 $page = $page == NULL?1:$page;
 $total_counts = get_shire_count(-1);
 $total = ceil($total_counts/20);

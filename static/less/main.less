@@ -2,7 +2,8 @@
 body    { background-color: #CAD7F7; }
 img     { width: 100%; }
 table   { font-size: 9pt; }
-tr,td   { vertical-align: middle; }
+tr,td   { vertical-align: middle; background-color: white; }
+tr:hover{ background-color: whiteSmoke; }
 input {
   text-decoration: none;
   border-width: 1px;
@@ -18,7 +19,8 @@ textarea {
 .quit_system { color: red !important; }
 .msg         { color: red; text-align: center; font-size: 14pt; height: 40px; }
 .m           { display: inline-block; }
-.fix         { fixed: both; }
+.fix         { clear: both; height: 0px;}
+.hidden      { display: none; }
 
 .container {
   width: 1024px;
@@ -65,6 +67,7 @@ textarea {
 
   .content {
     min-height: 335px;
+    width: 100%;
     background-color: white;
 
     .login-form {
@@ -81,6 +84,7 @@ textarea {
     .admin_content {
       float: left;
       width: 76%;
+      height: auto;
       padding-top: 5px;
 
       .server_msg {
@@ -107,6 +111,7 @@ textarea {
 }
 
 .paginator {
+  background-color: inherit;
   padding: 5px 0px 30px 0px;
   font-size: 9pt;
 

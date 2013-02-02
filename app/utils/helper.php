@@ -13,9 +13,10 @@ function escape($data){
 
 function decode_shire_state($state=0){
     switch($state){
-        case 0: return "新单";
-        case 1: return "已维修";
-        case 2: return "非本部门维修范围";
+        case -1: return "拒绝维修";
+        case  0: return "新单";
+        case  1: return "维修中";
+        case  2: return "维修完毕";
     }
 }
 
@@ -75,6 +76,21 @@ function update_shire($reporter, $report_time, $contact_num, $department, $place
     $db = new DB;
     $db->connect();
     $db->query($sql);
+}
+
+function change_shire_state($shire_id, $state, $state_context, $feedback){
+    $db = new DB;
+    $db->connect();
+    $db->query("SELECT shire_id FROM shire WHERE shire_id=$shire_id");
+    $db->next_record();
+    if($db->f('shire_id')){
+        $repair_time = $state==2?date('Y/m/d'):'';
+        $db->query("UPDATE shire SET state=$state,state_context='$state_context',"
+                  ."repair_time='$repair_time',feedback='$feedback' "
+                  ."WHERE shire_id=$shire_id;");
+    }else{
+        return false;
+    }
 }
 
 function consumer_check($consumer, $password){
