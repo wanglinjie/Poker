@@ -26,10 +26,10 @@
                           {foreach from=$shires item=shire}
                           <tr>
                             <td width="10%" height=30 class="table-body" align="center">#2013{$shire.shire_id}</td>
-                            <td width="14%" height=30 class="table-body" align="center">{$shire.department}</td>
-                            <td width="13%" height=30 class="table-body" align="center">{$shire.place}</td>
-                            <td width="13%" height=30 class="table-body" align="center">{$shire.reason}</td>
-                            <td width="10%" height=30 class="table-body" align="center">{$shire.broken_item}</td>
+                            <td width="14%" height=30 class="table-body" align="center">{$shire.department|escape}</td>
+                            <td width="13%" height=30 class="table-body" align="center">{$shire.place|escape|truncate:30:"..."}</td>
+                            <td width="13%" height=30 class="table-body" align="center">{$shire.reason|truncate:30:"..."}</td>
+                            <td width="10%" height=30 class="table-body" align="center">{$shire.broken_item|escape}</td>
                             <td width="10%" height=30 class="table-body" align="center">{$shire.report_time}</td>
                             <td width="6%" height=30 class="table-body" align="center">{$shire.decode_state}</td>
                             {if $shire.state == 0}
@@ -40,9 +40,9 @@
                               <td width="8%" height=30 class="table-body" align="center">&nbsp;</td>
                             {/if}
                             {if $shire.state == -1}
-                              <td width="16%" height=30 class="table-body" align="center">{$shire.state_context}</td>
+                              <td width="16%" height=30 class="table-body" align="center">{$shire.state_context|escape|truncate:30:"..."}</td>
                             {elseif $shire.state == 2}
-                              <td width="16%" height=30 class="table-body" align="center">{$shire.feedback}</td>
+                              <td width="16%" height=30 class="table-body" align="center">{$shire.feedback|escape|truncate:30:":..."}</td>
                             {else}
                               <td width="16%" height=30 class="table-body" align="center">&nbsp;</td>
                             {/if}

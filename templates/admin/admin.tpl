@@ -26,16 +26,16 @@
                             {foreach from=$shires item=shire}
                             <tr class="data-line">
                               <td width="10%" height=30 class="table-body" align="center">#2013{$shire.shire_id}</td>
-                              <td width="14%" height=30 class="table-body" align="center">{$shire.department}</td>
-                              <td width="13%" height=30 class="table-body" align="center">{$shire.place}</td>
-                              <td width="13%" height=30 class="table-body" align="center">{$shire.reason}</td>
-                              <td width="10%" height=30 class="table-body" align="center">{$shire.broken_item}</td>
+                              <td width="14%" height=30 class="table-body" align="center">{$shire.department|escape}</td>
+                              <td width="13%" height=30 class="table-body" align="center">{$shire.place|escape|truncate:30:"..."}</td>
+                              <td width="13%" height=30 class="table-body" align="center">{$shire.reason|escape|truncate:30:"..."}</td>
+                              <td width="10%" height=30 class="table-body" align="center">{$shire.broken_item|escape}</td>
                               <td width="10%" height=30 class="table-body" align="center">{$shire.report_time}</td>
                               <td width="6%" height=30 class="table-body" align="center">点击查看更多</td>
                             </tr>
                             <tr class="hidden">
                               <td colspan=4 class="table-body">
-                                详细原因: {$shire.detail}
+                                详细原因: {$shire.detail|escape}
                               </td>
                               {if $type==0}
                                 <td colspan=3 class="table-body">
