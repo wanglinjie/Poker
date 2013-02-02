@@ -6,6 +6,12 @@
   });
 
   require(['jquery'], function($) {
+    $(".quit_system").on('click', function(e) {
+      alert("Quiting System!");
+      window.opener = '';
+      window.close();
+      return false;
+    });
     return $(".goto_home").on('click', function(e) {
       window.location = $('.home').attr('href');
       return false;
