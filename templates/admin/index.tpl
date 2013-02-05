@@ -21,5 +21,6 @@
         </pre>
       </div>
     </div>
+    <div class="fix">&nbsp;</div>
   </div>
 {include file="footer.tpl"}
