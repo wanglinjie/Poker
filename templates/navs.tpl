@@ -3,7 +3,9 @@
 <html lang="en">
 <head>
 {include file="header.tpl"}
+{if $smarty.config.DEBUG == 1}
 <script src="{$public}/js/libs/less.min.js"></script>
+{/if}
 </head>
 <body>
 <div class="container">

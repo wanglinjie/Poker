@@ -3,7 +3,11 @@
 <meta charset="utf-8" />
 <meta name="copyright" content="xiaomo(wxm4ever@gmail.com)" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{if $smarty.config.DEBUG == 1}
 <link rel="stylesheet/less" type="text/css" href="{$public}/less/main.less">
+{else}
+<link rel="stylesheet" href="{$public}/css/main.css">
+{/if}
 <link rel="stylesheet" href="{$public}/css/libs/bootstrap.min.css" media="screen">
 <script type="text/javascript" src="{$public}/js/libs/jquery.min.js"></script>
 <script type="text/javascript" src="{$public}/js/libs/bootstrap.min.js"></script>
