@@ -75,9 +75,9 @@
             </tr>
             <tr>
               <td height=30 colspan=2 align="center">
-                <input type="submit" value="报修申请">
-                <input type="reset" value="重新填写">
-                <input type="button" class="goto_home" value="返回">
+                <button type="submit">保修申请</button>
+                <button type="reset">重新填写</button>
+                <button type="button" class="goto_home">返回</button>
               </td>
             </tr>
           </table>
