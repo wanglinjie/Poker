@@ -12,10 +12,11 @@
       window.close();
       return false;
     });
-    return $(".goto_home").on('click', function(e) {
+    $(".goto_home").on('click', function(e) {
       window.location = $('.home').attr('href');
       return false;
     });
+    return true;
   });
 
 }).call(this);
