@@ -15,4 +15,5 @@ require(['jquery'], ($)->
         window.location = $('.home').attr('href')
         return false
     )
+    return true
 )
