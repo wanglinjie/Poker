@@ -71,11 +71,14 @@
             <tr>
               <td height=30 width=135 align="right" class="m">上传故障图片:</td>
               <td height=30>
+                <input type="file" id="upload_pics" name="upload_pics" data-url="upload.php" multiple>
+                <!--
                 <span class="btn btn-success fileinput-button">
                   <i class="icon-plus icon-white"></i>
                   <span>Add Files...</span>
                   <input type="file" id="upload_pics" name="upload_pics" data-url="upload.php" multiple>
                 </span>
+              -->
               </td>
             </tr>
             <tr class="upload_info">
@@ -109,22 +112,22 @@
     var const_department = {
       'dzbgs': {
         'bgs1': '办公室1',
-        'bgs2': '办公室2', 
+        'bgs2': '办公室2'
       },
       'jwjcc': {
         'bgs3': '办公室3',
-        'bgs4': '办公室4',
-      },
+        'bgs4': '办公室4'
+      }
     };
     var const_broken_item = {
       'sgl': {
         'b1': '物品1',
-        'b2': '物品2', 
+        'b2': '物品2'
       },
       'dgl': {
         'b3': '物品3',
-        'b4': '物品4', 
-      },
+        'b4': '物品4'
+      }
     };
 
     var binding_item = function(item){
@@ -185,7 +188,7 @@
              $('.upload_info').find('span').text('已上传图片 ' + data.origin_name);
              alert("上传成功!");
           });
-      },
+      }
     });
     $('form').on('submit', function(e){
       var is_valid = valid();
