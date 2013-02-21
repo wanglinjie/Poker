@@ -97,9 +97,9 @@ $(function(){
         var data_line = hidden_line.prev();
 
         if(state == -1){
-            state_context = btn.closest('td').prev().find('input').attr('value').trim();
+            state_context = btn.closest('td').prev().find('input').val().trim();
         }else if(state == 2){
-            feedback = btn.closest('td').prev().find('textarea').attr('value').trim(); 
+            feedback = btn.closest('td').prev().find('textarea').val().trim();
         }
         $.post('j/admin.php', {shire_id:shire_id, state:state, state_context:state_context, feedback:feedback},
             function(d){
@@ -122,7 +122,6 @@ $(function(){
             return false;
         }
         var img = '<img src="' + domain + '/upload/' + picpath + '" style="width:400px;height:300px;" />';
-        console.log(img);
         $(img).bPopup();
         return false;
     });
