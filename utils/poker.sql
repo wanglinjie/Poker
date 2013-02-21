@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2013 年 02 月 21 日 08:56
+-- 生成日期: 2013 年 02 月 21 日 10:05
 -- 服务器版本: 5.5.29
 -- PHP 版本: 5.4.6-1ubuntu1.1
 
@@ -24,6 +24,8 @@ SET time_zone = "+00:00";
 
 --
 -- 表的结构 `barrack`
+--
+-- 创建时间: 2013 年 02 月 05 日 10:18
 --
 
 CREATE TABLE IF NOT EXISTS `barrack` (
@@ -47,6 +49,8 @@ INSERT INTO `barrack` (`orc_id`, `consumer`, `password`) VALUES
 --
 -- 表的结构 `shire`
 --
+-- 创建时间: 2013 年 02 月 21 日 00:54
+--
 
 CREATE TABLE IF NOT EXISTS `shire` (
   `shire_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '报修id(PK)',
@@ -64,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `shire` (
   `repair_time` date NOT NULL COMMENT '维修时间',
   `feedback` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '安排反馈',
   PRIMARY KEY (`shire_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=195 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=197 ;
 
 --
 -- 转存表中的数据 `shire`
@@ -110,7 +114,9 @@ INSERT INTO `shire` (`shire_id`, `reporter`, `report_time`, `contact_num`, `depa
 (191, 'å°é»‘', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', '0000-00-00', ''),
 (192, 'å°é»‘', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', '0000-00-00', ''),
 (193, 'å°é»‘', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', '0000-00-00', ''),
-(194, 'å°é»‘', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', '0000-00-00', '');
+(194, 'å°é»‘', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', '0000-00-00', ''),
+(195, 'æµ‹è¯•', '2013-02-21', 'æµ‹è¯•', 'åŠžå…¬å®¤1', 'æµ‹è¯•', 'æµ‹è¯•', 'é˜¿æ–¯é¡¿', 'upload1361411298head.jpg', 'b1', 0, '', '0000-00-00', ''),
+(196, 'AASé˜¿æ–¯é¡¿', '2013-02-21', 'é˜¿æ–¯é¡¿', 'åŠžå…¬å®¤1', 'é˜¿æ–¯é¡¿', 'é˜¿æ–¯é¡¿', 'é˜¿æ–¯é¡¿', 'upload1361412130head.jpg', 'b1', 0, '', '0000-00-00', '');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

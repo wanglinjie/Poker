@@ -35,7 +35,7 @@ function get_shire_count($state=-1){
 function get_shires($state=-1, $page=1, $limit=20){
     $start = ($page-1)*$limit;
     $sql = "SELECT shire_id, reporter, report_time, contact_num, department, place, reason, detail, "
-         . "broken_item, state, state_context, repair_time, feedback FROM shire ";
+         . "broken_item, filename, state, state_context, repair_time, feedback FROM shire ";
     if($state != -1){
         $sql = $sql . "WHERE state=$state ";
     }
@@ -56,6 +56,7 @@ function get_shires($state=-1, $page=1, $limit=20){
             'reason'    =>  $db->f('reason'),
             'detail'    =>  $db->f('detail'),
             'broken_item'   =>  $db->f('broken_item'),
+            'filename'      =>  $db->f('filename'),
             'state' =>  $db->f('state'),
             'decode_state'  =>  decode_shire_state($db->f('state')),
             'state_context' =>  $db->f('state_context'),
@@ -67,11 +68,11 @@ function get_shires($state=-1, $page=1, $limit=20){
 }
 
 function update_shire($reporter, $report_time, $contact_num, $department, $place,
-        $broken_item, $reason, $detail, $state, $state_context, $repair_time, $feedback){
+        $broken_item, $reason, $detail, $filename, $state, $state_context, $repair_time, $feedback){
     $sql = "INSERT INTO shire(reporter, report_time, contact_num, department, place, broken_item,"
-         . "reason, detail, state, state_context, repair_time, feedback) VALUES('$reporter', "
+         . "reason, detail, filename, state, state_context, repair_time, feedback) VALUES('$reporter', "
          . "'$report_time', '$contact_num', '$department', '$place', '$broken_item', '$reason',"
-         . "'$detail', $state, '$state_context', '$repair_time', '$feedback');";
+         . "'$detail', '$filename', $state, '$state_context', '$repair_time', '$feedback');";
 
     $db = new DB;
     $db->connect();

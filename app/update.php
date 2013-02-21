@@ -10,9 +10,10 @@ if($_POST){
     $broken_item = escape($_POST['broken_item']);
     $reason = escape($_POST['reason']);
     $detail = escape($_POST['detail']);
+    $filename = escape($_POST['filename']);
 
     update_shire($reporter,$report_time,$contact_num,$department,
-        $place,$broken_item,$reason,$detail,0,'','','');
+        $place,$broken_item,$reason,$detail, $filename, 0,'','','');
     $smarty->assign('server_msg', '申报成功!');
 }
 
