@@ -21,6 +21,19 @@ textarea {
 .m           { display: inline-block; }
 .fix         { clear: both; height: 0px;}
 .hidden      { display: none; }
+.fileinput-button {
+  width: 120px;
+  height: 20px;
+
+  input{
+    opacity: 0;
+    filter: alpha(opacity=0);
+    transform: translate(300px, 0) scale(4);
+    margin-left: -100px;
+    width: inherit;
+    height: inherit;
+  }
+}
 
 .container {
   width: 1024px !important;

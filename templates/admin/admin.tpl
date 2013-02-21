@@ -31,7 +31,7 @@
                               <td width="13%" height=30 class="table-body" align="center">{$shire.reason|escape|truncate:30:"..."}</td>
                               <td width="10%" height=30 class="table-body" align="center">{$shire.broken_item|escape}</td>
                               <td width="10%" height=30 class="table-body" align="center">{$shire.report_time}</td>
-                              <td width="6%" height=30 class="table-body" align="center">点击查看更多</td>
+                              <td width="6%" height=30 class="table-body" align="center"><a class="show_pic" href="#" data-url="{$shire.filename}" data-domain="{$domain}">点击查看图片</a></td>
                             </tr>
                             <tr class="hidden">
                               <td colspan=4 class="table-body">
@@ -79,6 +79,7 @@
     </div>
     <div class="fix">&nbsp;</div>
   </div>
+  <script src="{$public}/js/libs/jquery.bpopup-0.8.0.min.js"></script>
 {literal}
 <script>
 $(function(){
@@ -111,6 +112,19 @@ $(function(){
                 }
             }
         );
+    });
+    $('a.show_pic').on('click', function(e){
+        e.preventDefault();
+        var domain = $(this).attr('data-domain').trim();
+        var picpath = $(this).attr('data-url').trim();
+        if(!picpath){
+            alert("用户没有上传关于此报修的图片!");
+            return false;
+        }
+        var img = '<img src="' + domain + '/upload/' + picpath + '" style="width:400px;height:300px;" />';
+        console.log(img);
+        $(img).bPopup();
+        return false;
     });
 });
 </script>

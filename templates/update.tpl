@@ -1,5 +1,4 @@
-{config_load file="main.conf"}
-{include file="navs.tpl"}
+{config_load file="main.conf"} {include file="navs.tpl"}
   {if $server_msg}
     {literal}
     <script>
@@ -70,6 +69,22 @@
               </td>
             </tr>
             <tr>
+              <td height=30 width=135 align="right" class="m">上传故障图片:</td>
+              <td height=30>
+                <span class="btn btn-success fileinput-button">
+                  <i class="icon-plus icon-white"></i>
+                  <span>Add Files...</span>
+                  <input type="file" id="upload_pics" name="upload_pics" data-url="upload.php" multiple>
+                </span>
+              </td>
+            </tr>
+            <tr class="upload_info">
+              <td height=30 width=135 align="right" class="m">&nbsp;</td>
+              <td height=30>
+                <span>没有图片</span>
+              </td>
+            </tr>
+            <tr>
               <td width=135 align="right" class="m">故障详细描述:</td>
               <td width=496><textarea id="detail" name="detail"></textarea>
             </tr>
@@ -85,6 +100,9 @@
       </td></tr>
     </table>
   </div>
+  <script src="{$public}/js/libs/ui/minified/jquery.ui.widget.min.js"></script>
+  <script src="{$public}/js/libs/jquery.iframe-transport.js"></script>
+  <script src="{$public}/js/libs/jquery.fileupload.js"></script>
 {literal}
   <script>
   $(function(){
@@ -155,6 +173,20 @@
         return false;
       }
     }; 
+    var upload_file_object = $('#upload_pics');
+    upload_file_object.fileupload();
+    upload_file_object.fileupload({
+      url: 'upload.php',
+      acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+      add: function(e, data){
+        var jqXHR = data.submit()
+                  . success(function(data){
+             $('form').append('<input type="hidden" name="filename" value="' + data.name + '">');
+             $('.upload_info').find('span').text('已上传图片 ' + data.origin_name);
+             alert("上传成功!");
+          });
+      },
+    });
     $('form').on('submit', function(e){
       var is_valid = valid();
       return is_valid;
