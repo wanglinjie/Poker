@@ -3,7 +3,7 @@
     {literal}
     <script>
     $(function(){
-      if(confirm("报修成功，是否继续申报？") == false){
+      if(confirm("报修成功，将交由管理员审核。是否继续申报？") == false){
         window.location = 'index.php';
       } 
     });
