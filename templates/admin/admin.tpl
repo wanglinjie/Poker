@@ -40,10 +40,12 @@
                             </tr>
                             <tr class="hidden">
                               <td colspan=4 class="table-body">
-                                报修人: {$shire.reporter|escape}<br>
-                                报修人工号: {$shire.report_id|escape}<br>
-                                报修时间: {$shire.report_time}<br>
-                                详细原因: {$shire.detail|escape}<br>
+                                <p style="text-align:left;">
+                                  报修人: {$shire.reporter|escape}<br>
+                                  报修人工号: {$shire.report_id|escape}<br>
+                                  报修时间: {$shire.report_time}<br>
+                                  详细原因: {$shire.detail|escape}<br>
+                                </p>
                               </td>
                               {if $type==0}
                                 <td colspan=3 class="table-body">
@@ -60,12 +62,15 @@
                                             {/foreach}
                                           </select>
                                         </td>
-                                        <td><button class="btn btn-success btn-assign" data-id="{$shire.shire_id}">分配</button>
+                                        <td>
+                                          <button class="btn btn-success btn-assign" data-id="{$shire.shire_id}">分配</button>
+
+                                        </td>
                                       </tr>
                                     {else}
                                       <tr>
                                         <td>确认维修，并将状态修改为维修中.</td>
-                                        <td><button class="btn btn-success btn-admin" data-id="{$shire.shire_id}" data-state=1>提交</button>
+                                        <td><button class="btn btn-success btn-admin" data-id="{$shire.shire_id}" data-state=1>提交</button></td>
                                       </tr>
                                     {/if}
                                     <tr>

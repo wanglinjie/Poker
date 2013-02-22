@@ -27,20 +27,18 @@
     <div class="note">
       <div class="weather_report">
         <TABLE cellSpacing=0 cellPadding=0 width=1024 align=center border=0> 
-          <TBODY> 
             <TR>
               <TD> 
                 <DIV id=demo style="OVERFLOW: hidden; WIDTH: 1024px;"> 
                   <TABLE cellSpacing=0 cellPadding=0 align=left bgcolor=#CCC border=0 cellspace="0"> 
-                    <TBODY> 
                       <TR> 
                         <TD id=demo1 vAlign=top><table width="1024" bgcolor=#CCC border="0" cellpadding="0" cellspacing="0"> 
                       <tr> 
-                        <td width="171" bgcolor=#CCC><div align="center" class="msg" style="background-color:#CCC;">后勤服务中心竭诚为您服务，欢迎使用在线报修系统！</div></td> 
+                        <td width="1024" bgcolor=#CCC><div align="center" class="msg" style="background-color:#CCC;">后勤服务中心竭诚为您服务，欢迎使用在线报修系统！</div></td> 
                       </tr> 
                   </table></TD> 
-                  <TD id=demo2 vAlign=top> </TD></TR></TBODY></TABLE></DIV> 
-    </TD></TR></TBODY></TABLE></TD></TR></TABLE> 
+                  <TD id=demo2 vAlign=top> </TD></TR></TABLE></DIV> 
+    </TD></TR></TABLE></TD></TR></TABLE> 
     </div></div>
   </div>
 {literal}
