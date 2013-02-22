@@ -1,6 +1,5 @@
 <?php
 define('APP_ADMIN_ROOT', dirname(__FILE__));
-include(dirname(APP_ADMIN_ROOT) . '/core.php');
 include(APP_ADMIN_ROOT . '/middleware.php');
 
 if(auth_check() == false){
@@ -9,8 +8,12 @@ if(auth_check() == false){
 }
 
 $shires_count_with0state = get_shire_count(0);
-$total_shires_count = get_shire_count(-1);
+$total_shires_count = get_shire_count(-1)+1;
 $efficiency = ($total_shires_count-$shires_count_with0state)/$total_shires_count;
+
+$role = cache_role();
+$smarty->assign('role_id', $role['role_id']);
+$smarty->assign('role_type', $role['role_type']);
 
 $smarty->assign('shires_count_with0state', $shires_count_with0state);
 $smarty->assign('total_shires_count', $total_shires_count);

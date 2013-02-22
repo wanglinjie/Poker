@@ -15,23 +15,22 @@ if(auth_check() == false){
 }
 
 $type = escape($_POST['type']);
-
-if($type == 'admin'){
-    $shire_id = escape($_POST['shire_id']);
-    $state = escape($_POST['state']);
-    $state_context = escape($_POST['state_context']);
-    $feedback = escape($_POST['feedback']);
-
-    change_shire_state($shire_id, $state, $state_context, $feedback);
-}elseif($type == 'assign'){
-    $shire_id = escape($_POST['shire_id']);
+if($type == 'add'){
+    $role_type = escape($_POST['role_type']);
+    $r = add_role_type($role_type);
+    if($r == 0){
+        $msg = '类型已存在!';
+    }
+}elseif($type == 'del'){
     $role_id = escape($_POST['role_id']);
-
-    assign_shire_to_role($shire_id, $role_id);
+    $r = del_role_type($role_id);
+    if($r == 0){
+        $msg = '存在该身份类型的用户.若想删除请联系管理员!';
+    }
 }
 
 return jsonize(Array(
-    'r'     =>  1,
-    'msg'   =>  'succed!',
+    'r'     =>  $r,
+    'msg'   =>  $msg
 ));
 ?>

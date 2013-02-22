@@ -3,6 +3,7 @@ include('core.php');
 
 if($_POST){
     $reporter = escape($_POST['reporter']);
+    $report_id = escape($_POST['report_id']);
     $report_time = date('Y/m/d');
     $contact_num = escape($_POST['contact_num']);
     $department = escape($_POST['department_decode']);
@@ -12,7 +13,7 @@ if($_POST){
     $detail = escape($_POST['detail']);
     $filename = escape($_POST['filename']);
 
-    update_shire($reporter,$report_time,$contact_num,$department,
+    update_shire($reporter,$report_id,$report_time,$contact_num,$department,
         $place,$broken_item,$reason,$detail, $filename, 0,'','','');
     $smarty->assign('server_msg', '申报成功!');
 }

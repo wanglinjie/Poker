@@ -21,7 +21,7 @@
                               <td width="13%" height=30 class="table-title" align="center"><strong>报修原因</strong></td>
                               <td width="10%" height=30 class="table-title" align="center"><strong>报修物品</strong></td>
                               <td width="10%" height=30 class="table-title" align="center"><strong>报修时间</strong></td>
-                              <td width="16%" height=30 class="table-title" align="center"><strong>操作</strong></td>
+                              <td width="16%" height=30 class="table-title" align="center"><strong>查看</strong></td>
                             </tr>
                             {foreach from=$shires item=shire}
                             <tr class="data-line">
@@ -31,22 +31,46 @@
                               <td width="13%" height=30 class="table-body" align="center">{$shire.reason|escape|truncate:30:"..."}</td>
                               <td width="10%" height=30 class="table-body" align="center">{$shire.broken_item|escape}</td>
                               <td width="10%" height=30 class="table-body" align="center">{$shire.report_time}</td>
-                              <td width="6%" height=30 class="table-body" align="center"><a class="show_pic" href="#" data-url="{$shire.filename}" data-domain="{$domain}">点击查看图片</a></td>
+                              <td width="6%" height=30 class="table-body" align="center">
+                                {if $shire.filename}
+                                  <a class="show_pic" href="#" data-url="{$shire.filename}" data-domain="{$domain}">点击查看图片</a></td>
+                                {else}
+                                  此报修没有相关图片
+                                {/if}
                             </tr>
                             <tr class="hidden">
                               <td colspan=4 class="table-body">
-                                详细原因: {$shire.detail|escape}
+                                报修人: {$shire.reporter|escape}<br>
+                                报修人工号: {$shire.report_id|escape}<br>
+                                报修时间: {$shire.report_time}<br>
+                                详细原因: {$shire.detail|escape}<br>
                               </td>
                               {if $type==0}
                                 <td colspan=3 class="table-body">
                                   <table width="100%" border=0>
-                                    <tr>
-                                      <td>联系报修，并将状态修改为维修中.</td>
-                                      <td><button class="btn btn-success" data-id="{$shire.shire_id}" data-state=1>提交</button>
-                                    </tr>
+                                    {if $role_id == 1}
+                                      <tr>
+                                        <td>
+                                          分配给
+                                          <select style="margin-left: 55px;width: 137px;">
+                                            {foreach from=$roles item=role}
+                                              <option value='{$role.role_id}'>{$role.role_type}</option>
+                                            {foreachelse}
+                                              <option value='-1'>没有任何类型</option>
+                                            {/foreach}
+                                          </select>
+                                        </td>
+                                        <td><button class="btn btn-success btn-assign" data-id="{$shire.shire_id}">分配</button>
+                                      </tr>
+                                    {else}
+                                      <tr>
+                                        <td>确认维修，并将状态修改为维修中.</td>
+                                        <td><button class="btn btn-success btn-admin" data-id="{$shire.shire_id}" data-state=1>提交</button>
+                                      </tr>
+                                    {/if}
                                     <tr>
                                       <td>拒绝报修，理由为<input type="text"></td>
-                                      <td><button class="btn btn-danger" data-id="{$shire.shire_id}" data-state=-1>拒绝</button></td>
+                                      <td><button class="btn btn-danger btn-admin" data-id="{$shire.shire_id}" data-state=-1>拒绝</button></td>
                                     </tr>
                                   </table>
                                 </td>
@@ -87,7 +111,7 @@ $(function(){
         $('tr[class=hidden]').hide();
         $(this).next('.hidden').show();
     });
-    $('button').on('click', function(e){
+    $('button.btn-admin').on('click', function(e){
         var btn = $(this);
         var shire_id = btn.attr('data-id');
         var state = btn.attr('data-state');
@@ -101,7 +125,7 @@ $(function(){
         }else if(state == 2){
             feedback = btn.closest('td').prev().find('textarea').val().trim();
         }
-        $.post('j/admin.php', {shire_id:shire_id, state:state, state_context:state_context, feedback:feedback},
+        $.post('j/admin.php', {type:'admin', shire_id:shire_id, state:state, state_context:state_context, feedback:feedback},
             function(d){
                 if(d.r){ 
                     alert("成功!");
@@ -109,9 +133,27 @@ $(function(){
                     hidden_line.remove();
                 }else{
                     alert(d.msg);
+                    return false;
                 }
             }
         );
+    });
+    $('button.btn-assign').on('click', function(e){
+        var btn = $(this);
+        var hidden_line = btn.closest('.hidden');
+        var data_line = hidden_line.prev();
+        var shire_id = btn.attr('data-id');
+        var role_id = btn.closest('td').prev().find('select').val().trim();
+        $.post('j/admin.php', {type:'assign', shire_id:shire_id, role_id:role_id}, function(d){
+          if(d.r){
+            alert("成功!");
+            data_line.remove();
+            hidden_line.remove();
+          }else{
+            alert(d.msg);  
+            return false;
+          }
+        });
     });
     $('a.show_pic').on('click', function(e){
         e.preventDefault();

@@ -23,8 +23,13 @@
           <table width=1024 border=0 align="center" cellpadding=0 cellspacing=1>
             <tr>
               <td width=135 height=30 align="right" class="m">用户姓名:</td>
-              <td height=30 width=496><input type="text" id="reporter" name="reporter" size=10 maxlength=10><span class="table-msg">*</span></td>
+              <td height=30><input type="text" id="reporter" name="reporter" size=10 maxlength=10><span class="table-msg">*</span></td>
             </tr>
+            <tr>
+              <td width=135 height=30 align="right" class="m">用户工号:</td>
+              <td height=30><input type="text" id="report_id" name="report_id" size=10 maxlength=10><span class="table-msg">*</span></td>
+            </tr>
+
             <tr>
               <td width=135 height=30 align="right" class="m">联系方式:</td>
               <td height=30 width=496><input type="text" id="contact_num" name="contact_num" size=10><span class="table-msg">*(请确保信息正确，方便后勤人员联系！)</span></td>
@@ -153,6 +158,7 @@
     };
     var valid = function(){
       var reporter = $('#reporter').val().trim();
+      var report_id = $('#report_id').val().trim();
       var contact_num = $('#contact_num').val().trim();
       var department = $('#department');
       var broken_item = $('#broken_item');
@@ -163,7 +169,7 @@
       if(department == '请选择'){ department = $('#department_ext').val().trim(); }
       broken_item = item_decode(broken_item);
 
-      if(reporter && contact_num && department && broken_item && place && reason){
+      if(reporter && report_id && contact_num && department && broken_item && place && reason){
         var hidden_data = [
           "<input type='hidden' name='department_decode' value='" + department + "'>",
           "<input type='hidden' name='broken_item_decode' value='" + broken_item + "'>",

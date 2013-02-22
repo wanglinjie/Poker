@@ -1,6 +1,5 @@
 <?php
 define('APP_ADMIN_ROOT', dirname(__FILE__));
-include(dirname(APP_ADMIN_ROOT) . '/core.php');
 include(APP_ADMIN_ROOT . '/middleware.php');
 
 if(auth_check()){
@@ -12,11 +11,14 @@ if($_POST){
     $password = escape($_POST['password']);
     $remember = escape($_POST['remember']);
 
-    if(consumer_check($consumer,$password)){
+    $role = consumer_check($consumer, $password);
+    if($role){
         if($remember){
             setcookie('consumer', $consumer, time()+3600);
+            setcookie('role', $role, time()+3600);
         }
-        login($consumer);
+        login($consumer, $role);
+        cache_role();
         header('Location:index.php');
     }else{
         $smarty->assign('server_msg', '登陆失败');
