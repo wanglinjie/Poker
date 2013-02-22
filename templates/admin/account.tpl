@@ -8,6 +8,18 @@
       </div>
       <form method="POST" class="form-horizontal">
         <div class="control-group">
+          <label class="control-label" for="consumer">身份类型</label>
+          <div class="controls">
+            <select id="role_type" name="role_type">
+              {foreach from=$roles item=role}
+                <option value='{$role.role_id}'>{$role.role_type}</option>
+              {foreachelse}
+                <option value='-1'>没有任何类型</option>
+              {/foreach}
+            </select>
+          </div>
+        </div>
+        <div class="control-group">
           <label class="control-label" for="consumer">用户名</label>
           <div class="controls">
             <input type="text" id="consumer" name="consumer">
@@ -27,7 +39,7 @@
         </div>
         <div class="control-group">
           <div class="controls">
-            <button type="submit" class="btn">确认修改</button>
+            <button type="submit" class="btn">添加</button>
             <button type="reset" class="btn">重置</button>
           </div>
         </div>

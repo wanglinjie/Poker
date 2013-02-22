@@ -36,7 +36,7 @@
                       <TR> 
                         <TD id=demo1 vAlign=top><table width="1024" bgcolor=#CCC border="0" cellpadding="0" cellspacing="0"> 
                       <tr> 
-                        <td width="171" bgcolor=#CCC><div align="center" class="msg" style="background-color:#CCC;">后勤服务中心竭诚为您服务，欢迎使用在线保修系统！</div></td> 
+                        <td width="171" bgcolor=#CCC><div align="center" class="msg" style="background-color:#CCC;">后勤服务中心竭诚为您服务，欢迎使用在线报修系统！</div></td> 
                       </tr> 
                   </table></TD> 
                   <TD id=demo2 vAlign=top> </TD></TR></TBODY></TABLE></DIV> 

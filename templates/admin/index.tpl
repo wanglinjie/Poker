@@ -4,6 +4,7 @@
     {include file="admin/admin_navs.tpl"}
     <div class="admin_content">
       <div>
+        <pre>欢迎回来, {$role_type}</pre>
         <pre>
       当前运行脚本所在的文档根目录: {$smarty.server.DOCUMENT_ROOT}
       当前正在执行脚本文件名: {$smarty.server.PHP_SELF}

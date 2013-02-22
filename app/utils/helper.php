@@ -34,7 +34,7 @@ function get_shire_count($state=-1){
 
 function get_shires($state=-1, $page=1, $limit=20){
     $start = ($page-1)*$limit;
-    $sql = "SELECT shire_id, reporter, report_time, contact_num, department, place, reason, detail, "
+    $sql = "SELECT shire_id, reporter, report_id, report_time, contact_num, department, place, reason, detail, "
          . "broken_item, filename, state, state_context, repair_time, feedback FROM shire ";
     if($state != -1){
         $sql = $sql . "WHERE state=$state ";
@@ -49,6 +49,7 @@ function get_shires($state=-1, $page=1, $limit=20){
         array_push($shires, Array(
             'shire_id'  =>  $db->f('shire_id'),
             'reporter'  =>  $db->f('reporter'),
+            'report_id' =>  $db->f('report_id'),
             'report_time'   =>  $db->f('report_time'),
             'contact_num'   =>  $db->f('contact_num'),
             'department'    =>  $db->f('department'),
@@ -67,11 +68,100 @@ function get_shires($state=-1, $page=1, $limit=20){
     return $shires;
 }
 
-function update_shire($reporter, $report_time, $contact_num, $department, $place,
+function get_shire_count_by_role($state=-1, $role_id=1){
+    $sql = "SELECT COUNT(*) as c FROM shire WHERE role_id=$role_id ";
+    if($state != -1){
+        $sql = $sql . "AND state=$state ";
+    }
+    $db = new DB;
+    $db->connect();
+    $db->query($sql);
+    $db->next_record();
+    return $db->f('c');
+}
+
+function get_shires_by_role($state=-1, $role_id=1, $page=1, $limit=20){
+    $start = ($page-1)*$limit;
+    $sql = "SELECT shire_id, reporter, report_id, report_time, contact_num, department, place, reason, detail, "
+         . "broken_item, filename, state, state_context, repair_time, feedback FROM shire WHERE role_id=$role_id ";
+    if($state != -1){
+        $sql = $sql . "AND state=$state ";
+    }
+    $sql = $sql . "ORDER BY shire_id DESC LIMIT $start, $limit;";
+
+    $db = new DB;
+    $db->connect();
+    $db->query($sql);
+    $shires = Array();
+    while($db->next_record()){
+        array_push($shires, Array(
+            'shire_id'  =>  $db->f('shire_id'),
+            'reporter'  =>  $db->f('reporter'),
+            'report_id' =>  $db->f('report_id'),
+            'report_time'   =>  $db->f('report_time'),
+            'contact_num'   =>  $db->f('contact_num'),
+            'department'    =>  $db->f('department'),
+            'place' =>  $db->f('place'),
+            'reason'    =>  $db->f('reason'),
+            'detail'    =>  $db->f('detail'),
+            'broken_item'   =>  $db->f('broken_item'),
+            'filename'      =>  $db->f('filename'),
+            'state' =>  $db->f('state'),
+            'decode_state'  =>  decode_shire_state($db->f('state')),
+            'state_context' =>  $db->f('state_context'),
+            'repair_time'   =>  $db->f('repair_time'),
+            'feedback'  =>  $db->f('feedback'),
+        ));
+    }
+    return $shires;
+}
+
+function get_shire_count_not_refused(){
+    $sql = "SELECT COUNT(*) as c FROM shire WHERE state<>-1 AND role_id<>0;";
+    $db = new DB;
+    $db->connect();
+    $db->query($sql);
+    $db->next_record();
+    return $db->f('c');
+}
+
+function get_shires_not_refused($page=1, $limit=20){
+    $start = ($page-1)*$limit;
+    $sql = "SELECT shire_id, reporter, report_id, report_time, contact_num, department, place, reason, detail, "
+         . "broken_item, filename, state, state_context, repair_time, feedback FROM shire ";
+    $sql = $sql . "WHERE state<>-1 AND role_id<>0 ORDER BY shire_id DESC LIMIT $start, $limit;";
+    $db = new DB;
+    $db->connect();
+    $db->query($sql);
+    $shires = Array();
+    while($db->next_record()){
+        array_push($shires, Array(
+            'shire_id'  =>  $db->f('shire_id'),
+            'reporter'  =>  $db->f('reporter'),
+            'report_id' =>  $db->f('report_id'),
+            'report_time'   =>  $db->f('report_time'),
+            'contact_num'   =>  $db->f('contact_num'),
+            'department'    =>  $db->f('department'),
+            'place' =>  $db->f('place'),
+            'reason'    =>  $db->f('reason'),
+            'detail'    =>  $db->f('detail'),
+            'broken_item'   =>  $db->f('broken_item'),
+            'filename'      =>  $db->f('filename'),
+            'state' =>  $db->f('state'),
+            'decode_state'  =>  decode_shire_state($db->f('state')),
+            'state_context' =>  $db->f('state_context'),
+            'repair_time'   =>  $db->f('repair_time'),
+            'feedback'  =>  $db->f('feedback'),
+        ));
+    }
+    return $shires;
+}
+
+function update_shire($reporter, $report_id, $report_time, $contact_num, $department, $place,
         $broken_item, $reason, $detail, $filename, $state, $state_context, $repair_time, $feedback){
-    $sql = "INSERT INTO shire(reporter, report_time, contact_num, department, place, broken_item,"
+    $sql = "INSERT INTO shire(reporter, report_id, report_time, contact_num, department, place, broken_item,"
          . "reason, detail, filename, state, state_context, repair_time, feedback) VALUES('$reporter', "
-         . "'$report_time', '$contact_num', '$department', '$place', '$broken_item', '$reason',"
+         . "'$report_id', '$report_time', '$contact_num', '$department', '$place', '$broken_item', '$reason',"
          . "'$detail', '$filename', $state, '$state_context', '$repair_time', '$feedback');";
 
     $db = new DB;
@@ -94,14 +184,67 @@ function change_shire_state($shire_id, $state, $state_context, $feedback){
     }
 }
 
+function assign_shire_to_role($shire_id, $role_id){
+    $db = new DB;
+    $db->connect();
+    $db->query("UPDATE shire SET role_id=$role_id WHERE shire_id=$shire_id;");
+    return true;
+}
+
 function consumer_check($consumer, $password){
-    $sql = "SELECT consumer, password FROM barrack WHERE "
+    $sql = "SELECT consumer, password, role_id FROM barrack WHERE "
          . "consumer='$consumer' AND password='" . md5($password) . "';";
     $db = new DB;
     $db->connect();
     $db->query($sql);
     $db->next_record();
-    return $db->f('consumer');
+    return $db->f('role_id');
+}
+
+function translate_role_id($role_id){
+    $db = new DB;
+    $db->connect();
+    $db->query("SELECT role_type FROM role WHERE role_id=$role_id");
+    $db->next_record();
+    return $db->f('role_type');
+}
+
+function get_all_role_types(){
+    $db = new DB;
+    $db->connect();
+    $db->query('SELECT role_id, role_type FROM role;');
+    $all_role_types = Array();
+    while($db->next_record()){
+        array_push($all_role_types, Array(
+            'role_id'   =>  $db->f('role_id'),
+            'role_type' =>  $db->f('role_type')
+        ));
+    }
+    return $all_role_types;
+}
+
+function add_role_type($role_type){
+    $db = new DB;
+    $db->connect();
+    $db->query("SELECT role_id FROM role WHERE role_type='$role_type';");
+    $db->next_record();
+    if($db->f('role_id')){
+        return 0;
+    }
+    $db->query("INSERT INTO role(role_type) VALUES('$role_type');");
+    return 1;
+}
+
+function del_role_type($role_id){
+    $db = new DB;
+    $db->connect();
+    $db->query("SELECT consumer FROM barrack WHERE role_id=$role_id;");
+    $db->next_record();
+    if($db->f('consumer')){
+        return 0;
+    }
+    $db->query("DELETE FROM role WHERE role_id=$role_id;");
+    return 1;
 }
 
 function update_consumer_password($consumer, $origin_password, $password){
@@ -119,7 +262,7 @@ function update_consumer_password($consumer, $origin_password, $password){
     }
 }
 
-function add_new_consumer($consumer, $password){
+function add_new_consumer($consumer, $password, $role_id){
     $db = new DB;
     $db->connect();
     $db->query("SELECT consumer FROM barrack WHERE consumer='$consumer';");
@@ -127,8 +270,8 @@ function add_new_consumer($consumer, $password){
     if($db->f('consumer')){
         return false;
     }else{
-        $db->query("INSERT INTO barrack(consumer, password) VALUES('$consumer', "
-                  ."'" . md5($password) . "');");
+        $db->query("INSERT INTO barrack(consumer, password, role_id) VALUES('$consumer', "
+                  ."'" . md5($password) . "', $role_id);");
         return true;
     }
 }

@@ -1,6 +1,5 @@
 <?php
 define('APP_ADMIN_ROOT', dirname(__FILE__));
-include(dirname(APP_ADMIN_ROOT) . '/core.php');
 include(APP_ADMIN_ROOT . '/middleware.php');
 
 if(auth_check() == false){
@@ -25,6 +24,10 @@ if($_POST){
         }
     }
 }
+
+$role = cache_role();
+$smarty->assign('role_id', $role['role_id']);
+$smarty->assign('role_type', $role['role_type']);
 
 $smarty->assign('consumer', $_SESSION['consumer']);
 $smarty->display('admin/update.tpl');
