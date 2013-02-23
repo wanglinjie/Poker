@@ -19,7 +19,7 @@
         <ul>
           <li><a href="{$domain}/index.php" class="home">后勤服务中心首页</a></li>
           <li><a href="{$domain}/app/update.php">在线报修</a></li>
-          <li><a href="#">报修查询</a></li>
+          <li><a href="{$domain}/app/search.php">报修查询</a></li>
           <li><a href="#" class="quit_system">退出系统</a></li>
         </ul>
       </div>
