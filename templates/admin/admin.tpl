@@ -91,7 +91,7 @@
                               {/if}
                             </tr>
                             {foreachelse}
-                              <tr><td colspan=9 class="msg">恭喜，没有报修数据!</td></tr>
+                              <tr><td colspan=9 class="msg">没有报修数据!</td></tr>
                             {/foreach}
                           </tbody>
                         </table>

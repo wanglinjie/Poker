@@ -1,6 +1,16 @@
 {config_load file="main.conf"}
 {include file="navs.tpl"}
+  {if $server_msg}
+    {literal}
+    <script>
+    $(function(){
+      alert("搜索字符串不合法!");
+    });
+    </script>
+    {/literal}
+  {/if}
   <div class="content">
+    {if $query_result}
     <table width=1024 border=1 cellpadding=5 cellspacing=1 bgcolor="#CCCCCC" style="border-collapse: collapse" bordercolorlight="#335EA8" bordercolordark="#335EA8">
       <tbody>
         <tr>
@@ -48,7 +58,7 @@
                             {/if}
                           </tr>
                           {foreachelse}
-                            <tr><td colspan=9 class="msg">没有报修数据!</td></tr>
+                            <tr><td colspan=9 class="msg">没有相关报修数据!</td></tr>
                           {/foreach}
                         </tbody>
                       </table>
@@ -61,6 +71,13 @@
         </tr>
       </tbody>
     </table>
+    {else}
+    <div class="search_area">
+      <form method="GET">
+        <input type="text" id="search" name="search" placeholder="输入要搜索的报修单号" />
+        <button type="submit">查找</button>
+      </form>
+    </div>
+    {/if}
   </div>
-  {include file="paginator.tpl"}
 {include file="footer.tpl"}

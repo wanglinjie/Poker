@@ -127,7 +127,7 @@ function get_shire_count_not_refused(){
 
 function get_shires_not_refused($page=1, $limit=20){
     $start = ($page-1)*$limit;
-    $sql = "SELECT shire_id, reporter, report_id, report_time, contact_num, department, place, reason, detail, "
+    $sql = "SELECT shire_id, reporter, report_id, report_time, contact_num, department, place, reason, detail, " 
          . "broken_item, filename, state, state_context, repair_time, feedback FROM shire ";
     $sql = $sql . "WHERE state<>-1 AND role_id<>0 ORDER BY shire_id DESC LIMIT $start, $limit;";
     $db = new DB;
@@ -274,5 +274,35 @@ function add_new_consumer($consumer, $password, $role_id){
                   ."'" . md5($password) . "', $role_id);");
         return true;
     }
+}
+
+function find_shires($shire_id, $limit=20){
+    $sql = "SELECT shire_id, reporter, report_id, report_time, contact_num, department, place, reason, detail, " . "broken_item, filename, state, state_context, repair_time, feedback FROM shire ";
+    $sql = $sql . "WHERE state<>-1 AND role_id<>0 AND shire_id=$shire_id ORDER BY shire_id DESC LIMIT 0, $limit;";
+    $db = new DB;
+    $db->connect();
+    $db->query($sql);
+    $shires = Array();
+    while($db->next_record()){
+        array_push($shires, Array(
+            'shire_id'  =>  $db->f('shire_id'),
+            'reporter'  =>  $db->f('reporter'),
+            'report_id' =>  $db->f('report_id'),
+            'report_time'   =>  $db->f('report_time'),
+            'contact_num'   =>  $db->f('contact_num'),
+            'department'    =>  $db->f('department'),
+            'place' =>  $db->f('place'),
+            'reason'    =>  $db->f('reason'),
+            'detail'    =>  $db->f('detail'),
+            'broken_item'   =>  $db->f('broken_item'),
+            'filename'      =>  $db->f('filename'),
+            'state' =>  $db->f('state'),
+            'decode_state'  =>  decode_shire_state($db->f('state')),
+            'state_context' =>  $db->f('state_context'),
+            'repair_time'   =>  $db->f('repair_time'),
+            'feedback'  =>  $db->f('feedback'),
+        ));
+    }
+    return $shires;
 }
 ?>
