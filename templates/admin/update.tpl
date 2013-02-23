@@ -31,7 +31,7 @@
         </div>
         <div class="control-group">
           <div class="controls">
-            <button type="submit" class="btn">确认修改</button>
+            <button type="submit" class="btn">修改</button>
             <button type="reset" class="btn">重置</button>
           </div>
         </div>
