@@ -11,13 +11,13 @@ if($_POST){
     $password = escape($_POST['password']);
     $remember = escape($_POST['remember']);
 
-    $role = consumer_check($consumer, $password);
-    if($role){
+    $role_id = consumer_check($consumer, $password);
+    if($role_id){
         if($remember){
             setcookie('consumer', $consumer, time()+3600);
-            setcookie('role', $role, time()+3600);
+            setcookie('role_id', $role_id, time()+3600);
         }
-        login($consumer, $role);
+        login($consumer, $role_id);
         cache_role();
         header('Location:index.php');
     }else{
