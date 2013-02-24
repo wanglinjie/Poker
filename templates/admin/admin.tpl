@@ -84,7 +84,7 @@
                                   <table width="100%" border=0>
                                     <tr>
                                       <td><textarea placeholder="输入反馈内容，提交后状态为已修缮完毕!"></textarea></td>
-                                      <td><button class="btn btn-success" style="height:100%;margin-top:-10px;" data-id="{$shire.shire_id}" data-state=2>提交</button>
+                                      <td><button class="btn btn-success btn-admin" style="height:100%;margin-top:-10px;" data-id="{$shire.shire_id}" data-state=2>提交</button>
                                     </tr>
                                   </table>
                                 </td>
