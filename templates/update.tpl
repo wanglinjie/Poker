@@ -1,4 +1,5 @@
-{config_load file="main.conf"} {include file="navs.tpl"}
+{config_load file="main.conf"}
+{include file="navs.tpl"}
   {if $server_msg}
     {literal}
     <script>
@@ -50,7 +51,7 @@
             </tr>
             <tr>
               <td width=135 height=30 align="right" class="m">报修物品名称:</td>
-              <td height=30 width=496>
+              <td height=30 width=356>
                 <select id="broken_item_class">
                   <option value="" selected="selected">请选择</option>
                   <option value="sgl">水工类</option>
@@ -61,7 +62,7 @@
                 </select><span class="table-msg">*</span>
               </td>
               <td height=30 width=139>
-                <p align="right">故障地点:</p>
+                <span align="right">故障地点:</span>
               </td>
               <td height=30 width=269>
                 <input type="text" id="place" name="place"><span class="table-msg">*</span>
@@ -69,8 +70,8 @@
             </tr>
             <tr>
               <td height=30 width=135 align="right" class="m">报修原因:</td>
-              <td height=30 width=496>
-                <input type="text" id="reason" name="reason" size=27><span class="table-msg">*(故障简单叙述,不超过50字)</span>
+              <td height=30 width=796>
+                <input type="text" id="reason" name="reason" size=50><span class="table-msg">*(故障简单叙述,不超过50字)</span>
               </td>
             </tr>
             <tr>
