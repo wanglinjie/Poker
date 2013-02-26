@@ -1,10 +1,9 @@
 <?php
 
 function get_url_domain(){
-    $document_root_length = strlen($_SERVER['DOCUMENT_ROOT']);
-    $script_filename = substr($_SERVER['SCRIPT_FILENAME'], $document_root_length);
-    $index = stripos($script_filename, '/app/');
-    return substr($script_filename, 0, $index);
+    $request_url = $_SERVER['REQUEST_URI'];
+    $index = strpos($request_url, '/app/');
+    return substr($request_url, 0, $index);
 }
 
 function escape($data){
@@ -182,6 +181,34 @@ function change_shire_state($shire_id, $state, $state_context, $feedback){
     }else{
         return false;
     }
+}
+
+function get_shire_by_id($shire_id){
+    $sql = "SELECT shire_id, reporter, report_id, report_time, contact_num, department, place, reason, detail, " 
+         . "broken_item, filename, state, state_context, role_type, repair_time, feedback FROM shire,role ";
+    $sql = $sql . "WHERE shire.role_id=role.role_id AND shire_id=$shire_id;";
+    $db = new DB;
+    $db->connect();
+    $db->query($sql);
+    $db->next_record();
+    return Array(
+       'shire_id'  =>  $db->f('shire_id'),
+       'reporter'  =>  $db->f('reporter'),
+       'report_id' =>  $db->f('report_id'),
+       'report_time'   =>  $db->f('report_time'),
+       'contact_num'   =>  $db->f('contact_num'),
+       'department'    =>  $db->f('department'),
+       'place' =>  $db->f('place'),
+       'reason'    =>  $db->f('reason'),
+       'detail'    =>  $db->f('detail'),
+       'broken_item'   =>  $db->f('broken_item'),
+       'filename'      =>  $db->f('filename'),
+       'state' =>  $db->f('state'),
+       'decode_state'  =>  decode_shire_state($db->f('state')),
+       'state_context' =>  $db->f('state_context'),
+       'repair_time'   =>  $db->f('repair_time'),
+       'feedback'  =>  $db->f('feedback'),
+    );
 }
 
 function assign_shire_to_role($shire_id, $role_id){
