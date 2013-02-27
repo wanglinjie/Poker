@@ -28,7 +28,7 @@
             </tr>
             <tr>
               <td width=135 height=30 align="right" class="m">用户工号:</td>
-              <td height=30><input type="text" id="report_id" name="report_id" size=10 maxlength=10><span class="table-msg">*</span></td>
+              <td height=30><input type="text" id="report_id" name="report_id" size=10 maxlength=10><span class="table-msg">*(学生报修的话请填写自己的学号)</span></td>
             </tr>
 
             <tr>
