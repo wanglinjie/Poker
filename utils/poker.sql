@@ -1,161 +1,89 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.11.1deb1
+-- version 2.10.3
 -- http://www.phpmyadmin.net
---
+-- 
 -- 主机: localhost
--- 生成日期: 2013 年 02 月 22 日 18:46
--- 服务器版本: 5.5.29
--- PHP 版本: 5.4.6-1ubuntu1.1
+-- 生成日期: 2013 年 02 月 24 日 00:34
+-- 服务器版本: 5.0.51
+-- PHP 版本: 5.2.6
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
---
+-- 
 -- 数据库: `poker`
---
+-- 
 
 -- --------------------------------------------------------
 
---
+-- 
 -- 表的结构 `barrack`
---
--- 创建时间: 2013 年 02 月 22 日 10:45
---
+-- 
 
 DROP TABLE IF EXISTS `barrack`;
 CREATE TABLE IF NOT EXISTS `barrack` (
-  `orc_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '管理员id',
-  `consumer` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '帐户名',
-  `password` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '密码',
+  `orc_id` int(11) NOT NULL auto_increment COMMENT '管理员id',
+  `consumer` varchar(20) character set utf8 collate utf8_bin NOT NULL COMMENT '帐户名',
+  `password` varchar(50) character set utf8 collate utf8_bin NOT NULL COMMENT '密码',
   `role_id` int(11) NOT NULL COMMENT '角色id',
-  PRIMARY KEY (`orc_id`),
+  PRIMARY KEY  (`orc_id`),
   UNIQUE KEY `consumer` (`consumer`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
---
--- 转存表中的数据 `barrack`
---
+-- 
+-- 导出表中的数据 `barrack`
+-- 
 
-INSERT INTO `barrack` (`orc_id`, `consumer`, `password`, `role_id`) VALUES
-(1, 'user1', '202cb962ac59075b964b07152d234b70', 1),
-(2, 'user2', '202cb962ac59075b964b07152d234b70', 1),
-(3, 'user4', '202cb962ac59075b964b07152d234b70', 4),
-(4, 'user5', '202cb962ac59075b964b07152d234b70', 3);
+INSERT INTO `barrack` (`orc_id`, `consumer`, `password`, `role_id`) VALUES (5, 0x61646d696e, 0x3230326362393632616335393037356239363462303731353264323334623730, 1);
+INSERT INTO `barrack` (`orc_id`, `consumer`, `password`, `role_id`) VALUES (6, 0x7573657231, 0x3230326362393632616335393037356239363462303731353264323334623730, 2);
 
 -- --------------------------------------------------------
 
---
+-- 
 -- 表的结构 `role`
---
--- 创建时间: 2013 年 02 月 22 日 10:46
---
+-- 
 
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE IF NOT EXISTS `role` (
-  `role_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '角色id',
-  `role_type` varchar(40) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '角色类型',
-  PRIMARY KEY (`role_id`)
+  `role_id` int(11) NOT NULL auto_increment COMMENT '角色id',
+  `role_type` varchar(40) character set utf8 collate utf8_bin NOT NULL COMMENT '角色类型',
+  PRIMARY KEY  (`role_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
---
--- 转存表中的数据 `role`
---
+-- 
+-- 导出表中的数据 `role`
+-- 
 
-INSERT INTO `role` (`role_id`, `role_type`) VALUES
-(3, 'æµ‹è¯•ç”¨æˆ·'),
-(4, 'ä»€ä¹ˆå•Šï¼Ÿ');
+INSERT INTO `role` (`role_id`, `role_type`) VALUES (1, 0xe7aea1e79086e59198);
+INSERT INTO `role` (`role_id`, `role_type`) VALUES (2, 0xe794b5e58a9be7bbb4e4bfaee983a8e997a8);
 
 -- --------------------------------------------------------
 
---
+-- 
 -- 表的结构 `shire`
---
--- 创建时间: 2013 年 02 月 22 日 10:45
---
+-- 
 
 DROP TABLE IF EXISTS `shire`;
 CREATE TABLE IF NOT EXISTS `shire` (
-  `shire_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '报修id(PK)',
-  `reporter` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '报修人',
-  `report_id` varchar(40) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '报修人工号',
+  `shire_id` int(11) NOT NULL auto_increment COMMENT '报修id(PK)',
+  `reporter` varchar(20) character set utf8 collate utf8_bin NOT NULL COMMENT '报修人',
+  `report_id` varchar(40) character set utf8 collate utf8_bin NOT NULL COMMENT '报修人工号',
   `report_time` date NOT NULL COMMENT '报修时间',
-  `contact_num` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '报修人联系方式',
-  `department` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '故障部门或班级',
-  `place` varchar(40) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '故障地点',
-  `reason` varchar(40) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '故障原因',
-  `detail` text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '详细原因',
-  `filename` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `broken_item` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '报修物品',
-  `state` int(11) NOT NULL DEFAULT '0' COMMENT '维修状态',
-  `state_context` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '维修状态的额外解释',
+  `contact_num` varchar(20) character set utf8 collate utf8_bin NOT NULL COMMENT '报修人联系方式',
+  `department` varchar(20) character set utf8 collate utf8_bin NOT NULL COMMENT '故障部门或班级',
+  `place` varchar(40) character set utf8 collate utf8_bin NOT NULL COMMENT '故障地点',
+  `reason` varchar(40) character set utf8 collate utf8_bin NOT NULL COMMENT '故障原因',
+  `detail` text character set utf8 collate utf8_bin NOT NULL COMMENT '详细原因',
+  `filename` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `broken_item` varchar(20) character set utf8 collate utf8_bin NOT NULL COMMENT '报修物品',
+  `state` int(11) NOT NULL default '0' COMMENT '维修状态',
+  `state_context` varchar(50) character set utf8 collate utf8_bin NOT NULL COMMENT '维修状态的额外解释',
   `role_id` int(11) NOT NULL,
   `repair_time` date NOT NULL COMMENT '维修时间',
-  `feedback` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '安排反馈',
-  PRIMARY KEY (`shire_id`)
+  `feedback` varchar(50) character set utf8 collate utf8_bin NOT NULL COMMENT '安排反馈',
+  PRIMARY KEY  (`shire_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=205 ;
 
---
--- 转存表中的数据 `shire`
---
+-- 
+-- 导出表中的数据 `shire`
+-- 
 
-INSERT INTO `shire` (`shire_id`, `reporter`, `report_id`, `report_time`, `contact_num`, `department`, `place`, `reason`, `detail`, `filename`, `broken_item`, `state`, `state_context`, `role_id`, `repair_time`, `feedback`) VALUES
-(155, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(156, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(157, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(158, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(159, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(160, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(161, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(162, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(163, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(164, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(165, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(166, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(167, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(168, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(169, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(170, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(171, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(172, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(173, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(174, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(175, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(176, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(177, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(178, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(179, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(180, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(181, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(182, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(183, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(184, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(185, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(186, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(187, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(188, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(189, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(190, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(191, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(192, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', 0, '', 0, '0000-00-00', ''),
-(193, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', -1, 'sdf', 0, '0000-00-00', ''),
-(194, 'å°é»‘', '', '2013-01-31', '18963168043', 'ä¸‰å…¬å¯“', 'äºŒå±‚åŽ•æ‰€', 'åŽ•æ‰€å µäº†', '', '', 'åŽ•æ‰€', -1, 'æ‹’ç»ï¼ï¼ï¼', 0, '0000-00-00', ''),
-(195, 'æµ‹è¯•', '', '2013-02-21', 'æµ‹è¯•', 'åŠžå…¬å®¤1', 'æµ‹è¯•', 'æµ‹è¯•', 'é˜¿æ–¯é¡¿', 'upload1361411298head.jpg', 'b1', -1, '', 0, '0000-00-00', ''),
-(196, 'AASé˜¿æ–¯é¡¿', '', '2013-02-21', 'é˜¿æ–¯é¡¿', 'åŠžå…¬å®¤1', 'é˜¿æ–¯é¡¿', 'é˜¿æ–¯é¡¿', 'é˜¿æ–¯é¡¿', 'upload1361412130head.jpg', 'b1', 2, '', 0, '2013-02-21', 'å¥½å§ã€‚ é‚£å°±åŒæ„äº†ã€‚~'),
-(197, 'æµ‹è¯•', '', '2013-02-22', '189', 'åŠžå…¬å®¤1', 'ä¸œåŒº', 'æ•…éšœ', 'æ•…éšœ', '', 'b1', 1, '', 0, '0000-00-00', ''),
-(198, 'songhuanyu', '', '2013-02-22', '12456', 'åŠžå…¬å®¤1', 'ghjkl', 'hgjkkl', '', '', 'b1', -1, '666666666666', 0, '0000-00-00', ''),
-(199, 'sghdh', '', '2013-02-22', 'hrhrae', 'åŠžå…¬å®¤2', 'shrhr', 'ryhejurtsk', '', '', 'b3', 1, '', 0, '0000-00-00', ''),
-(200, 'æµ‹è¯•', '123', '2013-02-22', '123123', 'åŠžå…¬å®¤1', '123', '123', '', '', 'b1', 0, '', 0, '0000-00-00', ''),
-(201, '1000030', '1000030', '2013-02-22', '5687066', 'åŠžå…¬å®¤1', 'ä¸»æ¥¼', 'æ¼æ°´', '', '', 'b1', 0, '', 0, '0000-00-00', ''),
-(202, 'hhh', 'kkk', '2013-02-22', 'kkk', 'åŠžå…¬å®¤1', 'kkk', 'lll', '', '', 'b1', 0, '', 0, '0000-00-00', ''),
-(203, 'frgyhu', 'gjkjkjk', '2013-02-22', 'hhjjkjk', 'åŠžå…¬å®¤1', 'vvbwae', 'w426', 'batr ee', '', 'b1', 0, '', 0, '0000-00-00', ''),
-(204, 'er', 'bvrfeb', '2013-02-22', 'efwbv', 'åŠžå…¬å®¤1', 'ewbvw', 'wev', '', '', 'b1', 1, '', 3, '0000-00-00', '');
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
