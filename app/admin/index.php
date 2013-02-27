@@ -8,8 +8,8 @@ if(auth_check() == false){
 }
 
 $shires_count_with0state = get_shire_count(0);
-$total_shires_count = get_shire_count(-1)+1;
-$efficiency = ($total_shires_count-$shires_count_with0state)/$total_shires_count;
+$total_shires_count = get_shire_count(-1);
+$efficiency = ($total_shires_count-$shires_count_with0state)/($total_shires_count+1);
 
 $role = cache_role();
 $smarty->assign('role_id', $role['role_id']);
