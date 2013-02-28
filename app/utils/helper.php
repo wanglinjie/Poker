@@ -19,6 +19,14 @@ function decode_shire_state($state=0){
     }
 }
 
+function check_reporter($report_id, $reporter){
+    $db = new DB;
+    $db->connect();
+    $db->query("SELECT wizard_id FROM wizard WHERE wizard_id='$report_id' AND wizard_name='$reporter'");
+    $db->next_record();
+    return $db->f('wizard_id')?True:False;
+}
+
 function get_shire_count($state=-1){
     $sql = "SELECT COUNT(*) as c FROM shire ";
     if($state != -1){
@@ -157,11 +165,11 @@ function get_shires_not_refused($page=1, $limit=20){
 }
 
 function update_shire($reporter, $report_id, $report_time, $contact_num, $department, $place,
-        $broken_item, $reason, $detail, $filename, $state, $state_context, $repair_time, $feedback){
+        $broken_item, $reason, $detail, $filename, $state, $state_context, $repair_time, $feedback, $auth_check=0){
     $sql = "INSERT INTO shire(reporter, report_id, report_time, contact_num, department, place, broken_item,"
-         . "reason, detail, filename, state, state_context, repair_time, feedback) VALUES('$reporter', "
+         . "reason, detail, filename, state, state_context, repair_time, feedback, auth_check) VALUES('$reporter', "
          . "'$report_id', '$report_time', '$contact_num', '$department', '$place', '$broken_item', '$reason',"
-         . "'$detail', '$filename', $state, '$state_context', '$repair_time', '$feedback');";
+         . "'$detail', '$filename', $state, '$state_context', '$report_time', '$feedback', $auth_check);";
 
     $db = new DB;
     $db->connect();

@@ -1,5 +1,12 @@
 {config_load file="main.conf"}
 {include file="navs.tpl"}
+  {if $check_msg}
+    {literal}
+    <script>
+    $(function(){ alert("报修使用的工号/学号与姓名不一致."); });
+    </script>
+    {/literal}
+  {/if}
   {if $server_msg}
     {literal}
     <script>

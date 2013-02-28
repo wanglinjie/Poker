@@ -3,3 +3,4 @@ templates_c/*.tpl.php
 *.swp
 .DS_Store
 utils/data
+utils/.ropeproject

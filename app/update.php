@@ -13,8 +13,14 @@ if($_POST){
     $detail = escape($_POST['detail']);
     $filename = escape($_POST['filename']);
 
+    echo $report_id . $reporter . "<br />";
+    $auth_check = check_reporter($report_id, $reporter);
+    if(!$auth_check){
+        $smarty->assign('check_msg', '提交的工号/学生号与姓名不符.将由工作人员进行审核.');
+    }
+    $check = $check == True?1:0;
     update_shire($reporter,$report_id,$report_time,$contact_num,$department,
-        $place,$broken_item,$reason,$detail, $filename, 0,'','','');
+        $place,$broken_item,$reason,$detail, $filename, 0,'','','', $check);
     $smarty->assign('server_msg', '申报成功!');
 }
 
