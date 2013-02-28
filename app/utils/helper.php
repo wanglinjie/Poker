@@ -165,11 +165,11 @@ function get_shires_not_refused($page=1, $limit=20){
 }
 
 function update_shire($reporter, $report_id, $report_time, $contact_num, $department, $place,
-        $broken_item, $reason, $detail, $filename, $state, $state_context, $repair_time, $feedback, $auth_check=0){
+        $broken_item, $reason, $detail, $filename, $state, $state_context, $repair_time, $feedback, $auth_check, $ip){
     $sql = "INSERT INTO shire(reporter, report_id, report_time, contact_num, department, place, broken_item,"
-         . "reason, detail, filename, state, state_context, repair_time, feedback, auth_check) VALUES('$reporter', "
+         . "reason, detail, filename, state, state_context, repair_time, feedback, auth_check, ip) VALUES('$reporter', "
          . "'$report_id', '$report_time', '$contact_num', '$department', '$place', '$broken_item', '$reason',"
-         . "'$detail', '$filename', $state, '$state_context', '$report_time', '$feedback', $auth_check);";
+         . "'$detail', '$filename', $state, '$state_context', '$report_time', '$feedback', $auth_check, '$ip');";
 
     $db = new DB;
     $db->connect();

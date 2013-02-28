@@ -74,6 +74,7 @@ CREATE TABLE IF NOT EXISTS `shire` (
   `repair_time` date NOT NULL COMMENT '维修时间',
   `feedback` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '安排反馈',
   `auth_check` int(11) NOT NULL DEFAULT '0',
+  `ip` varchar(40) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`shire_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=206 ;
 
