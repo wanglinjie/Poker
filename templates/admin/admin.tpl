@@ -50,7 +50,7 @@
                               {if $type==0}
                                 <td colspan=3 class="table-body">
                                   <table width="100%" border=0>
-                                    {if $role_id == 1}
+                                    {if $role_id == 1 && $shire.role_id!=1 }
                                       <tr>
                                         <td>
                                           分配给

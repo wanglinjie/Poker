@@ -90,7 +90,7 @@ function get_shire_count_by_role($state=-1, $role_id=1){
 function get_shires_by_role($state=-1, $role_id=1, $page=1, $limit=20){
     $start = ($page-1)*$limit;
     $sql = "SELECT shire_id, reporter, report_id, report_time, contact_num, department, place, reason, detail, "
-         . "broken_item, filename, state, state_context, repair_time, feedback FROM shire WHERE role_id=$role_id ";
+         . "broken_item, filename, state, state_context, role_id, repair_time, feedback FROM shire WHERE role_id=$role_id ";
     if($state != -1){
         $sql = $sql . "AND state=$state ";
     }
@@ -116,6 +116,7 @@ function get_shires_by_role($state=-1, $role_id=1, $page=1, $limit=20){
             'state' =>  $db->f('state'),
             'decode_state'  =>  decode_shire_state($db->f('state')),
             'state_context' =>  $db->f('state_context'),
+            'role_id'       =>  $db->f('role_id'),
             'repair_time'   =>  $db->f('repair_time'),
             'feedback'  =>  $db->f('feedback'),
         ));
