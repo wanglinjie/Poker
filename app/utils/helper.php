@@ -183,7 +183,7 @@ function change_shire_state($shire_id, $state, $state_context, $feedback){
     $db->query("SELECT shire_id FROM shire WHERE shire_id=$shire_id");
     $db->next_record();
     if($db->f('shire_id')){
-        $repair_time = $state==2?date('Y/m/d'):'';
+        $repair_time = date('Y/m/d');
         $db->query("UPDATE shire SET state=$state,state_context='$state_context',"
                   ."repair_time='$repair_time',feedback='$feedback' "
                   ."WHERE shire_id=$shire_id;");
