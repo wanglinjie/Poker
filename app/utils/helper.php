@@ -90,7 +90,7 @@ function get_shire_count_by_role($state=-1, $role_id=1){
 function get_shires_by_role($state=-1, $role_id=1, $page=1, $limit=20){
     $start = ($page-1)*$limit;
     $sql = "SELECT shire_id, reporter, report_id, report_time, contact_num, department, place, reason, detail, "
-         . "broken_item, filename, state, state_context, role_id, repair_time, feedback FROM shire WHERE role_id=$role_id ";
+         . "broken_item, filename, state, state_context, role_id, assign_time, repair_time, feedback FROM shire WHERE role_id=$role_id ";
     if($state != -1){
         $sql = $sql . "AND state=$state ";
     }
@@ -117,6 +117,7 @@ function get_shires_by_role($state=-1, $role_id=1, $page=1, $limit=20){
             'decode_state'  =>  decode_shire_state($db->f('state')),
             'state_context' =>  $db->f('state_context'),
             'role_id'       =>  $db->f('role_id'),
+            'assign_time'   =>  $db->f('assign_time'),
             'repair_time'   =>  $db->f('repair_time'),
             'feedback'  =>  $db->f('feedback'),
         ));
@@ -125,7 +126,8 @@ function get_shires_by_role($state=-1, $role_id=1, $page=1, $limit=20){
 }
 
 function get_shire_count_not_refused(){
-    $sql = "SELECT COUNT(*) as c FROM shire WHERE state<>-1 AND role_id<>0;";
+    $sql = "SELECT COUNT(*) as c FROM shire WHERE state<>-1 AND "
+         . "(role_id<>0 or auth_check=1);";
     $db = new DB;
     $db->connect();
     $db->query($sql);
@@ -137,7 +139,7 @@ function get_shires_not_refused($page=1, $limit=20){
     $start = ($page-1)*$limit;
     $sql = "SELECT shire_id, reporter, report_id, report_time, contact_num, department, place, reason, detail, " 
          . "broken_item, filename, state, state_context, repair_time, feedback FROM shire ";
-    $sql = $sql . "WHERE state<>-1 AND role_id<>0 ORDER BY shire_id DESC LIMIT $start, $limit;";
+    $sql = $sql . "WHERE state<>-1 AND (role_id<>0 or auth_check=1) ORDER BY shire_id DESC LIMIT $start, $limit;";
     $db = new DB;
     $db->connect();
     $db->query($sql);
@@ -221,9 +223,10 @@ function get_shire_by_id($shire_id){
 }
 
 function assign_shire_to_role($shire_id, $role_id){
+    $assign_time = date('Y/m/d');
     $db = new DB;
     $db->connect();
-    $db->query("UPDATE shire SET role_id=$role_id WHERE shire_id=$shire_id;");
+    $db->query("UPDATE shire SET role_id=$role_id, assign_time='$assign_time' WHERE shire_id=$shire_id;");
     return true;
 }
 
@@ -248,7 +251,7 @@ function translate_role_id($role_id){
 function get_all_role_types(){
     $db = new DB;
     $db->connect();
-    $db->query('SELECT role_id, role_type FROM role;');
+    $db->query("SELECT role_id, role_type FROM role WHERE role_type<>'管理员';");
     $all_role_types = Array();
     while($db->next_record()){
         array_push($all_role_types, Array(

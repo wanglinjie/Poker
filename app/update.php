@@ -8,7 +8,7 @@ if($_POST){
     $contact_num = escape($_POST['contact_num']);
     $department = escape($_POST['department_decode']);
     $place = escape($_POST['place']);
-    $broken_item = escape($_POST['broken_item']);
+    $broken_item = escape($_POST['broken_item_decode']);
     $reason = escape($_POST['reason']);
     $detail = escape($_POST['detail']);
     $filename = escape($_POST['filename']);

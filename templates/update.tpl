@@ -3,7 +3,7 @@
   {if $check_msg}
     {literal}
     <script>
-    $(function(){ alert("报修使用的工号/学号与姓名不一致."); });
+    $(function(){ alert("报修使用的工号/学号与姓名不一致,将由管理员进行审核."); });
     </script>
     {/literal}
   {/if}
@@ -11,7 +11,7 @@
     {literal}
     <script>
     $(function(){
-      if(confirm("报修成功，将交由管理员审核。是否继续申报？") == false){
+      if(confirm("报修成功。是否继续申报？") == false){
         window.location = 'index.php';
       } 
     });
@@ -45,24 +45,51 @@
             <tr>
               <td width=135 height=30 align="right" class="m">报修部门:</td>
               <td height=30 width=860 colspan=3>
-                <select id="department_class">
+                <select id="department" style="width: 302px;">
                   <option value="" selected>请选择</option>
-                  <option value="dzbgs">党政办公室</option>
-                  <option value="jwjcc">纪委监察处</option>
+                  <option value="xybgs">学院办公室</option>
+                  <option value="ghbgs">党群工作部</option>
+                  <option value="jjsf">纪检审法办公室</option>
+                  <option value="xsgzc">学生工作处</option>
+                  <option value="jwc">教务处</option>
+                  <option value="yjsc">研究生处</option>
+                  <option value="rlzy">人力资源处</option>
+                  <option value="kjfzc">科技发展处</option>
+                  <option value="ghcwc">规划财务处</option>
+                  <option value="zcglc">资产管理处</option>
+                  <option value="zwbwc">总务保卫处</option>
+                  <option value="tsg">图书馆</option>
+                  <option value="jxjy">继续教育学院</option>
+                  <option value="hq">后勤服务中心</option>
+                  <option value="cbxy">船舶与海洋工程学院</option>
+                  <option value="hykx">海洋科学与技术学院</option>
+                  <option value="clkx">材料科学与工程学院</option>
+                  <option value="jsj">计算机科学与技术学院</option>
+                  <option value="tmgc">土木工程系</option>
+                  <option value="tyjxb">体育教学部</option>
+                  <option value="qcgc">汽车工程学院</option>
+                  <option value="xxydq">信息与电气工程学院</option>
+                  <option value="jjgl">经济管理学院</option>
+                  <option value="lxy">理学院</option>
+                  <option value="yywx">语言文学学院</option>
+                  <option value="sxzz">思想政治伦理教学部</option>
                 </select>
-                <select id="department" name="department">
-                  <option value="" selected>请选择</option>
-                </select> 
-                <span class="table-msg">*</span><input type="text" id="department_ext" name="department_ext" size=21 maxlength=50><span class="table-msg">(请先选择部门，无可选项者请在后面补充!)</span>
+                <span class="table-msg">*</span><input type="text" id="department_ext" name="department_ext" size=21 maxlength=50><span class="table-msg">(请选择部门，无可选项者请在后面补充!)</span>
               </td>
             </tr>
             <tr>
-              <td width=135 height=30 align="right" class="m">报修物品名称:</td>
+              <td width=135 height=30 align="right" class="m">报修项目分类:</td>
               <td height=30 width=356>
                 <select id="broken_item_class">
                   <option value="" selected="selected">请选择</option>
-                  <option value="sgl">水工类</option>
-                  <option value="dgl">电工类</option>
+                  <option value="fs">防水</option>
+                  <option value="fwwx">房屋维修</option>
+                  <option value="xydl">校园道路维修与改造</option>
+                  <option value="gpswx">给排水维修及改造</option>
+                  <option value="dqwx">电气维修及改造</option>
+                  <option value="mcwx">门窗维修及改造</option>
+                  <option value="zyc">桌、椅、床等维修及改造</option>
+                  <option value="qt">其他</option>
                 </select>
                 <select id="broken_item" name="broken_item">
                   <option value="" selected>请选择</option>
@@ -122,24 +149,39 @@
 {literal}
   <script>
   $(function(){
-    var const_department = {
-      'dzbgs': {
-        'bgs1': '办公室1',
-        'bgs2': '办公室2'
-      },
-      'jwjcc': {
-        'bgs3': '办公室3',
-        'bgs4': '办公室4'
-      }
-    };
     var const_broken_item = {
-      'sgl': {
-        'b1': '物品1',
-        'b2': '物品2'
+      'fs': {
+        'fwfs': '房屋防水',
+        'qtfs': '墙体防水',
+        'snfs': '室内防水',
+        'bkyj': '不可预见项目'
       },
-      'dgl': {
-        'b3': '物品3',
-        'b4': '物品4'
+      'fwwx': {
+        'xw': '室内维修',
+        'b4': '室外维修'
+      },
+      'xydl': {
+        'jbxm': '基本项目'
+      },
+      'gpswx': {
+        'gps1': '给排水维修及改造'
+      },
+      'dqwx': {
+        'dqwx1': '电器维修及改造'
+      },
+      'mcwx': {
+        'mcwx1': '门窗维修及改造'
+      },
+      'zyc': {
+        'zyc1': '桌、椅、床等维修及改造'
+      },
+      'qt': {
+        'xzct': '学子餐厅排烟管道清洗',
+        'qg': '旗杆',
+        'zlq': '主楼门前景观石',
+        'syj': '学院二楼收银机',
+        'lyj': '一、二生活区晾衣架',
+        'xcl': '宣传栏'
       }
     };
 
@@ -159,7 +201,7 @@
         }
       });
     };
-    ["department", "broken_item"].forEach(function(v){binding_item(v)});
+    ["broken_item"].forEach(function(v){binding_item(v)});
 
     var item_decode = function(o){
       return o.find('option:selected').text().trim();
@@ -176,7 +218,10 @@
       department = item_decode(department);
       if(department == '请选择'){ department = $('#department_ext').val().trim(); }
       broken_item = item_decode(broken_item);
-
+      if(broken_item == '请选择'){
+        broken_item = null;
+      }
+  
       if(reporter && report_id && contact_num && department && broken_item && place && reason){
         var hidden_data = [
           "<input type='hidden' name='department_decode' value='" + department + "'>",
