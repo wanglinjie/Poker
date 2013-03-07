@@ -44,6 +44,9 @@
                                   报修人: {$shire.reporter|escape}<br>
                                   报修人工号: {$shire.report_id|escape}<br>
                                   报修时间: {$shire.report_time}<br>
+                                  {if $shire.assign_time}
+                                  <font color="red">管理员分配时间:{$shire.assign_time}</font><br>
+                                  {/if}
                                   详细原因: {$shire.detail|escape}<br>
                                 </p>
                               </td>
