@@ -11,4 +11,5 @@ $smarty = new MySmarty;
 $url_domain = get_url_domain();
 $smarty->assign('domain', $url_domain);
 $smarty->assign('public', $url_domain . '/static');
+$smarty->assign('title', '哈工大威海后勤服务中心网上报修系统');
 ?>
