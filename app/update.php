@@ -8,6 +8,7 @@ if($_POST){
     $contact_num = escape($_POST['contact_num']);
     $department = escape($_POST['department_decode']);
     $place = escape($_POST['place']);
+    $broken_item_class = escape($_POST['broken_item_class_decode']);
     $broken_item = escape($_POST['broken_item_decode']);
     $reason = escape($_POST['reason']);
     $detail = escape($_POST['detail']);
@@ -20,7 +21,7 @@ if($_POST){
     }
     $check = $check == True?1:0;
     update_shire($reporter,$report_id,$report_time,$contact_num,$department,
-        $place,$broken_item,$reason,$detail, $filename, 0,'','','', $check, $ip);
+        $place, $broken_item_class, $broken_item,$reason,$detail, $filename, 0,'','','', $check, $ip);
     $smarty->assign('server_msg', '申报成功!');
 }
 

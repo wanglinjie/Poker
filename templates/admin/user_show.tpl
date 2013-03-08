@@ -59,63 +59,26 @@
                                   报修人: {$shire.reporter|escape}<br>
                                   报修人工号: {$shire.report_id|escape}<br>
                                   报修时间: {$shire.report_time}<br>
-                                  {if $shire.assign_time}
-                                  <font color="red">管理员分配时间:{$shire.assign_time}</font><br>
-                                  {/if}
-                                  {if $shire.assign_feedback}
-                                  <font color="red">
-                                    {if $shire.assign_feedback == 1}
-                                    维修人员申请{$shire.request_days}天数用来维修
-                                    {else}
-                                    维修人员拒绝维修.
-                                    {/if}
-                                  </font>
-                                  {/if}
                                   详细原因: {$shire.detail|escape}<br>
+                                  <font color="red">后勤管理员分配时间:{$shire.assign_time}</font><br>
                                 </p>
                               </td>
-                              {if $type==0}
-                                <td colspan=3 class="table-body">
+                              <td colspan=3 class="table-body">
                                   <table width="100%" border=0>
-                                    {if $role_id == 1 && $shire.role_id!=1 }
-                                      <tr>
-                                        <td>
-                                          分配给
-                                          <select style="margin-left: 55px;width: 137px;">
-                                            {foreach from=$roles item=role}
-                                              <option value='{$role.role_id}'>{$role.role_type}</option>
-                                            {foreachelse}
-                                              <option value='-1'>没有任何类型</option>
-                                            {/foreach}
-                                          </select>
-                                        </td>
-                                        <td>
-                                          <button class="btn btn-success btn-assign" data-id="{$shire.shire_id}">分配</button>
-
-                                        </td>
-                                      </tr>
-                                    {else}
-                                      <tr>
-                                        <td>确认维修，并将状态修改为维修中.</td>
-                                        <td><button class="btn btn-success btn-admin" data-id="{$shire.shire_id}" data-state=1>提交</button></td>
-                                      </tr>
-                                    {/if}
+                                    <tr>
+                                      <td>
+                                        维修预计需要天数<input type="text"/>
+                                      </td>
+                                      <td>
+                                        <button class="btn btn-success btn-admin" data-id="{$shire.shire_id}" data-feedback=1>确定</button>
+                                      </td>
+                                    </tr>
                                     <tr>
                                       <td>拒绝报修，理由为<input type="text"></td>
-                                      <td><button class="btn btn-danger btn-admin" data-id="{$shire.shire_id}" data-state=-1>拒绝</button></td>
+                                      <td><button class="btn btn-danger btn-admin" data-id="{$shire.shire_id}" data-feedback=-1>拒绝</button></td>
                                     </tr>
                                   </table>
                                 </td>
-                              {else}
-                                <td colspan=3 class="table-body">
-                                  <table width="100%" border=0>
-                                    <tr>
-                                      <td><textarea placeholder="输入反馈内容，提交后状态为已修缮完毕!"></textarea></td>
-                                      <td><button class="btn btn-success btn-admin" style="height:100%;margin-top:-10px;" data-id="{$shire.shire_id}" data-state=2>提交</button>
-                                    </tr>
-                                  </table>
-                                </td>
-                              {/if}
                             </tr>
                             {foreachelse}
                               <tr><td colspan=9 class="msg">没有报修数据!</td></tr>
@@ -143,50 +106,6 @@ $(function(){
         $('tr[class=hidden]').hide();
         $(this).next('.hidden').show();
     });
-    $('button.btn-admin').on('click', function(e){
-        var btn = $(this);
-        var shire_id = btn.attr('data-id');
-        var state = btn.attr('data-state');
-        var state_context = '';
-        var feedback = '';
-        var hidden_line = btn.closest('.hidden');
-        var data_line = hidden_line.prev();
-
-        if(state == -1){
-            state_context = btn.closest('td').prev().find('input').val().trim();
-        }else if(state == 2){
-            feedback = btn.closest('td').prev().find('textarea').val().trim();
-        }
-        $.post('j/admin.php', {type:'admin', shire_id:shire_id, state:state, state_context:state_context, feedback:feedback},
-            function(d){
-                if(d.r){ 
-                    alert("成功!");
-                    data_line.remove();
-                    hidden_line.remove();
-                }else{
-                    alert(d.msg);
-                    return false;
-                }
-            }
-        );
-    });
-    $('button.btn-assign').on('click', function(e){
-        var btn = $(this);
-        var hidden_line = btn.closest('.hidden');
-        var data_line = hidden_line.prev();
-        var shire_id = btn.attr('data-id');
-        var role_id = btn.closest('td').prev().find('select').val().trim();
-        $.post('j/admin.php', {type:'assign', shire_id:shire_id, role_id:role_id}, function(d){
-          if(d.r){
-            alert("成功!");
-            data_line.remove();
-            hidden_line.remove();
-          }else{
-            alert(d.msg);  
-            return false;
-          }
-        });
-    });
     $('a.show_pic').on('click', function(e){
         e.preventDefault();
         var domain = $(this).attr('data-domain').trim();
@@ -198,6 +117,27 @@ $(function(){
         var img = '<img src="' + domain + '/upload/' + picpath + '" style="width:400px;height:300px;" />';
         $(img).bPopup();
         return false;
+    });
+    $('button.btn-admin').on('click', function(e){
+        var btn = $(this);
+        var shire_id = btn.attr('data-id');
+        var feedback = btn.attr('data-feedback');
+        var hidden_line = btn.closest('.hidden');
+        var data_line = hidden_line.prev();
+
+        var extra_data = btn.closest('td').prev().find('input').val().trim();
+        $.post('j/user.php', {shire_id:shire_id, feedback:feedback, extra_data:extra_data},
+            function(d){
+                if(d.r){ 
+                    alert("成功!");
+                    data_line.remove();
+                    hidden_line.remove();
+                }else{
+                    alert(d.msg);
+                    return false;
+                }
+            }
+        );
     });
     var decode_http_args = function(){
         var http_args = {};
