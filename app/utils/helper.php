@@ -27,13 +27,16 @@ function check_reporter($report_id, $reporter){
     return $db->f('wizard_id')?True:False;
 }
 
-function get_shire_count($state=-1, $broken_class=NULL){
-    $sql = "SELECT COUNT(*) as c FROM shire ";
-    if($state != -1){
-        $sql = $sql . "WHERE state=$state ";
-        if($broken_class){
-            $sql = $sql . "AND broken_item_class='$broken_class' ";
-        }
+function admin_get_shires_count_with_assign_feedback($assign_feedback, $broken_class=NULL){
+    if($assign_feedback){
+        $sql = "SELECT COUNT(*) as c FROM shire WHERE state=0 AND role_id<>0 "
+             . "AND assign_feedback<>0 AND admin_permit=0";
+    }else{
+        $sql = "SELECT COUNT(*) as c FROM shire WHERE state=0 AND role_id=0 "
+             . "AND admin_permit=0 ";
+    }
+    if($broken_class){
+        $sql = $sql . "AND broken_item_class='$broken_class';";
     }
     $db = new DB;
     $db->connect();
@@ -42,18 +45,20 @@ function get_shire_count($state=-1, $broken_class=NULL){
     return $db->f('c');
 }
 
-function get_shires($state=-1, $page=1, $limit=20, $broken_class=NULL){
+function admin_get_shires_with_assign_feedback($assign_feedback, $page, $broken_class=NULL){
+    $limit = 20;
     $start = ($page-1)*$limit;
-    $sql = "SELECT shire_id, reporter, report_id, report_time, contact_num, department, place, reason, detail, "
-         . "broken_item, filename, state, state_context, repair_time, feedback FROM shire ";
-    if($state != -1){
-        $sql = $sql . "WHERE state=$state ";
-        if($broken_class){
-            $sql = $sql . "AND broken_item_class='$broken_class' ";
-        }
+    if($assign_feedback){
+        $sql = "SELECT * FROM shire WHERE state=0 AND role_id<>0 "
+            . "AND assign_feedback<>0 AND admin_permit=0 ";
+    }else{
+        $sql = "SELECT * FROM shire WHERE state=0 AND role_id=0 "
+             . "AND admin_permit=0 ";
+    }
+    if($broken_class){
+        $sql = $sql . "AND broken_item_class='$broken_class' ";
     }
     $sql = $sql . "ORDER BY shire_id DESC LIMIT $start, $limit;";
-
     $db = new DB;
     $db->connect();
     $db->query($sql);
@@ -69,77 +74,202 @@ function get_shires($state=-1, $page=1, $limit=20, $broken_class=NULL){
             'place' =>  $db->f('place'),
             'reason'    =>  $db->f('reason'),
             'detail'    =>  $db->f('detail'),
+            'broken_item_class' =>  $db->f('broken_item_class'),
             'broken_item'   =>  $db->f('broken_item'),
             'filename'      =>  $db->f('filename'),
             'state' =>  $db->f('state'),
             'decode_state'  =>  decode_shire_state($db->f('state')),
             'state_context' =>  $db->f('state_context'),
-            'repair_time'   =>  $db->f('repair_time'),
-            'feedback'  =>  $db->f('feedback'),
-        ));
-    }
-    return $shires;
-}
-
-function get_shire_count_by_role($state=-1, $role_id=1, $broken_class=NULL){
-    $sql = "SELECT COUNT(*) as c FROM shire WHERE role_id=$role_id ";
-    if($state != -1){
-        $sql = $sql . "AND state=$state ";
-        if($broken_class){
-            $sql = $sql . "AND broken_item_class='$broken_class' ";
-        }
-    }
-    $db = new DB;
-    $db->connect();
-    $db->query($sql);
-    $db->next_record();
-    return $db->f('c');
-}
-
-function get_shires_by_role($state=-1, $role_id=1, $page=1, $limit=20, $broken_class=NULL){
-    $start = ($page-1)*$limit;
-    $sql = "SELECT shire_id, reporter, report_id, report_time, contact_num, department, place, reason, detail, "
-         . "broken_item, filename, state, state_context, role_id, assign_time, repair_time, feedback FROM shire WHERE role_id=$role_id ";
-    if($state != -1){
-        $sql = $sql . "AND state=$state ";
-        if($broken_class){
-            $sql = $sql . "AND broken_item_class='$broken_class' ";
-        }
-    }
-    $sql = $sql . "ORDER BY shire_id DESC LIMIT $start, $limit;";
-
-    $db = new DB;
-    $db->connect();
-    $db->query($sql);
-    $shires = Array();
-    while($db->next_record()){
-        array_push($shires, Array(
-            'shire_id'  =>  $db->f('shire_id'),
-            'reporter'  =>  $db->f('reporter'),
-            'report_id' =>  $db->f('report_id'),
-            'report_time'   =>  $db->f('report_time'),
-            'contact_num'   =>  $db->f('contact_num'),
-            'department'    =>  $db->f('department'),
-            'place' =>  $db->f('place'),
-            'reason'    =>  $db->f('reason'),
-            'detail'    =>  $db->f('detail'),
-            'broken_item'   =>  $db->f('broken_item'),
-            'filename'      =>  $db->f('filename'),
-            'state' =>  $db->f('state'),
-            'decode_state'  =>  decode_shire_state($db->f('state')),
-            'state_context' =>  $db->f('state_context'),
-            'role_id'       =>  $db->f('role_id'),
+            'role_id'   =>  $db->f('role_id'),
             'assign_time'   =>  $db->f('assign_time'),
+            'assign_feedback'   =>  $db->f('assign_feedback'),
+            'assign_feedback_time'  =>  $db->f('assign_feedback_time'),
+            'request_days'  =>  $db->f('request_days'),
+            'admin_permit'  =>  $db->f('admin_permit'),
             'repair_time'   =>  $db->f('repair_time'),
             'feedback'  =>  $db->f('feedback'),
+            'auth_check'    =>  $db->f('auth_check'),
+            'ip'    =>  $db->f('ip'),
         ));
     }
     return $shires;
 }
+
+function user_get_shires_count_with_admin_feedback($role_id, $broken_class=NULL){
+    $sql = "SELECT COUNT(*) as c FROM shire WHERE state=0 AND "
+         . "role_id=$role_id AND assign_feedback<>0 ";
+    if($broken_class){
+        $sql = $sql . "AND broken_item_class='$broken_class';";
+    }
+    $db = new DB;
+    $db->connect();
+    $db->query($sql);
+    $db->next_record();
+    return $db->f('c');
+}
+
+function user_get_shires_with_admin_feedback($role_id, $page, $broken_class){
+    $limit = 20;
+    $start = ($page-1)*$limit;
+    $sql = "SELECT * FROM shire WHERE state=0 AND role_id=$role_id AND assign_feedback<>0 ";
+    if($broken_class){
+        $sql = $sql . "AND broken_item_class='$broken_class' ORDER BY shire_id DESC "
+             . "LIMIT $start, $limit;";
+    }
+    $db = new DB;
+    $db->connect();
+    $db->query($sql);
+    $shires = Array();
+    while($db->next_record()){
+        array_push($shires, Array(
+            'shire_id'  =>  $db->f('shire_id'),
+            'reporter'  =>  $db->f('reporter'),
+            'report_id' =>  $db->f('report_id'),
+            'report_time'   =>  $db->f('report_time'),
+            'contact_num'   =>  $db->f('contact_num'),
+            'department'    =>  $db->f('department'),
+            'place' =>  $db->f('place'),
+            'reason'    =>  $db->f('reason'),
+            'detail'    =>  $db->f('detail'),
+            'broken_item_class' =>  $db->f('broken_item_class'),
+            'broken_item'   =>  $db->f('broken_item'),
+            'filename'      =>  $db->f('filename'),
+            'state' =>  $db->f('state'),
+            'decode_state'  =>  decode_shire_state($db->f('state')),
+            'state_context' =>  $db->f('state_context'),
+            'role_id'   =>  $db->f('role_id'),
+            'assign_time'   =>  $db->f('assign_time'),
+            'assign_feedback'   =>  $db->f('assign_feedback'),
+            'assign_feedback_time'  =>  $db->f('assign_feedback_time'),
+            'request_days'  =>  $db->f('request_days'),
+            'admin_permit'  =>  $db->f('admin_permit'),
+            'repair_time'   =>  $db->f('repair_time'),
+            'feedback'  =>  $db->f('feedback'),
+            'auth_check'    =>  $db->f('auth_check'),
+            'ip'    =>  $db->f('ip'),
+        ));
+    }
+    return $shires;
+}
+
+function user_get_shires_count_with_repair_feedback($role_id, $broken_class=NULL){
+    $sql = "SELECT COUNT(*) as c FROM shire WHERE state=1 AND "
+         . "role_id=$role_id AND admin_permit=1 ";
+    if($broken_class){
+        $sql = $sql . "AND broken_item_class='$broken_class';";
+    }
+    $db = new DB;
+    $db->connect();
+    $db->query($sql);
+    $db->next_record();
+    return $db->f('c');
+}
+
+function user_get_shires_with_repair_feedback($role_id, $page, $broken_class){
+    $limit = 20;
+    $start = ($page-1)*$limit;
+    $sql = "SELECT * FROM shire WHERE state=1 AND role_id=$role_id AND admin_permit=1 ";
+    if($broken_class){
+        $sql = $sql . "AND broken_item_class='$broken_class' ORDER BY shire_id DESC "
+             . "LIMIT $start, $limit;";
+    }
+    $db = new DB;
+    $db->connect();
+    $db->query($sql);
+    $shires = Array();
+    while($db->next_record()){
+        array_push($shires, Array(
+            'shire_id'  =>  $db->f('shire_id'),
+            'reporter'  =>  $db->f('reporter'),
+            'report_id' =>  $db->f('report_id'),
+            'report_time'   =>  $db->f('report_time'),
+            'contact_num'   =>  $db->f('contact_num'),
+            'department'    =>  $db->f('department'),
+            'place' =>  $db->f('place'),
+            'reason'    =>  $db->f('reason'),
+            'detail'    =>  $db->f('detail'),
+            'broken_item_class' =>  $db->f('broken_item_class'),
+            'broken_item'   =>  $db->f('broken_item'),
+            'filename'      =>  $db->f('filename'),
+            'state' =>  $db->f('state'),
+            'decode_state'  =>  decode_shire_state($db->f('state')),
+            'state_context' =>  $db->f('state_context'),
+            'role_id'   =>  $db->f('role_id'),
+            'assign_time'   =>  $db->f('assign_time'),
+            'assign_feedback'   =>  $db->f('assign_feedback'),
+            'assign_feedback_time'  =>  $db->f('assign_feedback_time'),
+            'request_days'  =>  $db->f('request_days'),
+            'admin_permit'  =>  $db->f('admin_permit'),
+            'repair_time'   =>  $db->f('repair_time'),
+            'feedback'  =>  $db->f('feedback'),
+            'auth_check'    =>  $db->f('auth_check'),
+            'ip'    =>  $db->f('ip'),
+        ));
+    }
+    return $shires;
+}
+
+function user_get_shires_count($role_id, $broken_class=NULL){
+    $sql = "SELECT COUNT(*) as c FROM shire WHERE state=0 AND "
+         . "role_id=$role_id AND assign_feedback=0 ";
+    if($broken_class){
+        $sql = $sql . "AND broken_item_class='$broken_class';";
+    }
+    $db = new DB;
+    $db->connect();
+    $db->query($sql);
+    $db->next_record();
+    return $db->f('c');
+}
+
+function user_get_shires($role_id, $page, $broken_class){
+    $limit = 20;
+    $start = ($page-1)*$limit;
+    $sql = "SELECT * FROM shire WHERE state=0 AND role_id=$role_id AND assign_feedback=0 ";
+    if($broken_class){
+        $sql = $sql . "AND broken_item_class='$broken_class' ORDER BY shire_id DESC "
+             . "LIMIT $start, $limit;";
+    }
+    $db = new DB;
+    $db->connect();
+    $db->query($sql);
+    $shires = Array();
+    while($db->next_record()){
+        array_push($shires, Array(
+            'shire_id'  =>  $db->f('shire_id'),
+            'reporter'  =>  $db->f('reporter'),
+            'report_id' =>  $db->f('report_id'),
+            'report_time'   =>  $db->f('report_time'),
+            'contact_num'   =>  $db->f('contact_num'),
+            'department'    =>  $db->f('department'),
+            'place' =>  $db->f('place'),
+            'reason'    =>  $db->f('reason'),
+            'detail'    =>  $db->f('detail'),
+            'broken_item_class' =>  $db->f('broken_item_class'),
+            'broken_item'   =>  $db->f('broken_item'),
+            'filename'      =>  $db->f('filename'),
+            'state' =>  $db->f('state'),
+            'decode_state'  =>  decode_shire_state($db->f('state')),
+            'state_context' =>  $db->f('state_context'),
+            'role_id'   =>  $db->f('role_id'),
+            'assign_time'   =>  $db->f('assign_time'),
+            'assign_feedback'   =>  $db->f('assign_feedback'),
+            'assign_feedback_time'  =>  $db->f('assign_feedback_time'),
+            'request_days'  =>  $db->f('request_days'),
+            'admin_permit'  =>  $db->f('admin_permit'),
+            'repair_time'   =>  $db->f('repair_time'),
+            'feedback'  =>  $db->f('feedback'),
+            'auth_check'    =>  $db->f('auth_check'),
+            'ip'    =>  $db->f('ip'),
+        ));
+    }
+    return $shires;
+}
+
 
 function get_shire_count_not_refused(){
     $sql = "SELECT COUNT(*) as c FROM shire WHERE state<>-1 AND "
-         . "(role_id<>0 or auth_check=1);";
+         . "admin_permit=1;";
     $db = new DB;
     $db->connect();
     $db->query($sql);
@@ -151,7 +281,7 @@ function get_shires_not_refused($page=1, $limit=20){
     $start = ($page-1)*$limit;
     $sql = "SELECT shire_id, reporter, report_id, report_time, contact_num, department, place, reason, detail, " 
          . "broken_item, filename, state, state_context, repair_time, feedback FROM shire ";
-    $sql = $sql . "WHERE state<>-1 AND (role_id<>0 or auth_check=1) ORDER BY shire_id DESC LIMIT $start, $limit;";
+    $sql = $sql . "WHERE state<>-1 AND admin_permit=1 ORDER BY shire_id DESC LIMIT $start, $limit;";
     $db = new DB;
     $db->connect();
     $db->query($sql);
@@ -204,6 +334,39 @@ function change_shire_state($shire_id, $state, $state_context, $feedback){
     }else{
         return false;
     }
+}
+
+function do_user_feedback($shire_id, $feedback, $request_days){
+    $sql = "UPDATE shire SET assign_feedback=$feedback, request_days=$request_days "
+         . "WHERE shire_id=$shire_id;";
+    $db = new DB;
+    $db->connect();
+    $db->query($sql);
+}
+
+function do_admin_permit($shire_id){
+    $assign_feedback_time = date('Y/m/d');
+    $sql = "UPDATE shire SET admin_permit=1, assign_feedback_time='$assign_feedback_time' "
+         . "WHERE shire_id=$shire_id";
+    $db = new DB;
+    $db->connect();
+    $db->query($sql);
+}
+
+function do_user_repair($shire_id){
+    $sql = "UPDATE shire SET state=1 WHERE shire_id=$shire_id;";
+    $db = new DB;
+    $db->connect();
+    $db->query($sql);
+}
+
+function do_user_repair_feedback($shire_id, $feedback){
+    $repair_time = date('Y/m/d');
+    $sql = "UPDATE shire SET state=2, repair_time='$repair_time', feedback='$feedback' "
+         . "WHERE shire_id=$shire_id;";
+    $db = new DB;
+    $db->connect();
+    $db->query($sql);
 }
 
 function get_shire_by_id($shire_id){

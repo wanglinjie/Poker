@@ -9,26 +9,19 @@ include(APP_ADMIN_ROOT . '/middleware.php');
 
 if(auth_check() == false){
     return jsonize(Array(
-        'r'     =>  0,
+        'r'     => 0,
         'msg'   => 'auth required!',
     ));
 }
 
-$type = escape($_POST['type']);
 $shire_id = escape($_POST['shire_id']);
+$type = escape($_POST['type']);
 
-if($type == 'admin'){
-    $state = escape($_POST['state']);
-    $state_context = escape($_POST['state_context']);
+if($type == 'repair'){
+    do_user_repair($shire_id);
+}elseif($type == 'feedback'){
     $feedback = escape($_POST['feedback']);
-
-    change_shire_state($shire_id, $state, $state_context, $feedback);
-}elseif($type == 'assign'){
-    $role_id = escape($_POST['role_id']);
-
-    assign_shire_to_role($shire_id, $role_id);
-}elseif($type == 'permit'){
-    do_admin_permit($shire_id);
+    do_user_repair_feedback($shire_id, $feedback);
 }
 
 return jsonize(Array(
