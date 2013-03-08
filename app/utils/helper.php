@@ -215,6 +215,7 @@ function get_shire_by_id($shire_id){
        'broken_item'   =>  $db->f('broken_item'),
        'filename'      =>  $db->f('filename'),
        'state' =>  $db->f('state'),
+       'role_type'  =>  $db->f('role_type'),
        'decode_state'  =>  decode_shire_state($db->f('state')),
        'state_context' =>  $db->f('state_context'),
        'repair_time'   =>  $db->f('repair_time'),
