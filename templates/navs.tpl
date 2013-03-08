@@ -14,7 +14,7 @@
       <img src="{$public}/img/banner.jpg">
     </div>
     <div class="navs">
-      <div class="date left">2013年1月29日星期二</div>
+      <div class="date left">{$header_date}</div>
       <div class="nav right">
         <ul>
           <li><a href="{$domain}/index.php" class="home">后勤服务中心首页</a></li>
