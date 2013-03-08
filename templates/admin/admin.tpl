@@ -3,6 +3,21 @@
   <div class="content">
     {include file="admin/admin_navs.tpl"}
     <div class="admin_content">
+      <div class="filter">
+        按分类查找
+        <select id="broken_item_class">
+          <option value="" selected="selected">请选择</option>
+          <option value="fs" data-value="防水">防水</option>
+          <option value="fwwx" data-value="房屋维修">房屋维修</option>
+          <option value="xydl" data-value="校园道路维修与改造">校园道路维修与改造</option>
+          <option value="gpswx" data-value="给排水维修及改造">给排水维修及改造</option>
+          <option value="dqwx" data-value="电气维修及改造">电气维修及改造</option>
+          <option value="mcwx" data-value="门窗维修及改造">门窗维修及改造</option>
+          <option value="zyc" data-value="桌、椅、床等维修及改造">桌、椅、床等维修及改造</option>
+          <option value="qt" data-value="其他">其他</option>
+        </select>
+        <button>筛选</button>
+      </div>
       <table width="100%" border=1 cellpadding=5 cellspacing=1 bgcolor="#CCCCCC" style="border-collapse: collapse" bordercolorlight="#335EA8" bordercolordark="#335EA8">
         <tbody>
           <tr>
@@ -175,6 +190,52 @@ $(function(){
         $(img).bPopup();
         return false;
     });
+    var decode_http_args = function(){
+        var http_args = {};
+        var query_string = window.location.search;
+        query_string = query_string.substring(1);
+
+        var pairs = query_string.split('&');
+        for(var i=0;i<pairs.length;i++){
+            var sign = pairs[i].indexOf('=');
+            if(sign == -1){
+              return http_args;
+            }
+            var key = pairs[i].substring(0, sign);
+            var value = pairs[i].substring(sign+1);
+            http_args[key] = value;
+        }
+        return http_args;
+    };
+    var encode_http_args = function(http_args){
+        var data_string = [];
+        for(var k in http_args){
+            data_string.push(k + '=' + http_args[k]);
+        }
+        return unescape(data_string.join('&'));
+    };
+    $('.filter').on('click', 'button', function(e){
+        var broken_class_select = $('#broken_item_class');
+        var broken_class = broken_class_select.find('option:selected').text().trim();
+        if(broken_class!='请选择'){
+            var http_args = decode_http_args();
+            http_args['broken_class'] = broken_class;
+            window.location = window.location.pathname + '?' + encode_http_args(http_args);
+        }else{
+            alert("请选择分类!");
+        }   
+    });
+    (function(){
+        // render
+        var http_args = decode_http_args();
+        broken_class = http_args['broken_class'];
+        if(broken_class){
+            broken_class = decodeURI(broken_class);
+            var broken_class_select = $('#broken_item_class');
+            broken_class_select.find('option').attr('selected', false);
+            broken_class_select.find('option[data-value=' + broken_class + ']').attr('selected', true);
+        }
+    })();
 });
 </script>
 {/literal}

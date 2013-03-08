@@ -27,10 +27,13 @@ function check_reporter($report_id, $reporter){
     return $db->f('wizard_id')?True:False;
 }
 
-function get_shire_count($state=-1){
+function get_shire_count($state=-1, $broken_class=NULL){
     $sql = "SELECT COUNT(*) as c FROM shire ";
     if($state != -1){
         $sql = $sql . "WHERE state=$state ";
+        if($broken_class){
+            $sql = $sql . "AND broken_item_class='$broken_class' ";
+        }
     }
     $db = new DB;
     $db->connect();
@@ -39,12 +42,15 @@ function get_shire_count($state=-1){
     return $db->f('c');
 }
 
-function get_shires($state=-1, $page=1, $limit=20){
+function get_shires($state=-1, $page=1, $limit=20, $broken_class=NULL){
     $start = ($page-1)*$limit;
     $sql = "SELECT shire_id, reporter, report_id, report_time, contact_num, department, place, reason, detail, "
          . "broken_item, filename, state, state_context, repair_time, feedback FROM shire ";
     if($state != -1){
         $sql = $sql . "WHERE state=$state ";
+        if($broken_class){
+            $sql = $sql . "AND broken_item_class='$broken_class' ";
+        }
     }
     $sql = $sql . "ORDER BY shire_id DESC LIMIT $start, $limit;";
 
@@ -75,10 +81,13 @@ function get_shires($state=-1, $page=1, $limit=20){
     return $shires;
 }
 
-function get_shire_count_by_role($state=-1, $role_id=1){
+function get_shire_count_by_role($state=-1, $role_id=1, $broken_class=NULL){
     $sql = "SELECT COUNT(*) as c FROM shire WHERE role_id=$role_id ";
     if($state != -1){
         $sql = $sql . "AND state=$state ";
+        if($broken_class){
+            $sql = $sql . "AND broken_item_class='$broken_class' ";
+        }
     }
     $db = new DB;
     $db->connect();
@@ -87,12 +96,15 @@ function get_shire_count_by_role($state=-1, $role_id=1){
     return $db->f('c');
 }
 
-function get_shires_by_role($state=-1, $role_id=1, $page=1, $limit=20){
+function get_shires_by_role($state=-1, $role_id=1, $page=1, $limit=20, $broken_class=NULL){
     $start = ($page-1)*$limit;
     $sql = "SELECT shire_id, reporter, report_id, report_time, contact_num, department, place, reason, detail, "
          . "broken_item, filename, state, state_context, role_id, assign_time, repair_time, feedback FROM shire WHERE role_id=$role_id ";
     if($state != -1){
         $sql = $sql . "AND state=$state ";
+        if($broken_class){
+            $sql = $sql . "AND broken_item_class='$broken_class' ";
+        }
     }
     $sql = $sql . "ORDER BY shire_id DESC LIMIT $start, $limit;";
 
@@ -168,10 +180,10 @@ function get_shires_not_refused($page=1, $limit=20){
 }
 
 function update_shire($reporter, $report_id, $report_time, $contact_num, $department, $place,
-        $broken_item, $reason, $detail, $filename, $state, $state_context, $repair_time, $feedback, $auth_check, $ip){
-    $sql = "INSERT INTO shire(reporter, report_id, report_time, contact_num, department, place, broken_item,"
+        $broken_item_class, $broken_item, $reason, $detail, $filename, $state, $state_context, $repair_time, $feedback, $auth_check, $ip){
+    $sql = "INSERT INTO shire(reporter, report_id, report_time, contact_num, department, place, broken_item_class, broken_item,"
          . "reason, detail, filename, state, state_context, repair_time, feedback, auth_check, ip) VALUES('$reporter', "
-         . "'$report_id', '$report_time', '$contact_num', '$department', '$place', '$broken_item', '$reason',"
+         . "'$report_id', '$report_time', '$contact_num', '$department', '$place', '$broken_item_class', '$broken_item', '$reason',"
          . "'$detail', '$filename', $state, '$state_context', '$report_time', '$feedback', $auth_check, '$ip');";
 
     $db = new DB;

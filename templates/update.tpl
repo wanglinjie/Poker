@@ -211,12 +211,14 @@
       var report_id = $('#report_id').val().trim();
       var contact_num = $('#contact_num').val().trim();
       var department = $('#department');
+      var broken_item_class = $('#broken_item_class');
       var broken_item = $('#broken_item');
       var place = $('#place').val().trim();
       var reason = $('#reason').val().trim();
 
       department = item_decode(department);
       if(department == '请选择'){ department = $('#department_ext').val().trim(); }
+      broken_item_class = item_decode(broken_item_class);
       broken_item = item_decode(broken_item);
       if(broken_item == '请选择'){
         broken_item = null;
@@ -225,7 +227,8 @@
       if(reporter && report_id && contact_num && department && broken_item && place && reason){
         var hidden_data = [
           "<input type='hidden' name='department_decode' value='" + department + "'>",
-          "<input type='hidden' name='broken_item_decode' value='" + broken_item + "'>",
+          "<input type='hidden' name='broken_item_class_decode' value='" + broken_item_class + "'>",
+          "<input type='hidden' name='broken_item_decode' value='" + broken_item + "'>"
         ];
         hidden_data.forEach(function(v){
           $('form').append(v);

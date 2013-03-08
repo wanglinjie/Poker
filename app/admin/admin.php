@@ -17,14 +17,16 @@ $smarty->assign('role_type', $role['role_type']);
 $page = $_GET['p'];
 $page = $page == NULL?1:$page;
 
+$broken_class = escape($_GET['broken_class']);
+
 if($role['role_id'] == 1){
-    $total_counts = get_shire_count($state);
+    $total_counts = get_shire_count($state, $broken_class);
     $total = ceil($total_counts/20);
-    $shires = get_shires($state, $page);
+    $shires = get_shires($state, $page, 20, $broken_class);
 }else{
-    $total_counts = get_shire_count_by_role($state, $role['role_id']);
+    $total_counts = get_shire_count_by_role($state, $role['role_id'], $broken_class);
     $total = ceil($total_counts/20);
-    $shires = get_shires_by_role($state, $role['role_id'], $page);
+    $shires = get_shires_by_role($state, $role['role_id'], $page, 20, $broken_class);
 }
 
 $all_role_types = get_all_role_types();
