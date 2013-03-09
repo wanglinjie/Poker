@@ -59,26 +59,55 @@
                                   报修人: {$shire.reporter|escape}<br>
                                   报修人工号: {$shire.report_id|escape}<br>
                                   报修时间: {$shire.report_time}<br>
-                                  报修原因: {$shire.reason|escape}<br>
                                   详细原因: {$shire.detail|escape}<br>
-                                  <font color="red">后勤管理员分配时间: {$shire.assign_time}</font><br>
-                                  <font color="red">维修申请时间: {$shire.request_days}</font><br>
-                                  <font color="red">后勤管理员通过报修审批时间: {$shire.assign_feedback_time}</font><br>
+                                  {if $shire.assign_time}
+                                    <font color="red">后勤管理员分配时间:{$shire.assign_time}</font><br>
+                                    <font color="red">此报修事件分配给 {$shire.role_type|escape}</font><br>
+                                  {/if}
+                                  {if $shire.assign_feedback_time}
+                                    <font color="red">后勤管理员确认维修请求时间:{$shire.assign_feedback_time}</font><br>
+                                  {/if}
+                                  {if $shire.request_days}
+                                    <font color="red">维修人员请求维修时间:{$shire.request_days}</font><br>
+                                  {/if}
+                                  {if $shire.repair_time}
+                                    <font color="red">维修时间:{$shire.repair_time}</font><br>
+                                  {/if}
                                 </p>
                               </td>
                               <td colspan=3 class="table-body">
-                                  <table width="100%" border=0>
-                                    <tr>
-                                      <td>
-                                        <textarea placeholder="输入反馈内容，提交后状态为已修缮完毕!"></textarea>
-                                      </td>
-                                      <td>
-                                        <button class="btn btn-success btn-admin" data-id="{$shire.shire_id}">确定</button>
-
-                                      </td>
-                                    </tr>
-                                  </table>
-                                </td>
+                                <table width="100%" border=0>
+                                  <tr>
+                                    <td>
+                                      <font color="red">
+                                      {if $shire.state == -1}
+                                        后勤管理员拒绝此报修.<br>
+                                        反馈:{$shire.feedback|escape}<br>
+                                      {elseif $shire.state == 0}
+                                        {if $shire.assign_feedback == -1}
+                                          后勤管理员分配此报修到{$shire.role_type|escape}进行维修.<br>
+                                          {$shire.role_type|escape}拒绝了此维修.<br>
+                                        {elseif $shire.assign_feedback == 0}
+                                          后勤管理员分配此报修到{$shire.role_type|escape}进行维修.<br>
+                                          此报修正等待{$shire.role_type}进行回复.<br>
+                                        {elseif $shire.assign_feedback == 1}
+                                          后勤管理员分配此报修到{$shire.role_type|escape}进行维修.<br>
+                                          后勤人员接受了此报修，预计消耗{$shire.request_days}天数进行维修<br>
+                                          {$shire.role_type|escape}正在等待后勤管理员的确认.<br>
+                                        {/if}
+                                      {elseif $shire.state == 1}
+                                        此报修处于在修状态，由{$shire.role_type|escape}进行维修.<br>
+                                        维修预计消耗:{$shire.request_days}天.
+                                      {else} 
+                                        此报修处于已修缮完毕状态，由{$shire.role_type|escape}进行维修.<br>
+                                        维修完成时间:{$shire.repair_time}
+                                        维修反馈:{$shire.feedback|escape}
+                                      {/if}
+                                      </font>
+                                    </td>
+                                  </tr>
+                                </table>
+                              </td>
                             </tr>
                             {foreachelse}
                               <tr><td colspan=9 class="msg">没有报修数据!</td></tr>
@@ -120,11 +149,13 @@ $(function(){
     });
     $('button.btn-admin').on('click', function(e){
         var btn = $(this);
+        var shire_id = btn.attr('data-id');
+        var feedback = btn.attr('data-feedback');
         var hidden_line = btn.closest('.hidden');
         var data_line = hidden_line.prev();
-        var feedback = btn.closest('td').prev().find('textarea').val().trim();
-        var shire_id = btn.attr('data-id');
-        $.post('j/user_feedback.php', {type:'feedback', shire_id:shire_id, feedback: feedback},
+
+        var extra_data = btn.closest('td').prev().find('input').val().trim();
+        $.post('j/user.php', {shire_id:shire_id, feedback:feedback, extra_data:extra_data},
             function(d){
                 if(d.r){ 
                     alert("成功!");

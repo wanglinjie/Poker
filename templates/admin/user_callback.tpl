@@ -59,6 +59,7 @@
                                   报修人: {$shire.reporter|escape}<br>
                                   报修人工号: {$shire.report_id|escape}<br>
                                   报修时间: {$shire.report_time}<br>
+                                  报修原因: {$shire.reason|escape}<br>
                                   详细原因: {$shire.detail|escape}<br>
                                   <font color="red">后勤管理员分配时间: {$shire.assign_time}</font><br>
                                   <font color="red">维修申请时间: {$shire.request_days}</font><br>
@@ -67,6 +68,7 @@
                               </td>
                               <td colspan=3 class="table-body">
                                   <table width="100%" border=0>
+                                    {if $shire.state != -1}
                                     <tr>
                                       <td>
                                         开始维修，进入在修状态.
@@ -76,6 +78,9 @@
 
                                       </td>
                                     </tr>
+                                    {else}
+                                      <tr><td><font color="red">后勤人员拒绝了您的申请</font></td></tr>
+                                    {/if}
                                   </table>
                                 </td>
                             </tr>
