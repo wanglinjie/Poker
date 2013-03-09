@@ -27,8 +27,8 @@
                           <tr>
                             <td width="10%" height=30 class="table-body" align="center"><a href="{$domain}/app/detail.php?id={$shire.shire_id}">#2013{$shire.shire_id}</a></td>
                             <td width="14%" height=30 class="table-body" align="center">{$shire.department|escape}</td>
-                            <td width="13%" height=30 class="table-body" align="center">{$shire.place|escape|truncate:30:"..."}</td>
-                            <td width="13%" height=30 class="table-body" align="center">{$shire.reason|truncate:30:"..."}</td>
+                            <td width="13%" height=30 class="table-body" align="center">{$shire.place|escape|truncate:10:"..."}</td>
+                            <td width="13%" height=30 class="table-body" align="center">{$shire.reason|truncate:10:"..."}</td>
                             <td width="10%" height=30 class="table-body" align="center">{$shire.broken_item|escape}</td>
                             <td width="10%" height=30 class="table-body" align="center">{$shire.report_time}</td>
                             <td width="6%" height=30 class="table-body" align="center">{$shire.decode_state}</td>
