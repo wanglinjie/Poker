@@ -67,6 +67,7 @@
                               </td>
                               <td colspan=3 class="table-body">
                                   <table width="100%" border=0>
+                                    {if $shire.state != -1}
                                     <tr>
                                       <td>
                                         开始维修，进入在修状态.
@@ -76,6 +77,9 @@
 
                                       </td>
                                     </tr>
+                                    {else}
+                                      <tr><td><font color="red">后勤人员拒绝了您的申请</font></td></tr>
+                                    {/if}
                                   </table>
                                 </td>
                             </tr>

@@ -64,6 +64,7 @@
                               </td>
                               <td colspan=3 class="table-body">
                                   <table width="100%" border=0>
+                                    {if $shire.assign_feedback != -1}
                                     <tr>
                                       {if $assign_feedback_admin}
                                       <td>
@@ -94,6 +95,11 @@
                                       <td>拒绝报修，理由为<input type="text"></td>
                                       <td><button class="btn btn-danger btn-admin" data-id="{$shire.shire_id}" data-state=-1>拒绝</button></td>
                                     </tr>
+                                    {else}
+                                    <tr>
+                                      <td><font color="red">维修人员拒绝了维修要求.</font></td>
+                                    </tr>
+                                    {/if}
                                   </table>
                                 </td>
                             </tr>

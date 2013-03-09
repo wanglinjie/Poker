@@ -96,8 +96,8 @@ function admin_get_shires_with_assign_feedback($assign_feedback, $page, $broken_
 }
 
 function user_get_shires_count_with_admin_feedback($role_id, $broken_class=NULL){
-    $sql = "SELECT COUNT(*) as c FROM shire WHERE state=0 AND "
-         . "role_id=$role_id AND assign_feedback<>0 ";
+    $sql = "SELECT COUNT(*) as c FROM shire WHERE state IN (0,-1) AND "
+         . "role_id=$role_id AND assign_feedback NOT IN (0,-1) ";
     if($broken_class){
         $sql = $sql . "AND broken_item_class='$broken_class';";
     }
@@ -111,11 +111,11 @@ function user_get_shires_count_with_admin_feedback($role_id, $broken_class=NULL)
 function user_get_shires_with_admin_feedback($role_id, $page, $broken_class){
     $limit = 20;
     $start = ($page-1)*$limit;
-    $sql = "SELECT * FROM shire WHERE state=0 AND role_id=$role_id AND assign_feedback<>0 ";
+    $sql = "SELECT * FROM shire WHERE state IN (0,-1) AND role_id=$role_id AND assign_feedback NOT IN (0,-1) ";
     if($broken_class){
-        $sql = $sql . "AND broken_item_class='$broken_class' ORDER BY shire_id DESC "
-             . "LIMIT $start, $limit;";
+        $sql = $sql . "AND broken_item_class='$broken_class' ";
     }
+    $sql = $sql . "ORDER BY shire_id DESC LIMIT $start, $limit;";
     $db = new DB;
     $db->connect();
     $db->query($sql);
@@ -310,10 +310,12 @@ function get_shires_not_refused($page=1, $limit=20){
 }
 
 function update_shire($reporter, $report_id, $report_time, $contact_num, $department, $place,
-        $broken_item_class, $broken_item, $reason, $detail, $filename, $state, $state_context, $repair_time, $feedback, $auth_check, $ip){
-    $sql = "INSERT INTO shire(reporter, report_id, report_time, contact_num, department, place, broken_item_class, broken_item,"
-         . "reason, detail, filename, state, state_context, repair_time, feedback, auth_check, ip) VALUES('$reporter', "
-         . "'$report_id', '$report_time', '$contact_num', '$department', '$place', '$broken_item_class', '$broken_item', '$reason',"
+        $broken_item_class, $broken_item, $reason, $detail, $filename, $state, $state_context, 
+        $repair_time, $feedback, $auth_check, $ip){
+    $sql = "INSERT INTO shire(reporter, report_id, report_time, contact_num, department, "
+         . " place, broken_item_class, broken_item, reason, detail, filename, state, state_context, "
+         . " repair_time, feedback, auth_check, ip) VALUES('$reporter', '$report_id', '$report_time',"
+         . " '$contact_num', '$department', '$place', '$broken_item_class', '$broken_item', '$reason',"
          . "'$detail', '$filename', $state, '$state_context', '$report_time', '$feedback', $auth_check, '$ip');";
 
     $db = new DB;
