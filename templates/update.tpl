@@ -60,7 +60,9 @@
                   <option value="zwbwc">总务保卫处</option>
                   <option value="tsg">图书馆</option>
                   <option value="jxjy">继续教育学院</option>
-                  <option value="hq">后勤服务中心</option>
+                  <option value="hq1">后勤服务公寓服务中心</option>
+                  <option value="hq2">后勤服务餐饮服务中心</option>
+                  <option value="hq3">后勤服务物业服务中心</option>
                   <option value="cbxy">船舶与海洋工程学院</option>
                   <option value="hykx">海洋科学与技术学院</option>
                   <option value="clkx">材料科学与工程学院</option>
@@ -133,7 +135,7 @@
             </tr>
             <tr>
               <td height=30 colspan=2 align="center">
-                <button type="submit">保修申请</button>
+                <button type="submit">报修申请</button>
                 <button type="reset">重新填写</button>
                 <button type="button" class="goto_home">返回</button>
               </td>

@@ -14,11 +14,6 @@
       请求页面时的请求方法: {$smarty.server.REQUEST_METHOD}
       当前请求的User_Agent头部信息: {$smarty.server.HTTP_USER_AGENT}
       
-
-      报修信息:
-        新报修申请数为 {$shires_count_with0state}
-        共报修事件数为 {$total_shires_count}
-        处理效率为 {$efficiency}
         </pre>
       </div>
     </div>
