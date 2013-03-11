@@ -63,7 +63,7 @@ if($role['role_id'] == 1){
         $smarty->assign('shires', $shires);
         $smarty->display('admin/user_feedback.tpl');
     }else{
-        //保修新单
+        //报修新单
         $total_counts = user_get_shires_count($role['role_id']);
         $total = ceil($total_counts/20);
         $shires = user_get_shires($role['role_id'], $page, $broken_class);

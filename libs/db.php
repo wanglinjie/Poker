@@ -5,7 +5,7 @@
 //  let's dance with smarty and phplib db_mysql.
 
 define('DB_LIB_PATH', dirname(__FILE__) . '/DB/db_mysql.inc');
-define('DB_HOST', '172.29.143.85');
+define('DB_HOST', 'localhost');
 define('DB_NAME', 'poker');
 define('DB_USER', 'poker');
 define('DB_PASS', 'poker');
