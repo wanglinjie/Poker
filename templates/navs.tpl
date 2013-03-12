@@ -17,9 +17,9 @@
       <div class="date left">{$header_date}</div>
       <div class="nav right">
         <ul>
-          <li><a href="{$domain}/index.php" class="home">后勤服务中心首页</a></li>
+          <li><a href="http://hq.hitwh.edu.cn/">后勤服务中心首页</a></li>
+          <li><a href="{$domain}/app/index.php" class="home">报修系统首页</a></li>
           <li><a href="{$domain}/app/update.php">在线报修</a></li>
-          <li><a href="{$domain}/app/search.php">报修查询</a></li>
           <li><a href="#" class="quit_system">退出系统</a></li>
         </ul>
       </div>
@@ -77,6 +77,13 @@ $(function(){
   var MyMar=setInterval(Marquee,speed3) 
   document.getElementById("demo").onmouseover=function() {clearInterval(MyMar)} 
   document.getElementById("demo").onmouseout=function() {if(t){MyMar=setInterval(RMarquee,speed3)}else{MyMar=setInterval(Marquee,speed3)}} 
+
+  // render the header
+  //if($.browser.webkit)
+  userAgent = navigator.userAgent.toLowerCase();
+  if(/webkit/.test(userAgent)){
+    $('#demo').css('margin-top', '-12px');
+  }
 });
 </SCRIPT> 
 {/literal}
