@@ -4,7 +4,7 @@
     {include file="admin/admin_navs.tpl"}
     <div class="admin_content">
       <div class="filter">
-        按分类查找
+        <span>按分类查找</span>
         <select id="broken_item_class">
           <option value="" selected="selected">请选择</option>
           <option value="fs" data-value="防水">防水</option>
@@ -16,7 +16,7 @@
           <option value="zyc" data-value="桌、椅、床等维修及改造">桌、椅、床等维修及改造</option>
           <option value="qt" data-value="其他">其他</option>
         </select>
-        <button>筛选</button>
+        <button class="btn btn-filter">筛选</button>
       </div>
       <table width="100%" border=1 cellpadding=5 cellspacing=1 bgcolor="#CCCCCC" style="border-collapse: collapse" bordercolorlight="#335EA8" bordercolordark="#335EA8">
         <tbody>
