@@ -28,7 +28,7 @@
         <div class="control-group">
           <div class="controls">
             <label class="checkbox">
-              <input type="checkbox" id="remember" name="remember"> Remember me
+              <input type="checkbox" id="remember" name="remember"> 记住密码
             </label>
             <button type="submit" class="btn btn-login">登陆</button>
             <button class="btn goto_home">返回</button>
