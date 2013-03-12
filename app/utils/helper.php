@@ -10,6 +10,18 @@ function escape($data){
     return mysql_real_escape_string(trim($data));
 }
 
+function translate_to_weekday($n){
+    switch($n){
+        case 1: return "一";
+        case 2: return "二";
+        case 3: return "三";
+        case 4: return "四";
+        case 5: return "五";
+        case 6: return "六";
+        case 7: return "日";
+    }
+}
+
 function decode_shire_state($state=0){
     switch($state){
         case -1: return "拒绝维修";
@@ -540,10 +552,24 @@ function translate_role_id($role_id){
     return $db->f('role_type');
 }
 
-function get_all_role_types(){
+function get_role_types(){
     $db = new DB;
     $db->connect();
     $db->query("SELECT role_id, role_type FROM role WHERE role_type<>'管理员';");
+    $role_types = Array();
+    while($db->next_record()){
+        array_push($role_types, Array(
+            'role_id'   =>  $db->f('role_id'),
+            'role_type' =>  $db->f('role_type')
+        ));
+    }
+    return $role_types;
+}
+
+function get_all_role_types(){
+    $db = new DB;
+    $db->connect();
+    $db->query("SELECT role_id, role_type FROM role;");
     $all_role_types = Array();
     while($db->next_record()){
         array_push($all_role_types, Array(

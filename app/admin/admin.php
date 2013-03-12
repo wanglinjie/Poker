@@ -27,8 +27,8 @@ if($role['role_id'] == 1){
     $total = ceil($total_counts/20);
     $shires = admin_get_shires_with_assign_feedback($assign_feedback, $page, $broken_class);
 
-    $all_role_types = get_all_role_types();
-    $smarty->assign('roles', $all_role_types);    
+    $role_types = get_role_types();
+    $smarty->assign('roles', $role_types);    
 
     $smarty->assign('page', $page);
     $smarty->assign('total_counts', $total_counts);
