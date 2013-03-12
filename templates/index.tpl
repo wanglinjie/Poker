@@ -32,8 +32,8 @@
                             <td width="10%" height=30 class="table-body" align="center">{$shire.broken_item|escape}</td>
                             <td width="10%" height=30 class="table-body" align="center">{$shire.report_time}</td>
                             {if $shire.state == 0}
-                              <td width="6%" height=30 class="table-body" align="center">{$shire.decode_state}</td>
-                              <td width="8%" height=30 class="table-body" align="center">{$shire.decode_state}</td>
+                              <td width="6%" height=30 class="table-body blue" align="center">{$shire.decode_state}</td>
+                              <td width="8%" height=30 class="table-body blue" align="center">{$shire.decode_state}</td>
                             {elseif $shire.state == 2}
                               <td width="6%" height=30 class="table-body red" align="center">{$shire.decode_state}</td>
                               <td width="8%" height=30 class="table-body red" align="center">{$shire.repair_time}</td>
