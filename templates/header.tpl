@@ -3,6 +3,8 @@
 <meta charset="utf-8" />
 <meta name="copyright" content="xiaomo(wxm4ever@gmail.com)" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="{$public}/img/icon.ico" mce_href="{$public}/img/icon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="{$public}/img/icon.ico" mce_href="{$public}/img/icon.ico" type="image/x-icon">
 {if $smarty.config.DEBUG == 1}
 <link rel="stylesheet/less" type="text/css" href="{$public}/less/main.less">
 {else}
