@@ -25,7 +25,7 @@ textarea {
 .red         { color: red; }
 .green       { color: green; }
 .blue        { color: blue; }
-.m           { display: inline-block; }
+.m           { display: inline-block; font-weight: bold; margin-top: 7px;}
 .fix         { clear: both; height: 0px;}
 .hidden      { display: none; }
 .fileinput-button {
@@ -40,6 +40,11 @@ textarea {
     width: inherit;
     height: inherit;
   }
+}
+b.title { 
+  display: block;
+  font-size: 15pt; 
+  padding-top: 30px;
 }
 
 .container {
@@ -185,6 +190,10 @@ textarea {
 }
 
 .filter {
+  span {
+    display: inline-block; font-weight: bold;
+  }
+
   select {
     width: 250px;
     margin-top: 2px;
@@ -205,11 +214,21 @@ textarea {
 }
 .table-msg {
   color: red;
+  font-weight: bold;
 }
 .table-body {
   background-color: #FFFFFF;
   line-height: normal;
   border: 1px #CCC solid;
+}
+.btn-groups {
+  button {
+    width: 120px;
+  }
+}
+.nav-header {
+  font-size: 15pt;
+  padding: 7px;
 }
 input#reason {
   width: 290px;

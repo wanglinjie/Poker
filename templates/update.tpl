@@ -22,7 +22,7 @@
     <table width=1024 border=0 align="center" cellpadding=0 cellspacing=0 class="table-border">
       <tr><td>
         <table width=1024 height=30 border=0 align="center" cellpadding=5 cellspacing=1>
-          <tr><td align="center"><b>报 修 登 记</b></td></tr>
+          <tr><td align="center"><b class="title">报 修 登 记</b></td></tr>
         </table>
         <table width=1024 border=0 align="center" cellpadding=0 cellspacing=1>
           <tr><td height=30 align="center" class="table-msg">说明：请您认真填写每一项!带*必须填写!</td></tr>
@@ -97,11 +97,11 @@
                   <option value="" selected>请选择</option>
                 </select><span class="table-msg">*</span>
               </td>
-              <td height=30 width=139>
+              <td height=30 width=139 class="m">
                 <span align="right">故障地点:</span>
               </td>
               <td height=30 width=269>
-                <input type="text" id="place" name="place"><span class="table-msg">*</span>
+                <div style="margin-left: -80px;"><input type="text" id="place" name="place"><span class="table-msg">*</span></div>
               </td>
             </tr>
             <tr>
@@ -134,10 +134,9 @@
               <td width=496><textarea id="detail" name="detail"></textarea>
             </tr>
             <tr>
-              <td height=30 colspan=2 align="center">
-                <button type="submit">报修申请</button>
-                <button type="reset">重新填写</button>
-                <button type="button" class="goto_home">返回</button>
+              <td height=30 colspan=2 align="center" class="btn-groups">
+                <button type="submit" class="btn btn-large btn-success">报修</button>
+                <button type="button" class="btn btn-large goto_home">返回</button>
               </td>
             </tr>
           </table>
