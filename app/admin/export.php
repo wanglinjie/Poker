@@ -37,7 +37,7 @@ if($_POST && $_POST['role_id']){
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(8,  $row_id, $shire['repair_time']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(9, $row_id, $shire['decode_state']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(10, $row_id, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(11, $row_id, '');
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(11, $row_id, $shire['assign_extra_data']);
 
             $row_id += 1;
         }

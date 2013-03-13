@@ -67,6 +67,7 @@ function shires_to_export($role_id){
             'role_id'   =>  $db->f('role_id'),
             'assign_time'   =>  $db->f('assign_time'),
             'assign_feedback'   =>  $db->f('assign_feedback'),
+            'assign_extra_data'   =>  $db->f('assign_extra_data'),
             'assign_feedback_time'  =>  $db->f('assign_feedback_time'),
             'request_days'  =>  $db->f('request_days'),
             'admin_permit'  =>  $db->f('admin_permit'),
@@ -135,6 +136,7 @@ function admin_get_shires_with_assign_feedback($assign_feedback, $page, $broken_
             'role_id'   =>  $db->f('role_id'),
             'assign_time'   =>  $db->f('assign_time'),
             'assign_feedback'   =>  $db->f('assign_feedback'),
+            'assign_extra_data'   =>  $db->f('assign_extra_data'),
             'assign_feedback_time'  =>  $db->f('assign_feedback_time'),
             'request_days'  =>  $db->f('request_days'),
             'admin_permit'  =>  $db->f('admin_permit'),
@@ -192,6 +194,7 @@ function admin_get_all_shires($page=1, $broken_class=NULL){
             'role_type' =>  $db->f('role_type'),
             'assign_time'   =>  $db->f('assign_time'),
             'assign_feedback'   =>  $db->f('assign_feedback'),
+            'assign_extra_data'   =>  $db->f('assign_extra_data'),
             'assign_feedback_time'  =>  $db->f('assign_feedback_time'),
             'request_days'  =>  $db->f('request_days'),
             'admin_permit'  =>  $db->f('admin_permit'),
@@ -249,6 +252,7 @@ function user_get_all_shires($role_id, $page, $broken_class=NULL){
             'role_type' =>  $db->f('role_type'),
             'assign_time'   =>  $db->f('assign_time'),
             'assign_feedback'   =>  $db->f('assign_feedback'),
+            'assign_extra_data'   =>  $db->f('assign_extra_data'),
             'assign_feedback_time'  =>  $db->f('assign_feedback_time'),
             'request_days'  =>  $db->f('request_days'),
             'admin_permit'  =>  $db->f('admin_permit'),
@@ -306,6 +310,7 @@ function user_get_shires_with_admin_feedback($role_id, $page, $broken_class){
             'role_id'   =>  $db->f('role_id'),
             'assign_time'   =>  $db->f('assign_time'),
             'assign_feedback'   =>  $db->f('assign_feedback'),
+            'assign_extra_data'   =>  $db->f('assign_extra_data'),
             'assign_feedback_time'  =>  $db->f('assign_feedback_time'),
             'request_days'  =>  $db->f('request_days'),
             'admin_permit'  =>  $db->f('admin_permit'),
@@ -363,6 +368,7 @@ function user_get_shires_with_repair_feedback($role_id, $page, $broken_class){
             'role_id'   =>  $db->f('role_id'),
             'assign_time'   =>  $db->f('assign_time'),
             'assign_feedback'   =>  $db->f('assign_feedback'),
+            'assign_extra_data'   =>  $db->f('assign_extra_data'),
             'assign_feedback_time'  =>  $db->f('assign_feedback_time'),
             'request_days'  =>  $db->f('request_days'),
             'admin_permit'  =>  $db->f('admin_permit'),
@@ -420,6 +426,7 @@ function user_get_shires($role_id, $page, $broken_class){
             'role_id'   =>  $db->f('role_id'),
             'assign_time'   =>  $db->f('assign_time'),
             'assign_feedback'   =>  $db->f('assign_feedback'),
+            'assign_extra_data'   =>  $db->f('assign_extra_data'),
             'assign_feedback_time'  =>  $db->f('assign_feedback_time'),
             'request_days'  =>  $db->f('request_days'),
             'admin_permit'  =>  $db->f('admin_permit'),
@@ -504,9 +511,9 @@ function change_shire_state($shire_id, $state, $state_context, $feedback){
     }
 }
 
-function do_user_feedback($shire_id, $feedback, $request_days){
-    $sql = "UPDATE shire SET assign_feedback=$feedback, request_days=$request_days "
-         . "WHERE shire_id=$shire_id;";
+function do_user_feedback($shire_id, $feedback, $request_days, $assign_extra_data){
+    $sql = "UPDATE shire SET assign_feedback=$feedback, request_days=$request_days, "
+         . "assign_extra_data='$assign_extra_data' WHERE shire_id=$shire_id;";
     $db = new DB;
     $db->connect();
     $db->query($sql);

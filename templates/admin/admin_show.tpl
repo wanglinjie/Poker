@@ -61,6 +61,12 @@
                                   报修时间: {$shire.report_time}<br>
                                   报修原因: {$shire.reason|escape}<br>
                                   详细原因: {$shire.detail|escape}<br>
+                                  {if $shire.request_days}
+                                  <font color="red">维修人员申请{$shire.request_days}天来进行维修.</font><br>
+                                  {/if}
+                                  {if $shire.assign_extra_data}
+                                  <font color="red">备注:{$shire.assign_extra_data}.</font><br>
+                                  {/if}
                                 </p>
                               </td>
                               <td colspan=3 class="table-body">

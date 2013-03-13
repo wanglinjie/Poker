@@ -67,7 +67,7 @@
                               <td colspan=3 class="table-body">
                                   <table width="100%" border=0>
                                     <tr>
-                                      <td>
+                                      <td style="text-align: right;">
                                         维修预计需要天数<input type="text"/>
                                       </td>
                                       <td>
@@ -75,7 +75,7 @@
                                       </td>
                                     </tr>
                                     <tr>
-                                      <td>拒绝报修，理由为<input type="text"></td>
+                                      <td style="text-align: right;">备注:<input type="text"></td>
                                       <td><button class="btn btn-danger btn-admin" data-id="{$shire.shire_id}" data-feedback=-1>拒绝</button></td>
                                     </tr>
                                   </table>
@@ -126,8 +126,9 @@ $(function(){
         var hidden_line = btn.closest('.hidden');
         var data_line = hidden_line.prev();
 
-        var extra_data = btn.closest('td').prev().find('input').val().trim();
-        $.post('j/user.php', {shire_id:shire_id, feedback:feedback, extra_data:extra_data},
+        var request_days = btn.closest('td').prev().find('input').val().trim();
+        var extra_data = btn.closest('tr').next().find('input').val().trim();
+        $.post('j/user.php', {shire_id:shire_id, feedback:feedback, request_days: request_days, extra_data:extra_data},
             function(d){
                 if(d.r){ 
                     alert("成功!");
