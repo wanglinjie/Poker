@@ -71,11 +71,7 @@
                                     {if $shire.state != -1}
                                     <tr>
                                       <td>
-                                        开始维修，进入在修状态.
-                                      </td>
-                                      <td>
-                                        <button class="btn btn-success btn-admin" data-id="{$shire.shire_id}">确定</button>
-
+                                        <font color="blue">后勤人员同意了您的申请</font>
                                       </td>
                                     </tr>
                                     {else}
@@ -121,24 +117,6 @@ $(function(){
         var img = '<img src="' + domain + '/upload/' + picpath + '" style="width:400px;height:300px;" />';
         $(img).bPopup();
         return false;
-    });
-    $('button.btn-admin').on('click', function(e){
-        var btn = $(this);
-        var hidden_line = btn.closest('.hidden');
-        var data_line = hidden_line.prev();
-        var shire_id = btn.attr('data-id');
-        $.post('j/user_feedback.php', {type:'repair', shire_id:shire_id},
-            function(d){
-                if(d.r){ 
-                    alert("成功!");
-                    data_line.remove();
-                    hidden_line.remove();
-                }else{
-                    alert(d.msg);
-                    return false;
-                }
-            }
-        );
     });
     var decode_http_args = function(){
         var http_args = {};
