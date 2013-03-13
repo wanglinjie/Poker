@@ -61,6 +61,10 @@ $(function(){
     });
     paging_op.on('click', '.prev', function(e){
       e.preventDefault();
+      if(paging_page == 1){
+        alert("已到第一页!");
+        return false;
+      }
       var page = paging_page-1;
       var http_args = decode_http_args();
       http_args['p'] = page;
@@ -68,6 +72,10 @@ $(function(){
     });
     paging_op.on('click', '.next', function(e){
       e.preventDefault();
+      if(paging_page == paging_total){
+        alert("已到最后一页!");
+        return false;
+      }
       var page = paging_page+1;
       var http_args = decode_http_args();
       http_args['p'] = page;
