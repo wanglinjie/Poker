@@ -39,6 +39,46 @@ function check_reporter($report_id, $reporter){
     return $db->f('wizard_id')?True:False;
 }
 
+function shires_to_export($role_id){
+    $date = date('Y/m/d');
+    $sql = "SELECT * FROM shire,role WHERE shire.role_id=role.role_id "
+         . "AND state=2 AND shire.role_id=$role_id AND repair_time='$date';";
+    $db = new DB;
+    $db->connect();
+    $db->query($sql);
+    $shires = Array();
+    while($db->next_record()){
+        array_push($shires, Array(
+            'shire_id'  =>  $db->f('shire_id'),
+            'reporter'  =>  $db->f('reporter'),
+            'report_id' =>  $db->f('report_id'),
+            'report_time'   =>  $db->f('report_time'),
+            'contact_num'   =>  $db->f('contact_num'),
+            'department'    =>  $db->f('department'),
+            'place' =>  $db->f('place'),
+            'reason'    =>  $db->f('reason'),
+            'detail'    =>  $db->f('detail'),
+            'broken_item_class' =>  $db->f('broken_item_class'),
+            'broken_item'   =>  $db->f('broken_item'),
+            'filename'      =>  $db->f('filename'),
+            'state' =>  $db->f('state'),
+            'decode_state'  =>  decode_shire_state($db->f('state')),
+            'state_context' =>  $db->f('state_context'),
+            'role_id'   =>  $db->f('role_id'),
+            'assign_time'   =>  $db->f('assign_time'),
+            'assign_feedback'   =>  $db->f('assign_feedback'),
+            'assign_feedback_time'  =>  $db->f('assign_feedback_time'),
+            'request_days'  =>  $db->f('request_days'),
+            'admin_permit'  =>  $db->f('admin_permit'),
+            'repair_time'   =>  $db->f('repair_time'),
+            'feedback'  =>  $db->f('feedback'),
+            'auth_check'    =>  $db->f('auth_check'),
+            'ip'    =>  $db->f('ip'),
+        ));
+    }
+    return $shires;
+}
+
 function admin_get_shires_count_with_assign_feedback($assign_feedback, $broken_class=NULL){
     if($assign_feedback){
         $sql = "SELECT COUNT(*) as c FROM shire WHERE state=0 AND role_id<>0 "

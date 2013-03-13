@@ -7,6 +7,7 @@
           <li><a href="admin.php">报修分配</a></li>
           <li><a href="admin.php?assign_feedback=1">下级反馈</a></li>
           <li><a href="show.php">报修汇总</a></li>
+          <li><a href="export.php">今日导出</a></li>
        
           <li class="nav-header">用户管理</li>
           <li><a href="manage_role.php">身份管理</a></li>
