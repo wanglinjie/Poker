@@ -262,7 +262,7 @@ function user_get_all_shires($role_id, $page, $broken_class=NULL){
 }
 
 function user_get_shires_count_with_admin_feedback($role_id, $broken_class=NULL){
-    $sql = "SELECT COUNT(*) as c FROM shire WHERE state IN (0,-1) AND "
+    $sql = "SELECT COUNT(*) as c FROM shire WHERE state IN (1,-1) AND "
          . "role_id=$role_id AND assign_feedback NOT IN (0,-1) ";
     if($broken_class){
         $sql = $sql . "AND broken_item_class='$broken_class';";
@@ -277,7 +277,7 @@ function user_get_shires_count_with_admin_feedback($role_id, $broken_class=NULL)
 function user_get_shires_with_admin_feedback($role_id, $page, $broken_class){
     $limit = 20;
     $start = ($page-1)*$limit;
-    $sql = "SELECT * FROM shire WHERE state IN (0,-1) AND role_id=$role_id AND assign_feedback NOT IN (0,-1) ";
+    $sql = "SELECT * FROM shire WHERE state IN (1,-1) AND role_id=$role_id AND assign_feedback NOT IN (0,-1) ";
     if($broken_class){
         $sql = $sql . "AND broken_item_class='$broken_class' ";
     }
@@ -514,7 +514,7 @@ function do_user_feedback($shire_id, $feedback, $request_days){
 
 function do_admin_permit($shire_id){
     $assign_feedback_time = date('Y/m/d');
-    $sql = "UPDATE shire SET admin_permit=1, assign_feedback_time='$assign_feedback_time' "
+    $sql = "UPDATE shire SET state=1, admin_permit=1, assign_feedback_time='$assign_feedback_time' "
          . "WHERE shire_id=$shire_id";
     $db = new DB;
     $db->connect();
