@@ -19,7 +19,7 @@
     {/literal}
   {/if}
   <div class="content">
-    <table width=1024 border=0 align="center" cellpadding=0 cellspacing=0 class="table-border">
+    <table width=1024 border=0 align="center" cellpadding=0 cellspacing=0 class="table-border content-bg">
       <tr><td>
         <table width=1024 height=30 border=0 align="center" cellpadding=5 cellspacing=1>
           <tr><td align="center"><b class="title">报 修 登 记</b></td></tr>
@@ -135,8 +135,8 @@
             </tr>
             <tr>
               <td height=30 colspan=2 align="center" class="btn-groups">
-                <button type="submit" class="btn btn-large btn-success">报修</button>
-                <button type="button" class="btn btn-large goto_home">返回</button>
+                <button type="submit" class="btn btn-success">报修</button>
+                <button type="button" class="btn goto_home">返回</button>
               </td>
             </tr>
           </table>
