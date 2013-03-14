@@ -63,6 +63,8 @@
                   <option value="hq1">后勤服务公寓服务中心</option>
                   <option value="hq2">后勤服务餐饮服务中心</option>
                   <option value="hq3">后勤服务物业服务中心</option>
+                  <option value="hq4">后勤服务商业服务中心</option>
+                  <option value="hq5">后勤服务综合管理办公室</option>
                   <option value="cbxy">船舶与海洋工程学院</option>
                   <option value="hykx">海洋科学与技术学院</option>
                   <option value="clkx">材料科学与工程学院</option>
