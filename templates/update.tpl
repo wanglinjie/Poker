@@ -30,20 +30,20 @@
         <form method="POST">
           <table width=1024 border=0 align="center" cellpadding=0 cellspacing=1>
             <tr>
-              <td width=135 height=30 align="right" class="m">用户姓名:</td>
+              <td width=175 height=30 align="right" class="m">用户姓名:</td>
               <td height=30><input type="text" id="reporter" name="reporter" size=10 maxlength=10><span class="table-msg">*</span></td>
             </tr>
             <tr>
-              <td width=135 height=30 align="right" class="m">用户工号:</td>
+              <td width=175 height=30 align="right" class="m">用户工号:</td>
               <td height=30><input type="text" id="report_id" name="report_id" size=10 maxlength=10><span class="table-msg">*(学生报修的话请填写自己的学号)</span></td>
             </tr>
 
             <tr>
-              <td width=135 height=30 align="right" class="m">联系方式:</td>
+              <td width=175 height=30 align="right" class="m">联系方式:</td>
               <td height=30 width=496><input type="text" id="contact_num" name="contact_num" size=10><span class="table-msg">*(请确保信息正确，方便后勤人员联系！)</span></td>
             </tr>
             <tr>
-              <td width=135 height=30 align="right" class="m">报修部门:</td>
+              <td width=175 height=30 align="right" class="m">报修部门:</td>
               <td height=30 width=860 colspan=3>
                 <select id="department" style="width: 302px;">
                   <option value="" selected>请选择</option>
@@ -78,12 +78,15 @@
                   <option value="yywx">语言文学学院</option>
                   <option value="sxzz">思想政治伦理教学部</option>
                 </select>
-                <span class="table-msg">*</span><input type="text" id="department_ext" name="department_ext" size=21 maxlength=50><span class="table-msg">(请选择部门，无可选项者请在后面补充!)</span>
+                <span class="table-msg">*</span>
+                <!--
+                <input type="text" id="department_ext" name="department_ext" size=21 maxlength=50><span class="table-msg">(请选择部门，无可选项者请在后面补充!)</span>
+                -->
               </td>
             </tr>
             <tr>
-              <td width=135 height=30 align="right" class="m">报修项目分类:</td>
-              <td height=30 width=356>
+              <td width=175 height=30 align="right" class="m">报修项目分类:</td>
+              <td height=30 width=356 colspan=3>
                 <select id="broken_item_class">
                   <option value="" selected="selected">请选择</option>
                   <option value="fs">防水</option>
@@ -99,21 +102,19 @@
                   <option value="" selected>请选择</option>
                 </select><span class="table-msg">*</span>
               </td>
-              <td height=30 width=139 class="m">
-                <span align="right">故障地点:</span>
-              </td>
-              <td height=30 width=269>
-                <div style="margin-left: -80px;"><input type="text" id="place" name="place"><span class="table-msg">*</span></div>
-              </td>
             </tr>
             <tr>
-              <td height=30 width=135 align="right" class="m">报修原因:</td>
+              <td height=30 width=175 align="right" class="m">故障地点:</td>
+              <td height=30 width=796><input type="text" id="place" name="place" size=50><span class="table-msg">*</span></td>
+            </tr>
+            <tr>
+              <td height=30 width=175 align="right" class="m">报修原因:</td>
               <td height=30 width=796>
                 <input type="text" id="reason" name="reason" size=50><span class="table-msg">*(故障简单叙述,不超过50字)</span>
               </td>
             </tr>
             <tr>
-              <td height=30 width=135 align="right" class="m">上传故障图片:</td>
+              <td height=30 width=175 align="right" class="m">上传故障图片:</td>
               <td height=30>
                 <input type="file" id="upload_pics" name="upload_pics" data-url="upload.php" multiple>
                 <!--
@@ -126,19 +127,21 @@
               </td>
             </tr>
             <tr class="upload_info">
-              <td height=30 width=135 align="right" class="m">&nbsp;</td>
+              <td height=30 width=175 align="right" class="m">&nbsp;</td>
               <td height=30>
                 <span>没有图片</span>
               </td>
             </tr>
             <tr>
-              <td width=135 align="right" class="m">故障详细描述:</td>
+              <td width=175 align="right" class="m">故障详细描述:</td>
               <td width=496><textarea id="detail" name="detail"></textarea>
             </tr>
             <tr>
               <td height=30 colspan=2 align="center" class="btn-groups">
-                <button type="submit" class="btn btn-success">报修</button>
-                <button type="button" class="btn goto_home">返回</button>
+                <div>
+                  <button type="submit" class="btn btn-success">报修</button>
+                  <button type="button" class="btn goto_home">返回</button>
+                </div>
               </td>
             </tr>
           </table>
@@ -220,7 +223,7 @@
       var reason = $('#reason').val().trim();
 
       department = item_decode(department);
-      if(department == '请选择'){ department = $('#department_ext').val().trim(); }
+      if(department == '请选择'){ department = null; }
       broken_item_class = item_decode(broken_item_class);
       broken_item = item_decode(broken_item);
       if(broken_item == '请选择'){
