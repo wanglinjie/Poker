@@ -31,9 +31,10 @@
             <option value="jxjy">继续教育学院</option>
             <option value="hq1">后勤服务公寓服务中心</option>
             <option value="hq2">后勤服务餐饮服务中心</option>
-            <option value="hq3">后勤服务物业服务中心</option>
+            <option value="hq3">后勤服务中心校园物业中心</option>
             <option value="hq4">后勤服务商务服务中心</option>
             <option value="hq5">后勤服务综合管理办公室</option>
+            <option value="hq6">后勤服务中心动力中心</option>
             <option value="cbxy">船舶与海洋工程学院</option>
             <option value="hykx">海洋科学与技术学院</option>
             <option value="clkx">材料科学与工程学院</option>
@@ -46,6 +47,8 @@
             <option value="lxy">理学院</option>
             <option value="yywx">语言文学学院</option>
             <option value="sxzz">思想政治伦理教学部</option>
+            <option value="scwy">上诚物业</option>
+            <option value="ghwy">广华物业</option>
           </select>
           <label>开始日期</label>
           <input type="text" id="from" name="from" />
