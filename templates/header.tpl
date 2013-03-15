@@ -11,7 +11,9 @@
 <link rel="stylesheet" href="{$public}/css/main.css">
 {/if}
 <link rel="stylesheet" href="{$public}/css/libs/bootstrap.min.css" media="screen">
+<link rel="stylesheet" href="{$public}/css/libs/redmond/jquery-ui-1.10.2.custom.min.css" media="screen">
 <script type="text/javascript" src="{$public}/js/libs/jquery.min.js"></script>
+<script type="text/javascript" src="{$public}/js/libs/jquery-ui-1.10.2.custom.min.js"></script>
 <script type="text/javascript" src="{$public}/js/libs/bootstrap.min.js"></script>
 <!-- IE6 -->
 <!--[if lte IE 6]>

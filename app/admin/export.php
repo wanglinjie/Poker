@@ -7,9 +7,11 @@ if(auth_check() == false or $role['role_id'] != 1){
     header('Location: login.php');
 }
 
-if($_POST && $_POST['role_id']){
-    $role_id = $_POST['role_id'];
-    $shires = shires_to_export($role_id);
+if($_POST && $_POST['department']){
+    $department = escape($_POST['department']);
+    $from = escape($_POST['from']);
+    $to = escape($_POST['to']);
+    $shires = shires_to_export($department, $from, $to);
     if($shires){
 
         include(SMARTY_LIB_ROOT . '/PHPExcel.php');
@@ -65,7 +67,5 @@ if($_POST && $_POST['role_id']){
 $smarty->assign('role_id', $role['role_id']);
 $smarty->assign('role_type', $role['role_type']);
 
-$role_types = get_role_types();
-$smarty->assign('roles', $role_types);
 $smarty->display('admin/export.tpl');
 ?>

@@ -39,10 +39,11 @@ function check_reporter($report_id, $reporter){
     return $db->f('wizard_id')?True:False;
 }
 
-function shires_to_export($role_id){
+function shires_to_export($department, $from, $to){
     $date = date('Y/m/d');
     $sql = "SELECT * FROM shire,role WHERE shire.role_id=role.role_id "
-         . "AND state=2 AND shire.role_id=$role_id AND repair_time='$date';";
+         . "AND department='$department' AND ((report_time BETWEEN '$from' AND '$to') "
+         . "OR (repair_time BETWEEN '$from' AND '$to')) ORDER BY shire_id;";
     $db = new DB;
     $db->connect();
     $db->query($sql);
