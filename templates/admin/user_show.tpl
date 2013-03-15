@@ -4,7 +4,7 @@
     {include file="admin/admin_navs.tpl"}
     <div class="admin_content">
       <div class="filter">
-        按分类查找
+        <span>按分类查找</span>
         <select id="broken_item_class">
           <option value="" selected="selected">请选择</option>
           <option value="fs" data-value="防水">防水</option>
@@ -16,7 +16,7 @@
           <option value="zyc" data-value="桌、椅、床等维修及改造">桌、椅、床等维修及改造</option>
           <option value="qt" data-value="其他">其他</option>
         </select>
-        <button>筛选</button>
+        <button class="btn btn-filter">筛选</button>
       </div>
       <table width="100%" border=1 cellpadding=5 cellspacing=1 bgcolor="#CCCCCC" style="border-collapse: collapse" bordercolorlight="#335EA8" bordercolordark="#335EA8">
         <tbody>
@@ -42,8 +42,8 @@
                             <tr class="data-line">
                               <td width="10%" height=30 class="table-body" align="center">#2013{$shire.shire_id}</td>
                               <td width="14%" height=30 class="table-body" align="center">{$shire.department|escape}</td>
-                              <td width="13%" height=30 class="table-body" align="center">{$shire.place|escape|truncate:10:"..."}</td>
-                              <td width="13%" height=30 class="table-body" align="center">{$shire.reason|escape|truncate:10:"..."}</td>
+                              <td width="13%" height=30 class="table-body" align="center">{$shire.place|escape|truncate:20:"..."}</td>
+                              <td width="13%" height=30 class="table-body" align="center">{$shire.reason|escape|truncate:20:"..."}</td>
                               <td width="10%" height=30 class="table-body" align="center">{$shire.broken_item|escape}</td>
                               <td width="10%" height=30 class="table-body" align="center">{$shire.report_time}</td>
                               <td width="6%" height=30 class="table-body" align="center">
@@ -67,7 +67,7 @@
                               <td colspan=3 class="table-body">
                                   <table width="100%" border=0>
                                     <tr>
-                                      <td>
+                                      <td style="text-align: right;">
                                         维修预计需要天数<input type="text"/>
                                       </td>
                                       <td>
@@ -75,7 +75,7 @@
                                       </td>
                                     </tr>
                                     <tr>
-                                      <td>拒绝报修，理由为<input type="text"></td>
+                                      <td style="text-align: right;">备注:<input type="text"></td>
                                       <td><button class="btn btn-danger btn-admin" data-id="{$shire.shire_id}" data-feedback=-1>拒绝</button></td>
                                     </tr>
                                   </table>
@@ -126,8 +126,9 @@ $(function(){
         var hidden_line = btn.closest('.hidden');
         var data_line = hidden_line.prev();
 
-        var extra_data = btn.closest('td').prev().find('input').val().trim();
-        $.post('j/user.php', {shire_id:shire_id, feedback:feedback, extra_data:extra_data},
+        var request_days = btn.closest('td').prev().find('input').val().trim();
+        var extra_data = btn.closest('tr').next().find('input').val().trim();
+        $.post('j/user.php', {shire_id:shire_id, feedback:feedback, request_days: request_days, extra_data:extra_data},
             function(d){
                 if(d.r){ 
                     alert("成功!");

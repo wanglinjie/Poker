@@ -2,7 +2,7 @@
 body    { background-color: #CAD7F7 !important; }
 img     { width: 100%; }
 table   { font-size: 9pt; }
-tr,td   { vertical-align: middle; background-color: white; overflow: hidden;}
+tr,td   { vertical-align: middle; }
 button  { width: 80px; }
 select {
   width: 150px;
@@ -16,15 +16,16 @@ input {
   width: 120px;
 }
 textarea {
-  width: 430px;
-  height: 120px;
+  width: 180px;
+  height: 80px;
 }
 
 .quit_system { color: red !important; }
 .msg         { color: red; text-align: center; font-size: 14pt; padding: 4px;}
 .red         { color: red; }
+.green       { color: green; }
 .blue        { color: blue; }
-.m           { display: inline-block; }
+.m           { display: inline-block; font-weight: bold; margin-top: 7px;}
 .fix         { clear: both; height: 0px;}
 .hidden      { display: none; }
 .fileinput-button {
@@ -39,6 +40,11 @@ textarea {
     width: inherit;
     height: inherit;
   }
+}
+b.title { 
+  display: block;
+  font-size: 17pt; 
+  padding-top: 30px;
 }
 
 .container {
@@ -61,7 +67,7 @@ textarea {
       font-weight: bold;
       padding: 4px 0px 0px;
 
-      .date { width: 60%; float: left; background-color: inherit; } 
+      .date { width: 40%; float: left; background-color: inherit; padding-left: 20px; } 
       .nav  { 
         width: 40%; float: right; background-color: inherit;
         text-align: right;
@@ -71,7 +77,7 @@ textarea {
           
           li {
             float: left;
-            padding-left: 15px;
+            padding-left: 10px;
 
             a       { color: white; font-weight: bold; }
             a:hover { color: white; font-weight: bold; }
@@ -112,6 +118,10 @@ textarea {
       float: left;
       width: 76%;
       padding-top: 35px;
+
+      img {
+        margin-bottom: 30px;
+      }
 
       .server_msg {
         width: 100%;
@@ -184,6 +194,10 @@ textarea {
 }
 
 .filter {
+  span {
+    display: inline-block; font-weight: bold;
+  }
+
   select {
     width: 250px;
     margin-top: 2px;
@@ -204,12 +218,32 @@ textarea {
 }
 .table-msg {
   color: red;
+  font-weight: bold;
 }
 .table-body {
   background-color: #FFFFFF;
   line-height: normal;
   border: 1px #CCC solid;
 }
-input#reason {
+.btn-groups {
+  div {
+    margin-left: -170px;
+    button {
+      width: 120px;
+    }
+  }
+}
+.nav-header {
+  font-size: 15pt;
+  padding: 7px;
+}
+input#reason, input#place {
   width: 290px;
+}
+.content-bg {
+  background-image: url('../img/bg.jpg');
+}
+#detail {
+  width: 350px;
+  height: 100px;
 }

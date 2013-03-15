@@ -7,11 +7,11 @@
           <table width="100%" border=0 cellpadding=5 cellspacing=1>
             <tr>
               <td height="30" colspan=6 align="center" class="table-title">
-                <b><span class="red">{$shire.reporter|escape}</span> 保修的详细资料</b>
+                <b><span class="red">{$shire.reporter|escape}</span> 报修的详细资料</b>
               </td>
             </tr>
             <tr align="center">
-              <td width=118 height=30 class="table-body">保修编号:</td>
+              <td width=118 height=30 class="table-body">报修编号:</td>
               <td width=112 height=30 class="table-body"><span class="blue">#2013{$shire.shire_id}</span></td>
               <td width=120 height=30 class="table-body">部门/办公室:</td>
               <td width=136 height=30 class="table-body"><span class="blue">{$shire.department|escape}</span></td>

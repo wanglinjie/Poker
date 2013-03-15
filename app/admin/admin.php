@@ -27,8 +27,8 @@ if($role['role_id'] == 1){
     $total = ceil($total_counts/20);
     $shires = admin_get_shires_with_assign_feedback($assign_feedback, $page, $broken_class);
 
-    $all_role_types = get_all_role_types();
-    $smarty->assign('roles', $all_role_types);    
+    $role_types = get_role_types();
+    $smarty->assign('roles', $role_types);    
 
     $smarty->assign('page', $page);
     $smarty->assign('total_counts', $total_counts);
@@ -63,7 +63,7 @@ if($role['role_id'] == 1){
         $smarty->assign('shires', $shires);
         $smarty->display('admin/user_feedback.tpl');
     }else{
-        //保修新单
+        //报修新单
         $total_counts = user_get_shires_count($role['role_id']);
         $total = ceil($total_counts/20);
         $shires = user_get_shires($role['role_id'], $page, $broken_class);
