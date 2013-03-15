@@ -10,6 +10,18 @@ function escape($data){
     return mysql_real_escape_string(trim($data));
 }
 
+function translate_to_weekday($n){
+    switch($n){
+        case 1: return "一";
+        case 2: return "二";
+        case 3: return "三";
+        case 4: return "四";
+        case 5: return "五";
+        case 6: return "六";
+        case 7: return "日";
+    }
+}
+
 function decode_shire_state($state=0){
     switch($state){
         case -1: return "拒绝维修";
@@ -25,6 +37,48 @@ function check_reporter($report_id, $reporter){
     $db->query("SELECT wizard_id FROM wizard WHERE wizard_id='$report_id' AND wizard_name='$reporter'");
     $db->next_record();
     return $db->f('wizard_id')?True:False;
+}
+
+function shires_to_export($department, $from, $to){
+    $date = date('Y/m/d');
+    $sql = "SELECT * FROM shire,role WHERE shire.role_id=role.role_id "
+         . "AND department='$department' AND ((report_time BETWEEN '$from' AND '$to') "
+         . "OR (repair_time BETWEEN '$from' AND '$to')) ORDER BY shire_id;";
+    $db = new DB;
+    $db->connect();
+    $db->query($sql);
+    $shires = Array();
+    while($db->next_record()){
+        array_push($shires, Array(
+            'shire_id'  =>  $db->f('shire_id'),
+            'reporter'  =>  $db->f('reporter'),
+            'report_id' =>  $db->f('report_id'),
+            'report_time'   =>  $db->f('report_time'),
+            'contact_num'   =>  $db->f('contact_num'),
+            'department'    =>  $db->f('department'),
+            'place' =>  $db->f('place'),
+            'reason'    =>  $db->f('reason'),
+            'detail'    =>  $db->f('detail'),
+            'broken_item_class' =>  $db->f('broken_item_class'),
+            'broken_item'   =>  $db->f('broken_item'),
+            'filename'      =>  $db->f('filename'),
+            'state' =>  $db->f('state'),
+            'decode_state'  =>  decode_shire_state($db->f('state')),
+            'state_context' =>  $db->f('state_context'),
+            'role_id'   =>  $db->f('role_id'),
+            'assign_time'   =>  $db->f('assign_time'),
+            'assign_feedback'   =>  $db->f('assign_feedback'),
+            'assign_extra_data'   =>  $db->f('assign_extra_data'),
+            'assign_feedback_time'  =>  $db->f('assign_feedback_time'),
+            'request_days'  =>  $db->f('request_days'),
+            'admin_permit'  =>  $db->f('admin_permit'),
+            'repair_time'   =>  $db->f('repair_time'),
+            'feedback'  =>  $db->f('feedback'),
+            'auth_check'    =>  $db->f('auth_check'),
+            'ip'    =>  $db->f('ip'),
+        ));
+    }
+    return $shires;
 }
 
 function admin_get_shires_count_with_assign_feedback($assign_feedback, $broken_class=NULL){
@@ -83,6 +137,7 @@ function admin_get_shires_with_assign_feedback($assign_feedback, $page, $broken_
             'role_id'   =>  $db->f('role_id'),
             'assign_time'   =>  $db->f('assign_time'),
             'assign_feedback'   =>  $db->f('assign_feedback'),
+            'assign_extra_data'   =>  $db->f('assign_extra_data'),
             'assign_feedback_time'  =>  $db->f('assign_feedback_time'),
             'request_days'  =>  $db->f('request_days'),
             'admin_permit'  =>  $db->f('admin_permit'),
@@ -140,6 +195,7 @@ function admin_get_all_shires($page=1, $broken_class=NULL){
             'role_type' =>  $db->f('role_type'),
             'assign_time'   =>  $db->f('assign_time'),
             'assign_feedback'   =>  $db->f('assign_feedback'),
+            'assign_extra_data'   =>  $db->f('assign_extra_data'),
             'assign_feedback_time'  =>  $db->f('assign_feedback_time'),
             'request_days'  =>  $db->f('request_days'),
             'admin_permit'  =>  $db->f('admin_permit'),
@@ -197,6 +253,7 @@ function user_get_all_shires($role_id, $page, $broken_class=NULL){
             'role_type' =>  $db->f('role_type'),
             'assign_time'   =>  $db->f('assign_time'),
             'assign_feedback'   =>  $db->f('assign_feedback'),
+            'assign_extra_data'   =>  $db->f('assign_extra_data'),
             'assign_feedback_time'  =>  $db->f('assign_feedback_time'),
             'request_days'  =>  $db->f('request_days'),
             'admin_permit'  =>  $db->f('admin_permit'),
@@ -210,7 +267,7 @@ function user_get_all_shires($role_id, $page, $broken_class=NULL){
 }
 
 function user_get_shires_count_with_admin_feedback($role_id, $broken_class=NULL){
-    $sql = "SELECT COUNT(*) as c FROM shire WHERE state IN (0,-1) AND "
+    $sql = "SELECT COUNT(*) as c FROM shire WHERE state IN (1,-1) AND "
          . "role_id=$role_id AND assign_feedback NOT IN (0,-1) ";
     if($broken_class){
         $sql = $sql . "AND broken_item_class='$broken_class';";
@@ -225,7 +282,7 @@ function user_get_shires_count_with_admin_feedback($role_id, $broken_class=NULL)
 function user_get_shires_with_admin_feedback($role_id, $page, $broken_class){
     $limit = 20;
     $start = ($page-1)*$limit;
-    $sql = "SELECT * FROM shire WHERE state IN (0,-1) AND role_id=$role_id AND assign_feedback NOT IN (0,-1) ";
+    $sql = "SELECT * FROM shire WHERE state IN (1,-1) AND role_id=$role_id AND assign_feedback NOT IN (0,-1) ";
     if($broken_class){
         $sql = $sql . "AND broken_item_class='$broken_class' ";
     }
@@ -254,6 +311,7 @@ function user_get_shires_with_admin_feedback($role_id, $page, $broken_class){
             'role_id'   =>  $db->f('role_id'),
             'assign_time'   =>  $db->f('assign_time'),
             'assign_feedback'   =>  $db->f('assign_feedback'),
+            'assign_extra_data'   =>  $db->f('assign_extra_data'),
             'assign_feedback_time'  =>  $db->f('assign_feedback_time'),
             'request_days'  =>  $db->f('request_days'),
             'admin_permit'  =>  $db->f('admin_permit'),
@@ -311,6 +369,7 @@ function user_get_shires_with_repair_feedback($role_id, $page, $broken_class){
             'role_id'   =>  $db->f('role_id'),
             'assign_time'   =>  $db->f('assign_time'),
             'assign_feedback'   =>  $db->f('assign_feedback'),
+            'assign_extra_data'   =>  $db->f('assign_extra_data'),
             'assign_feedback_time'  =>  $db->f('assign_feedback_time'),
             'request_days'  =>  $db->f('request_days'),
             'admin_permit'  =>  $db->f('admin_permit'),
@@ -368,6 +427,7 @@ function user_get_shires($role_id, $page, $broken_class){
             'role_id'   =>  $db->f('role_id'),
             'assign_time'   =>  $db->f('assign_time'),
             'assign_feedback'   =>  $db->f('assign_feedback'),
+            'assign_extra_data'   =>  $db->f('assign_extra_data'),
             'assign_feedback_time'  =>  $db->f('assign_feedback_time'),
             'request_days'  =>  $db->f('request_days'),
             'admin_permit'  =>  $db->f('admin_permit'),
@@ -452,9 +512,9 @@ function change_shire_state($shire_id, $state, $state_context, $feedback){
     }
 }
 
-function do_user_feedback($shire_id, $feedback, $request_days){
-    $sql = "UPDATE shire SET assign_feedback=$feedback, request_days=$request_days "
-         . "WHERE shire_id=$shire_id;";
+function do_user_feedback($shire_id, $feedback, $request_days, $assign_extra_data){
+    $sql = "UPDATE shire SET assign_feedback=$feedback, request_days=$request_days, "
+         . "assign_extra_data='$assign_extra_data' WHERE shire_id=$shire_id;";
     $db = new DB;
     $db->connect();
     $db->query($sql);
@@ -462,7 +522,7 @@ function do_user_feedback($shire_id, $feedback, $request_days){
 
 function do_admin_permit($shire_id){
     $assign_feedback_time = date('Y/m/d');
-    $sql = "UPDATE shire SET admin_permit=1, assign_feedback_time='$assign_feedback_time' "
+    $sql = "UPDATE shire SET state=1, admin_permit=1, assign_feedback_time='$assign_feedback_time' "
          . "WHERE shire_id=$shire_id";
     $db = new DB;
     $db->connect();
@@ -540,10 +600,24 @@ function translate_role_id($role_id){
     return $db->f('role_type');
 }
 
-function get_all_role_types(){
+function get_role_types(){
     $db = new DB;
     $db->connect();
     $db->query("SELECT role_id, role_type FROM role WHERE role_type<>'管理员';");
+    $role_types = Array();
+    while($db->next_record()){
+        array_push($role_types, Array(
+            'role_id'   =>  $db->f('role_id'),
+            'role_type' =>  $db->f('role_type')
+        ));
+    }
+    return $role_types;
+}
+
+function get_all_role_types(){
+    $db = new DB;
+    $db->connect();
+    $db->query("SELECT role_id, role_type FROM role;");
     $all_role_types = Array();
     while($db->next_record()){
         array_push($all_role_types, Array(

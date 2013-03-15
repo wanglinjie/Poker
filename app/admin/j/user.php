@@ -16,14 +16,15 @@ if(auth_check() == false){
 
 $shire_id = escape($_POST['shire_id']);
 $feedback = intval(escape($_POST['feedback']));
+$request_days = escape($_POST['request_days']);
 $extra_data = escape($_POST['extra_data']);
 
 if($feedback == 1){
-    $request_days = intval($extra_data);
+    $request_days = intval($request_days);
 }else{
     $request_days = 0;
 }
-do_user_feedback($shire_id, $feedback, $request_days);
+do_user_feedback($shire_id, $feedback, $request_days, $extra_data);
 
 return jsonize(Array(
     'r'     =>  1,
