@@ -39,7 +39,11 @@
                               <td width="16%" height=30 class="table-title" align="center"><strong>查看</strong></td>
                             </tr>
                             {foreach from=$shires item=shire}
+                              {if $shire.assign_feedback == -2}
+                            <tr class="data-line reject-line">
+                              {else}
                             <tr class="data-line">
+                              {/if}
                               <td width="10%" height=30 class="table-body" align="center">#2013{$shire.shire_id}</td>
                               <td width="14%" height=30 class="table-body" align="center">{$shire.department|escape}</td>
                               <td width="13%" height=30 class="table-body" align="center">{$shire.place|escape|truncate:20:"..."}</td>
@@ -62,6 +66,9 @@
                                   报修原因: {$shire.reason|escape}<br>
                                   详细原因: {$shire.detail|escape}<br>
                                   <font color="red">后勤管理员分配时间:{$shire.assign_time}</font><br>
+                                  {if $shire.assign_feedback == -2}
+                                  <font color="red">后勤管理员拒绝了您的维修申请,理由是:{$shire.reject_reason}.<br>请确认后再提交反馈!!!</font><br>
+                                  {/if}
                                 </p>
                               </td>
                               <td colspan=3 class="table-body">
@@ -103,7 +110,7 @@
 {literal}
 <script>
 $(function(){
-    $('.data-table').find('tr[class=data-line]').on('click', function(e){
+    $('.data-table').find('tr.data-line').on('click', function(e){
         $('tr[class=hidden]').hide();
         $(this).next('.hidden').show();
     });
@@ -127,7 +134,10 @@ $(function(){
         var data_line = hidden_line.prev();
 
         var request_days = btn.closest('td').prev().find('input').val().trim();
-        var extra_data = btn.closest('tr').next().find('input').val().trim();
+        var extra_data = '';
+        if(feedback == 1){
+            extra_data = btn.closest('tr').next().find('input').val().trim();
+        }
         $.post('j/user.php', {shire_id:shire_id, feedback:feedback, request_days: request_days, extra_data:extra_data},
             function(d){
                 if(d.r){ 

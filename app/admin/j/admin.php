@@ -29,6 +29,10 @@ if($type == 'admin'){
     assign_shire_to_role($shire_id, $role_id);
 }elseif($type == 'permit'){
     do_admin_permit($shire_id);
+}elseif($type == 'reject'){
+    $reject_reason = escape($_POST['reject_reason']);
+
+    do_admin_reject($shire_id, $reject_reason);
 }
 
 return jsonize(Array(
