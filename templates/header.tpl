@@ -15,9 +15,3 @@
 <script type="text/javascript" src="{$public}/js/libs/jquery.min.js"></script>
 <script type="text/javascript" src="{$public}/js/libs/jquery-ui-1.10.2.custom.min.js"></script>
 <script type="text/javascript" src="{$public}/js/libs/bootstrap.min.js"></script>
-<!-- IE6 -->
-<!--[if lte IE 6]>
-<script>
-window.location = "/ie6/index.html";
-</script>
-<![endif]-->
