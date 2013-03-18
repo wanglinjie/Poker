@@ -85,7 +85,7 @@ function shires_to_export($department, $from, $to){
 function admin_get_shires_count_with_assign_feedback($assign_feedback, $broken_class=NULL){
     if($assign_feedback){
         $sql = "SELECT COUNT(*) as c FROM shire WHERE state=0 AND role_id<>0 "
-             . "AND assign_feedback<>0 AND admin_permit=0";
+             . "AND assign_feedback NOT IN (-2,0) AND admin_permit=0";
     }else{
         $sql = "SELECT COUNT(*) as c FROM shire WHERE state=0 AND role_id=0 "
              . "AND admin_permit=0 ";
@@ -105,7 +105,7 @@ function admin_get_shires_with_assign_feedback($assign_feedback, $page, $broken_
     $start = ($page-1)*$limit;
     if($assign_feedback){
         $sql = "SELECT * FROM shire WHERE state=0 AND role_id<>0 "
-            . "AND assign_feedback<>0 AND admin_permit=0 ";
+            . "AND assign_feedback NOT IN (-2,0) AND admin_permit=0 ";
     }else{
         $sql = "SELECT * FROM shire WHERE state=0 AND role_id=0 "
              . "AND admin_permit=0 ";
@@ -528,7 +528,7 @@ function do_user_feedback($shire_id, $feedback, $request_days, $assign_extra_dat
 }
 
 function do_admin_reject($shire_id, $reject_reason){
-    $sql = "UPDATE shire SET assign_feedback=-2, reject_reason='$reject_reason' "
+    $sql = "UPDATE shire SET state=0, assign_feedback=-2, reject_reason='$reject_reason' "
          . "WHERE shire_id=$shire_id;";
     $db = new DB;
     $db->connect();
