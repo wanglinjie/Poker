@@ -106,7 +106,7 @@
                                           </td>
                                         </tr>
                                         <tr>
-                                          <td>拒绝此申请,理由<input type="text"></td>
+                                          <td>拒绝此申请,理由&nbsp;&nbsp;<input type="text"></td>
                                           <td><button class="btn btn-danger btn-reject" data-id="{$shire.shire_id}" data-state=-1>驳回</button></td>
                                         </tr>
                                       {/if}
