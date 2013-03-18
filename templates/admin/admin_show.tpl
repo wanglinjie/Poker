@@ -46,8 +46,8 @@
                             {/if}
                               <td width="10%" height=30 class="table-body" align="center">#2013{$shire.shire_id}</td>
                               <td width="14%" height=30 class="table-body" align="center">{$shire.department|escape}</td>
-                              <td width="13%" height=30 class="table-body" align="center">{$shire.place|escape|truncate:20:"..."}</td>
-                              <td width="13%" height=30 class="table-body" align="center">{$shire.reason|escape|truncate:20:"..."}</td>
+                              <td width="13%" height=30 class="table-body" align="center">{$shire.place|escape}</td>
+                              <td width="13%" height=30 class="table-body" align="center">{$shire.reason|escape}</td>
                               <td width="10%" height=30 class="table-body" align="center">{$shire.broken_item|escape}</td>
                               <td width="10%" height=30 class="table-body" align="center">{$shire.report_time}</td>
                               <td width="6%" height=30 class="table-body" align="center">
