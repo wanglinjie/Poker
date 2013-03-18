@@ -91,6 +91,7 @@ CREATE TABLE IF NOT EXISTS `shire` (
   `assign_time` date DEFAULT NULL COMMENT '管理人员分配时间',
   `assign_feedback` int(11) NOT NULL DEFAULT '0',
   `assign_extra_data` varchar(150) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `reject_reason` varchar(300) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   `assign_feedback_time` date DEFAULT NULL,
   `request_days` int(11) DEFAULT NULL,
   `admin_permit` int(11) NOT NULL DEFAULT '0',

@@ -185,12 +185,7 @@
         'zyc1': '桌、椅、床等维修及改造'
       },
       'qt': {
-        'xzct': '学子餐厅排烟管道清洗',
-        'qg': '旗杆',
-        'zlq': '主楼门前景观石',
-        'syj': '学院二楼收银机',
-        'lyj': '一、二生活区晾衣架',
-        'xcl': '宣传栏'
+        'qt1':  '其他'
       }
     };
 
@@ -202,11 +197,24 @@
         var cnt_selected_class = item_class.val();
         if(cnt_selected_class){
           item_obj.find('option').remove();     
-          item_obj.append("<option value=''>请选择</option>");
+
+          var length = function(o){
+            var count = 0;
+            for(var i in o){
+              if(o.hasOwnProperty(i)){
+                count++;
+              }
+            }
+            return count;
+          };
+          if(length(const_item[cnt_selected_class]) != 1){
+            item_obj.append('<option value="" selected>请选择</option>');
+          }
           for(var k in const_item[cnt_selected_class]){
             v = const_item[cnt_selected_class][k];
             item_obj.append("<option value='" + k + "'>" + v + "</option>");
           }
+          console.log(item_obj);
         }
       });
     };

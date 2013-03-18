@@ -8,6 +8,10 @@
 {/if}
 </head>
 <body>
+<!-- IE6 -->
+<!--[if lte IE 6]>
+<div class="ie6">您使用的浏览器版本过低,为了保证您的安全以及对本系统的使用体验,建议您升级浏览器.不知道去哪里升级?<a href="http://chrome.360.cn/" target="_blank">点击这里</a></div>
+<![endif]-->
 <div class="container">
   <div class="banner">
     <div class="banner-img">

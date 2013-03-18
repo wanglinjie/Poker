@@ -69,6 +69,7 @@ function shires_to_export($department, $from, $to){
             'assign_time'   =>  $db->f('assign_time'),
             'assign_feedback'   =>  $db->f('assign_feedback'),
             'assign_extra_data'   =>  $db->f('assign_extra_data'),
+            'reject_reason' =>  $db->f('reject_reason'),
             'assign_feedback_time'  =>  $db->f('assign_feedback_time'),
             'request_days'  =>  $db->f('request_days'),
             'admin_permit'  =>  $db->f('admin_permit'),
@@ -84,7 +85,7 @@ function shires_to_export($department, $from, $to){
 function admin_get_shires_count_with_assign_feedback($assign_feedback, $broken_class=NULL){
     if($assign_feedback){
         $sql = "SELECT COUNT(*) as c FROM shire WHERE state=0 AND role_id<>0 "
-             . "AND assign_feedback<>0 AND admin_permit=0";
+             . "AND assign_feedback NOT IN (-2,0) AND admin_permit=0";
     }else{
         $sql = "SELECT COUNT(*) as c FROM shire WHERE state=0 AND role_id=0 "
              . "AND admin_permit=0 ";
@@ -104,7 +105,7 @@ function admin_get_shires_with_assign_feedback($assign_feedback, $page, $broken_
     $start = ($page-1)*$limit;
     if($assign_feedback){
         $sql = "SELECT * FROM shire WHERE state=0 AND role_id<>0 "
-            . "AND assign_feedback<>0 AND admin_permit=0 ";
+            . "AND assign_feedback NOT IN (-2,0) AND admin_permit=0 ";
     }else{
         $sql = "SELECT * FROM shire WHERE state=0 AND role_id=0 "
              . "AND admin_permit=0 ";
@@ -138,6 +139,7 @@ function admin_get_shires_with_assign_feedback($assign_feedback, $page, $broken_
             'assign_time'   =>  $db->f('assign_time'),
             'assign_feedback'   =>  $db->f('assign_feedback'),
             'assign_extra_data'   =>  $db->f('assign_extra_data'),
+            'reject_reason' =>  $db->f('reject_reason'),
             'assign_feedback_time'  =>  $db->f('assign_feedback_time'),
             'request_days'  =>  $db->f('request_days'),
             'admin_permit'  =>  $db->f('admin_permit'),
@@ -196,6 +198,7 @@ function admin_get_all_shires($page=1, $broken_class=NULL){
             'assign_time'   =>  $db->f('assign_time'),
             'assign_feedback'   =>  $db->f('assign_feedback'),
             'assign_extra_data'   =>  $db->f('assign_extra_data'),
+            'reject_reason' =>  $db->f('reject_reason'),
             'assign_feedback_time'  =>  $db->f('assign_feedback_time'),
             'request_days'  =>  $db->f('request_days'),
             'admin_permit'  =>  $db->f('admin_permit'),
@@ -254,6 +257,7 @@ function user_get_all_shires($role_id, $page, $broken_class=NULL){
             'assign_time'   =>  $db->f('assign_time'),
             'assign_feedback'   =>  $db->f('assign_feedback'),
             'assign_extra_data'   =>  $db->f('assign_extra_data'),
+            'reject_reason' =>  $db->f('reject_reason'),
             'assign_feedback_time'  =>  $db->f('assign_feedback_time'),
             'request_days'  =>  $db->f('request_days'),
             'admin_permit'  =>  $db->f('admin_permit'),
@@ -312,6 +316,7 @@ function user_get_shires_with_admin_feedback($role_id, $page, $broken_class){
             'assign_time'   =>  $db->f('assign_time'),
             'assign_feedback'   =>  $db->f('assign_feedback'),
             'assign_extra_data'   =>  $db->f('assign_extra_data'),
+            'reject_reason' =>  $db->f('reject_reason'),
             'assign_feedback_time'  =>  $db->f('assign_feedback_time'),
             'request_days'  =>  $db->f('request_days'),
             'admin_permit'  =>  $db->f('admin_permit'),
@@ -370,6 +375,7 @@ function user_get_shires_with_repair_feedback($role_id, $page, $broken_class){
             'assign_time'   =>  $db->f('assign_time'),
             'assign_feedback'   =>  $db->f('assign_feedback'),
             'assign_extra_data'   =>  $db->f('assign_extra_data'),
+            'reject_reason' =>  $db->f('reject_reason'),
             'assign_feedback_time'  =>  $db->f('assign_feedback_time'),
             'request_days'  =>  $db->f('request_days'),
             'admin_permit'  =>  $db->f('admin_permit'),
@@ -384,7 +390,7 @@ function user_get_shires_with_repair_feedback($role_id, $page, $broken_class){
 
 function user_get_shires_count($role_id, $broken_class=NULL){
     $sql = "SELECT COUNT(*) as c FROM shire WHERE state=0 AND "
-         . "role_id=$role_id AND assign_feedback=0 ";
+         . "role_id=$role_id AND assign_feedback IN (-2, 0) ";
     if($broken_class){
         $sql = $sql . "AND broken_item_class='$broken_class';";
     }
@@ -398,7 +404,7 @@ function user_get_shires_count($role_id, $broken_class=NULL){
 function user_get_shires($role_id, $page, $broken_class){
     $limit = 20;
     $start = ($page-1)*$limit;
-    $sql = "SELECT * FROM shire WHERE state=0 AND role_id=$role_id AND assign_feedback=0 ";
+    $sql = "SELECT * FROM shire WHERE state=0 AND role_id=$role_id AND assign_feedback IN (-2, 0) ";
     if($broken_class){
         $sql = $sql . "AND broken_item_class='$broken_class' ORDER BY shire_id DESC "
              . "LIMIT $start, $limit;";
@@ -428,6 +434,7 @@ function user_get_shires($role_id, $page, $broken_class){
             'assign_time'   =>  $db->f('assign_time'),
             'assign_feedback'   =>  $db->f('assign_feedback'),
             'assign_extra_data'   =>  $db->f('assign_extra_data'),
+            'reject_reason' =>  $db->f('reject_reason'),
             'assign_feedback_time'  =>  $db->f('assign_feedback_time'),
             'request_days'  =>  $db->f('request_days'),
             'admin_permit'  =>  $db->f('admin_permit'),
@@ -520,6 +527,14 @@ function do_user_feedback($shire_id, $feedback, $request_days, $assign_extra_dat
     $db->query($sql);
 }
 
+function do_admin_reject($shire_id, $reject_reason){
+    $sql = "UPDATE shire SET state=0, assign_feedback=-2, reject_reason='$reject_reason' "
+         . "WHERE shire_id=$shire_id;";
+    $db = new DB;
+    $db->connect();
+    $db->query($sql);
+}
+
 function do_admin_permit($shire_id){
     $assign_feedback_time = date('Y/m/d');
     $sql = "UPDATE shire SET state=1, admin_permit=1, assign_feedback_time='$assign_feedback_time' "
@@ -578,7 +593,7 @@ function assign_shire_to_role($shire_id, $role_id){
     $assign_time = date('Y/m/d');
     $db = new DB;
     $db->connect();
-    $db->query("UPDATE shire SET role_id=$role_id, assign_time='$assign_time' WHERE shire_id=$shire_id;");
+    $db->query("UPDATE shire SET role_id=$role_id, assign_time='$assign_time',assign_feedback=0 WHERE shire_id=$shire_id;");
     return true;
 }
 
