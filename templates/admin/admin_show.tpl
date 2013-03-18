@@ -46,8 +46,8 @@
                             {/if}
                               <td width="10%" height=30 class="table-body" align="center">#2013{$shire.shire_id}</td>
                               <td width="14%" height=30 class="table-body" align="center">{$shire.department|escape}</td>
-                              <td width="13%" height=30 class="table-body" align="center">{$shire.place|escape|truncate:20:"..."}</td>
-                              <td width="13%" height=30 class="table-body" align="center">{$shire.reason|escape|truncate:20:"..."}</td>
+                              <td width="13%" height=30 class="table-body" align="center">{$shire.place|escape}</td>
+                              <td width="13%" height=30 class="table-body" align="center">{$shire.reason|escape}</td>
                               <td width="10%" height=30 class="table-body" align="center">{$shire.broken_item|escape}</td>
                               <td width="10%" height=30 class="table-body" align="center">{$shire.report_time}</td>
                               <td width="6%" height=30 class="table-body" align="center">
@@ -106,7 +106,7 @@
                                           </td>
                                         </tr>
                                         <tr>
-                                          <td>拒绝此申请,理由<input type="text"></td>
+                                          <td>拒绝此申请,理由&nbsp;&nbsp;<input type="text"></td>
                                           <td><button class="btn btn-danger btn-reject" data-id="{$shire.shire_id}" data-state=-1>驳回</button></td>
                                         </tr>
                                       {/if}
@@ -128,7 +128,7 @@
                                       </tr>
                                     {/if}
                                     <tr>
-                                      <td>冻结此保修,理由<input type="text"></td>
+                                      <td>冻结此保修,理由&nbsp;&nbsp;<input type="text"></td>
                                       <td><button class="btn btn-danger btn-admin" data-id="{$shire.shire_id}" data-state=-1>冻结</button></td>
                                     </tr>
                                   </table>
