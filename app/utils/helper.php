@@ -593,7 +593,7 @@ function assign_shire_to_role($shire_id, $role_id){
     $assign_time = date('Y/m/d');
     $db = new DB;
     $db->connect();
-    $db->query("UPDATE shire SET role_id=$role_id, assign_time='$assign_time' WHERE shire_id=$shire_id;");
+    $db->query("UPDATE shire SET role_id=$role_id, assign_time='$assign_time',assign_feedback=0 WHERE shire_id=$shire_id;");
     return true;
 }
 
