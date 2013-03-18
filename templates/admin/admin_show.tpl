@@ -128,7 +128,7 @@
                                       </tr>
                                     {/if}
                                     <tr>
-                                      <td>冻结此保修,理由<input type="text"></td>
+                                      <td>冻结此保修,理由&nbsp;&nbsp;<input type="text"></td>
                                       <td><button class="btn btn-danger btn-admin" data-id="{$shire.shire_id}" data-state=-1>冻结</button></td>
                                     </tr>
                                   </table>
