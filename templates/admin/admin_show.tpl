@@ -39,11 +39,15 @@
                               <td width="16%" height=30 class="table-title" align="center"><strong>查看</strong></td>
                             </tr>
                             {foreach from=$shires item=shire}
+                            {if $shire.assign_feedback == -1}
+                            <tr class="data-line reject-line">
+                            {else}
                             <tr class="data-line">
+                            {/if}
                               <td width="10%" height=30 class="table-body" align="center">#2013{$shire.shire_id}</td>
                               <td width="14%" height=30 class="table-body" align="center">{$shire.department|escape}</td>
-                              <td width="13%" height=30 class="table-body" align="center">{$shire.place|escape|truncate:20:"..."}</td>
-                              <td width="13%" height=30 class="table-body" align="center">{$shire.reason|escape|truncate:20:"..."}</td>
+                              <td width="13%" height=30 class="table-body" align="center">{$shire.place|escape}</td>
+                              <td width="13%" height=30 class="table-body" align="center">{$shire.reason|escape}</td>
                               <td width="10%" height=30 class="table-body" align="center">{$shire.broken_item|escape}</td>
                               <td width="10%" height=30 class="table-body" align="center">{$shire.report_time}</td>
                               <td width="6%" height=30 class="table-body" align="center">
@@ -61,6 +65,9 @@
                                   报修时间: {$shire.report_time}<br>
                                   报修原因: {$shire.reason|escape}<br>
                                   详细原因: {$shire.detail|escape}<br>
+                                  {if $shire.assign_feedback == -1}
+                                  <font color="red" style="font-weight: bold;">维修人员拒绝了您的请求,请在操作区域重新分配!!!</font>
+                                  {/if}
                                   {if $shire.request_days}
                                   <font color="red">维修人员申请{$shire.request_days}天来进行维修.</font><br>
                                   {/if}
@@ -71,42 +78,59 @@
                               </td>
                               <td colspan=3 class="table-body">
                                   <table width="100%" border=0>
-                                    {if $shire.assign_feedback != -1}
-                                    <tr>
-                                      {if $assign_feedback_admin}
-                                      <td>
-                                      <font color="red">维修人员申请{$shire.request_days}天数用来维修.</font>
-                                      </td>
-                                      <td>
-                                        <button class="btn btn-success btn-admin-permit" data-id="{$shire.shire_id}">确定</button>
-
-                                      </td>
+                                    {if $assign_feedback_admin}
+                                      {* 重新分配 *}
+                                      {if $shire.assign_feedback == -1}
+                                        <tr>
+                                          <td>
+                                            分配给
+                                            <select style="margin-left: 55px;width: 137px;">
+                                              {foreach from=$roles item=role}
+                                                <option value='{$role.role_id}'>{$role.role_type}</option>
+                                              {foreachelse}
+                                                <option value='-1'>没有任何类型</option>
+                                              {/foreach}
+                                            </select>
+                                          </td>
+                                          <td>
+                                            <button class="btn btn-success btn-assign" data-id="{$shire.shire_id}">分配</button>
+                                          </td>
+                                        </tr>
                                       {else}
-                                      <td>
-                                        分配给
-                                        <select style="margin-left: 55px;width: 137px;">
-                                          {foreach from=$roles item=role}
-                                            <option value='{$role.role_id}'>{$role.role_type}</option>
-                                          {foreachelse}
-                                            <option value='-1'>没有任何类型</option>
-                                          {/foreach}
-                                        </select>
-                                      </td>
-                                      <td>
-                                        <button class="btn btn-success btn-assign" data-id="{$shire.shire_id}">分配</button>
-
-                                      </td>
+                                        <tr>
+                                          <td>
+                                            <font color="red">维修人员申请{$shire.request_days}天数用来维修.</font>
+                                          </td>
+                                          <td>
+                                            <button class="btn btn-success btn-admin-permit" data-id="{$shire.shire_id}">确定</button>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>拒绝此申请,理由&nbsp;&nbsp;<input type="text"></td>
+                                          <td><button class="btn btn-danger btn-reject" data-id="{$shire.shire_id}" data-state=-1>驳回</button></td>
+                                        </tr>
                                       {/if}
-                                    </tr>
-                                    <tr>
-                                      <td>拒绝报修，理由为<input type="text"></td>
-                                      <td><button class="btn btn-danger btn-admin" data-id="{$shire.shire_id}" data-state=-1>拒绝</button></td>
-                                    </tr>
                                     {else}
-                                    <tr>
-                                      <td><font color="red">维修人员拒绝了维修要求.</font></td>
-                                    </tr>
+                                      <tr>
+                                        <td>
+                                          分配给
+                                          <select style="margin-left: 55px;width: 137px;">
+                                            {foreach from=$roles item=role}
+                                              <option value='{$role.role_id}'>{$role.role_type}</option>
+                                            {foreachelse}
+                                              <option value='-1'>没有任何类型</option>
+                                            {/foreach}
+                                          </select>
+                                        </td>
+                                        <td>
+                                          <button class="btn btn-success btn-assign" data-id="{$shire.shire_id}">分配</button>
+                                        </td>
+                                      </tr>
                                     {/if}
+                                    <tr>
+                                      <td>冻结此保修,理由&nbsp;&nbsp;<input type="text"></td>
+                                      <td><button class="btn btn-danger btn-admin" data-id="{$shire.shire_id}" data-state=-1>冻结</button></td>
+                                    </tr>
                                   </table>
                                 </td>
                             </tr>
@@ -132,7 +156,7 @@
 {literal}
 <script>
 $(function(){
-    $('.data-table').find('tr[class=data-line]').on('click', function(e){
+    $('.data-table').find('tr.data-line').on('click', function(e){
         $('tr[class=hidden]').hide();
         $(this).next('.hidden').show();
     });
@@ -174,6 +198,23 @@ $(function(){
                 }
             }
         );
+    });
+    $('button.btn-reject').on('click', function(e){
+        var btn = $(this);
+        var hidden_line = btn.closest('.hidden');
+        var data_line = hidden_line.prev();
+        var shire_id = btn.attr('data-id');
+        var reject_reason = btn.closest('td').prev().find('input').val().trim();
+        $.post('j/admin.php', {type:'reject', shire_id:shire_id, reject_reason:reject_reason}, function(d){
+          if(d.r){
+            alert("成功!");
+            data_line.remove();
+            hidden_line.remove();
+          }else{
+            alert(d.msg);  
+            return false;
+          }
+        });
     });
     $('button.btn-assign').on('click', function(e){
         var btn = $(this);
