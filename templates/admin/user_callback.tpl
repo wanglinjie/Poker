@@ -46,7 +46,7 @@
                               <td width="13%" height=30 class="table-body" align="center">{$shire.reason|escape}</td>
                               <td width="10%" height=30 class="table-body" align="center">{$shire.broken_item|escape}</td>
                               <td width="10%" height=30 class="table-body" align="center">{$shire.report_time}</td>
-                              <td width="6%" height=30 class="table-body" align="center">
+                              <td width="16%" height=30 class="table-body" align="center">
                                 {if $shire.filename}
                                   <a class="show_pic" href="#" data-url="{$shire.filename}" data-domain="{$domain}">点击查看图片</a></td>
                                 {else}
