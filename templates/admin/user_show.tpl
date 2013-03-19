@@ -62,10 +62,14 @@
                                 <p style="text-align:left;">
                                   报修人: {$shire.reporter|escape}<br>
                                   报修人工号: {$shire.report_id|escape}<br>
+                                  报修人联系方式: {$shire.contact_num|escape}<br>
                                   报修时间: {$shire.report_time}<br>
                                   报修原因: {$shire.reason|escape}<br>
                                   详细原因: {$shire.detail|escape}<br>
                                   <font color="red">后勤管理员分配时间:{$shire.assign_time}</font><br>
+                                  {if $shire.extra_data}
+                                  <font color="red">后勤管理员分配备注:{$shire.extra_data|escape}</font><br>
+                                  {/if}
                                   {if $shire.assign_feedback == -2}
                                   <font color="red">后勤管理员拒绝了您的维修申请,理由是:{$shire.reject_reason}.<br>请确认后再提交反馈!!!</font><br>
                                   {/if}
