@@ -66,6 +66,7 @@ function shires_to_export($department, $from, $to){
             'decode_state'  =>  decode_shire_state($db->f('state')),
             'state_context' =>  $db->f('state_context'),
             'role_id'   =>  $db->f('role_id'),
+            'extra_data'    =>  $db->f('extra_data'),
             'assign_time'   =>  $db->f('assign_time'),
             'assign_feedback'   =>  $db->f('assign_feedback'),
             'assign_extra_data'   =>  $db->f('assign_extra_data'),
@@ -136,6 +137,7 @@ function admin_get_shires_with_assign_feedback($assign_feedback, $page, $broken_
             'decode_state'  =>  decode_shire_state($db->f('state')),
             'state_context' =>  $db->f('state_context'),
             'role_id'   =>  $db->f('role_id'),
+            'extra_data'    =>  $db->f('extra_data'),
             'assign_time'   =>  $db->f('assign_time'),
             'assign_feedback'   =>  $db->f('assign_feedback'),
             'assign_extra_data'   =>  $db->f('assign_extra_data'),
@@ -195,6 +197,7 @@ function admin_get_all_shires($page=1, $broken_class=NULL){
             'state_context' =>  $db->f('state_context'),
             'role_id'   =>  $db->f('role_id'),
             'role_type' =>  $db->f('role_type'),
+            'extra_data'    =>  $db->f('extra_data'),
             'assign_time'   =>  $db->f('assign_time'),
             'assign_feedback'   =>  $db->f('assign_feedback'),
             'assign_extra_data'   =>  $db->f('assign_extra_data'),
@@ -254,6 +257,7 @@ function user_get_all_shires($role_id, $page, $broken_class=NULL){
             'state_context' =>  $db->f('state_context'),
             'role_id'   =>  $db->f('role_id'),
             'role_type' =>  $db->f('role_type'),
+            'extra_data'    =>  $db->f('extra_data'),
             'assign_time'   =>  $db->f('assign_time'),
             'assign_feedback'   =>  $db->f('assign_feedback'),
             'assign_extra_data'   =>  $db->f('assign_extra_data'),
@@ -313,6 +317,7 @@ function user_get_shires_with_admin_feedback($role_id, $page, $broken_class){
             'decode_state'  =>  decode_shire_state($db->f('state')),
             'state_context' =>  $db->f('state_context'),
             'role_id'   =>  $db->f('role_id'),
+            'extra_data'    =>  $db->f('extra_data'),
             'assign_time'   =>  $db->f('assign_time'),
             'assign_feedback'   =>  $db->f('assign_feedback'),
             'assign_extra_data'   =>  $db->f('assign_extra_data'),
@@ -347,9 +352,9 @@ function user_get_shires_with_repair_feedback($role_id, $page, $broken_class){
     $start = ($page-1)*$limit;
     $sql = "SELECT * FROM shire WHERE state=1 AND role_id=$role_id AND admin_permit=1 ";
     if($broken_class){
-        $sql = $sql . "AND broken_item_class='$broken_class' ORDER BY shire_id DESC "
-             . "LIMIT $start, $limit;";
+        $sql = $sql . "AND broken_item_class='$broken_class' ";
     }
+    $sql = $sql . "ORDER BY shire_id DESC LIMIT $start, $limit;";
     $db = new DB;
     $db->connect();
     $db->query($sql);
@@ -372,6 +377,7 @@ function user_get_shires_with_repair_feedback($role_id, $page, $broken_class){
             'decode_state'  =>  decode_shire_state($db->f('state')),
             'state_context' =>  $db->f('state_context'),
             'role_id'   =>  $db->f('role_id'),
+            'extra_data'    =>  $db->f('extra_data'),
             'assign_time'   =>  $db->f('assign_time'),
             'assign_feedback'   =>  $db->f('assign_feedback'),
             'assign_extra_data'   =>  $db->f('assign_extra_data'),
@@ -406,9 +412,9 @@ function user_get_shires($role_id, $page, $broken_class){
     $start = ($page-1)*$limit;
     $sql = "SELECT * FROM shire WHERE state=0 AND role_id=$role_id AND assign_feedback IN (-2, 0) ";
     if($broken_class){
-        $sql = $sql . "AND broken_item_class='$broken_class' ORDER BY shire_id DESC "
-             . "LIMIT $start, $limit;";
+        $sql = $sql . "AND broken_item_class='$broken_class' ";
     }
+    $sql = $sql . "ORDER BY shire_id DESC LIMIT $start, $limit;";
     $db = new DB;
     $db->connect();
     $db->query($sql);
@@ -431,6 +437,7 @@ function user_get_shires($role_id, $page, $broken_class){
             'decode_state'  =>  decode_shire_state($db->f('state')),
             'state_context' =>  $db->f('state_context'),
             'role_id'   =>  $db->f('role_id'),
+            'extra_data'    =>  $db->f('extra_data'),
             'assign_time'   =>  $db->f('assign_time'),
             'assign_feedback'   =>  $db->f('assign_feedback'),
             'assign_extra_data'   =>  $db->f('assign_extra_data'),
@@ -589,11 +596,11 @@ function get_shire_by_id($shire_id){
     );
 }
 
-function assign_shire_to_role($shire_id, $role_id){
+function assign_shire_to_role($shire_id, $role_id, $extra_data){
     $assign_time = date('Y/m/d');
     $db = new DB;
     $db->connect();
-    $db->query("UPDATE shire SET role_id=$role_id, assign_time='$assign_time',assign_feedback=0 WHERE shire_id=$shire_id;");
+    $db->query("UPDATE shire SET role_id=$role_id, extra_data='$extra_data', assign_time='$assign_time',assign_feedback=0 WHERE shire_id=$shire_id;");
     return true;
 }
 
