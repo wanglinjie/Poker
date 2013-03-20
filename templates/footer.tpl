@@ -17,7 +17,7 @@ $(function(){
     if(window.opener){
       window.close();
     }else{
-      window.href = 'http://hq.hitwh.edu.cn/';
+      window.location.href = 'http://hq.hitwh.edu.cn/';
     }
   });
 });
