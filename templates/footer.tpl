@@ -13,6 +13,10 @@ $(function(){
     window.location = $('.home').attr('href');
     return false;
   });
+  $(".quit_system").on('click', function(e){
+    e.preventDefault();
+    window.close();
+  });
 });
 </script>
 {/literal}
