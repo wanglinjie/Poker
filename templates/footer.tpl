@@ -14,8 +14,11 @@ $(function(){
     return false;
   });
   $(".quit_system").on('click', function(e){
-    e.preventDefault();
-    window.close();
+    if(window.opener){
+      window.close();
+    }else{
+      window.href = 'http://hq.hitwh.edu.cn/';
+    }
   });
 });
 </script>
