@@ -121,7 +121,7 @@ require('../app/utils/helpfun.php');
         reporter:reporter,department:department,broken_item_class:broken_item_class,broken_item:broken_item,reason:reason,place:place,state:state,role_id:role_id,assign_feedback:assign_feedback},
         function(d){
           if(d.r){
-            alert("成功！");
+            alert("操作成功！");
           }
           else{
             alert(d.msg);
