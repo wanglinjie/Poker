@@ -19,6 +19,6 @@ if($type=='add')
 {
   update_shiretest($report_id,$reporter,$department,$broken_item_class,
   $broken_item,$reason,$place,$state,$role_id,$assign_feedback);
-  return jsonize(Array('r'=>1, 'msg'=>'Hello'));
+  return jsonize(Array('r'=>1, 'msg'=>'操作失败！'));
 }
 ?>
