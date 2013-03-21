@@ -18,6 +18,7 @@ form h3 { text-align: center; }
 <?php
 require('../libs/db.php');
 require('../app/utils/helper.php');
+require('../app/utils/helpfun.php');
 ?>
     <form class="form-horizontal">
       <h3>添加报修</h3>
@@ -96,18 +97,77 @@ require('../app/utils/helper.php');
         </div>
       </div>
     </form>
+    <form class="form-horizontal">
+      <h3></h3>
+    </form>
   </body>
   <script src="../static/js/libs/jquery-1.9.1.min.js"></script>
   <script src="../static/js/libs/bootstrap.min.js"></script>
   <script>
-$(function(){
+  $(function(){
   $('button.btn-add').on('click', function(e){
     e.preventDefault();
     var report_id = $('#report_id').val().trim();
     var reporter = $('#reporter').val().trim();
     var department = $('#department').val().trim();
     var broken_item_class = $('#broken_item_class').val().trim();
-  })
+    var broken_item = $('#broken_item').val().trim();
+    var reason = $('#reason').val().trim();
+    var place = $('#place').val().trim();
+    var state = $('#state').val().trim();
+    var role_id = $('#role_id').val().trim();
+    var assign_feedback = $('#assign_feedback').val().trim();
+    /*
+    var xmlHttp;
+    if (window.XMLHttpRequest)
+    {
+      xmlHttp= new XMLHttpRequest;
+    }
+    else if(window.ActiveXObject)
+    {
+      try
+      {
+        xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
+      }
+      catch(e)
+      {
+        try
+        {
+          xmlHttp= new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        catch(e)
+        {
+          alert ("您的浏览器不支持AJAX！");
+          return;
+        }
+      }
+    }
+    var dataString='reporter_id'+reporter_id+'reporter'+reporter+'department'+department+'broken_item_class'+broken_item_class+'broken_item'+broken_item+'reason'+reason+'place'+place+'state'+state+'role_id'+role_id+'assign_feedback'+assign_feedback;
+
+    var url="testpost.php";
+    url=url+"?q="+str;
+    url=url+"&sid="+Math.random()
+    xmlHttp
+    */
+    $.post('testpost.php',{type:'add',report_id:report_id,
+      reporter:reporter,department:department,broken_item_class:broken_item_class,broken_item:broken_item,reason:reason,place:place,
+      state:state,role_id:role_id,assign_feedback:assign_feedback},
+      function(d)
+      {
+        if (d.r) 
+        {
+          alert("成功！");
+        }
+        else
+        {
+          alert(d.msg);
+          return false;
+        }
+          //console.log(d);
+          //console.log(d.r);
+          //console.log(d.msg);
+      });
+  });
 });
   </script>
 </html>
