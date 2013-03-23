@@ -500,15 +500,17 @@ function get_shires_not_refused($page=1, $limit=20){
 function update_shire($reporter, $report_id, $report_time, $contact_num, $department, $place,
         $broken_item_class, $broken_item, $reason, $detail, $filename, $state, $state_context, 
         $repair_time, $feedback, $auth_check, $ip){
-    $sql = "INSERT INTO shire(reporter, report_id, report_time, contact_num, department, "
-         . " place, broken_item_class, broken_item, reason, detail, filename, state, state_context, "
-         . " repair_time, feedback, auth_check, ip) VALUES('$reporter', '$report_id', '$report_time',"
-         . " '$contact_num', '$department', '$place', '$broken_item_class', '$broken_item', '$reason',"
-         . "'$detail', '$filename', $state, '$state_context', '$report_time', '$feedback', $auth_check, '$ip');";
+    if($reporter){
+        $sql = "INSERT INTO shire(reporter, report_id, report_time, contact_num, department, "
+             . " place, broken_item_class, broken_item, reason, detail, filename, state, state_context, "
+             . " repair_time, feedback, auth_check, ip) VALUES('$reporter', '$report_id', '$report_time',"
+             . " '$contact_num', '$department', '$place', '$broken_item_class', '$broken_item', '$reason',"
+             . "'$detail', '$filename', $state, '$state_context', '$report_time', '$feedback', $auth_check, '$ip');";
 
-    $db = new DB;
-    $db->connect();
-    $db->query($sql);
+        $db = new DB;
+        $db->connect();
+        $db->query($sql);
+    }   
 }
 
 function change_shire_state($shire_id, $state, $state_context, $feedback){
