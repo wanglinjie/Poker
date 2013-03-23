@@ -169,9 +169,9 @@ function admin_get_all_shires_count($broken_class=NULL){
 function admin_get_all_shires($page=1, $broken_class=NULL){
     $limit = 20;
     $start = ($page-1)*$limit;
-    $sql = "SELECT * FROM shire, role WHERE role.role_id=shire.role_id ";
+    $sql = "SELECT * FROM shire LEFT JOIN role ON role.role_id=shire.role_id ";
     if($broken_class){
-        $sql = $sql . "AND broken_item_class='$broken_class' ";
+        $sql = $sql . "WHERE broken_item_class='$broken_class' ";
     }
     $sql = $sql . "ORDER BY shire_id DESC LIMIT $start, $limit;";
     $db = new DB;
