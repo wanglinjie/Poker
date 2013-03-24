@@ -88,6 +88,7 @@ CREATE TABLE IF NOT EXISTS `shire` (
   `state` int(11) NOT NULL DEFAULT '0' COMMENT '维修状态',
   `state_context` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '维修状态的额外解释',
   `role_id` int(11) NOT NULL DEFAULT '0',
+  `extra_data` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   `assign_time` date DEFAULT NULL COMMENT '管理人员分配时间',
   `assign_feedback` int(11) NOT NULL DEFAULT '0',
   `assign_extra_data` varchar(150) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,

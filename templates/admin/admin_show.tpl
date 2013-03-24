@@ -62,9 +62,13 @@
                                 <p style="text-align:left;">
                                   报修人: {$shire.reporter|escape}<br>
                                   报修人工号: {$shire.report_id|escape}<br>
+                                  报修人联系方式: {$shire.contact_num|escape}<br>
                                   报修时间: {$shire.report_time}<br>
                                   报修原因: {$shire.reason|escape}<br>
                                   详细原因: {$shire.detail|escape}<br>
+                                  {if $shire.extra_data}
+                                  <font color="red">后勤管理员分配备注:{$shire.extra_data|escape}</font><br>
+                                  {/if}
                                   {if $shire.assign_feedback == -1}
                                   <font color="red" style="font-weight: bold;">维修人员拒绝了您的请求,请在操作区域重新分配!!!</font>
                                   {/if}
@@ -83,14 +87,26 @@
                                       {if $shire.assign_feedback == -1}
                                         <tr>
                                           <td>
-                                            分配给
-                                            <select style="margin-left: 55px;width: 137px;">
-                                              {foreach from=$roles item=role}
-                                                <option value='{$role.role_id}'>{$role.role_type}</option>
-                                              {foreachelse}
-                                                <option value='-1'>没有任何类型</option>
-                                              {/foreach}
-                                            </select>
+                                            <table>
+                                              <tr>
+                                                <td>分配给</td>
+                                                <td>
+                                                  <select style="margin-left: 55px;width: 137px;">
+                                                    {foreach from=$roles item=role}
+                                                      <option value='{$role.role_id}'>{$role.role_type}</option>
+                                                    {foreachelse}
+                                                      <option value='-1'>没有任何类型</option>
+                                                    {/foreach}
+                                                  </select>
+                                                </td>
+                                              </tr>
+                                              <tr>
+                                                <td>分配备注</td>
+                                                <td>
+                                                  <input type="text" value='{$shire.extra_data}' style="margin-left:55px;"/>
+                                                </td>
+                                              </tr>
+                                            </table>
                                           </td>
                                           <td>
                                             <button class="btn btn-success btn-assign" data-id="{$shire.shire_id}">分配</button>
@@ -106,21 +122,33 @@
                                           </td>
                                         </tr>
                                         <tr>
-                                          <td>拒绝此申请,理由&nbsp;&nbsp;<input type="text"></td>
+                                          <td>拒绝此申请,理由&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text"></td>
                                           <td><button class="btn btn-danger btn-reject" data-id="{$shire.shire_id}" data-state=-1>驳回</button></td>
                                         </tr>
                                       {/if}
                                     {else}
                                       <tr>
                                         <td>
-                                          分配给
-                                          <select style="margin-left: 55px;width: 137px;">
-                                            {foreach from=$roles item=role}
-                                              <option value='{$role.role_id}'>{$role.role_type}</option>
-                                            {foreachelse}
-                                              <option value='-1'>没有任何类型</option>
-                                            {/foreach}
-                                          </select>
+                                          <table>
+                                            <tr>
+                                              <td>分配给</td>
+                                              <td>
+                                                <select style="margin-left: 55px;width: 137px;">
+                                                  {foreach from=$roles item=role}
+                                                    <option value='{$role.role_id}'>{$role.role_type}</option>
+                                                  {foreachelse}
+                                                    <option value='-1'>没有任何类型</option>
+                                                  {/foreach}
+                                                </select>
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td>分配备注</td>
+                                              <td>
+                                                <input type="text" value='{$shire.extra_data}' style="margin-left:55px;"/>
+                                              </td>
+                                            </tr>
+                                          </table>
                                         </td>
                                         <td>
                                           <button class="btn btn-success btn-assign" data-id="{$shire.shire_id}">分配</button>
@@ -128,7 +156,7 @@
                                       </tr>
                                     {/if}
                                     <tr>
-                                      <td>冻结此保修,理由&nbsp;&nbsp;<input type="text"></td>
+                                      <td>冻结此保修,理由&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text"></td>
                                       <td><button class="btn btn-danger btn-admin" data-id="{$shire.shire_id}" data-state=-1>冻结</button></td>
                                     </tr>
                                   </table>
@@ -222,7 +250,8 @@ $(function(){
         var data_line = hidden_line.prev();
         var shire_id = btn.attr('data-id');
         var role_id = btn.closest('td').prev().find('select').val().trim();
-        $.post('j/admin.php', {type:'assign', shire_id:shire_id, role_id:role_id}, function(d){
+        var extra_data = btn.closest('td').prev().find('input').val().trim();
+        $.post('j/admin.php', {type:'assign', shire_id:shire_id, role_id:role_id, extra_data:extra_data}, function(d){
           if(d.r){
             alert("成功!");
             data_line.remove();
