@@ -13,6 +13,13 @@ $(function(){
     window.location = $('.home').attr('href');
     return false;
   });
+  $(".quit_system").on('click', function(e){
+    if(window.opener){
+      window.close();
+    }else{
+      window.location.href = 'http://hq.hitwh.edu.cn/';
+    }
+  });
 });
 </script>
 {/literal}

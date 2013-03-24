@@ -42,9 +42,9 @@
                               <td width="8%" height=30 class="table-body" align="center">&nbsp;</td>
                             {/if}
                             {if $shire.state == -1}
-                              <td width="16%" height=30 class="table-body" align="center">{$shire.state_context|escape|truncate:30:"..."}</td>
+                              <td width="16%" height=30 class="table-body" align="center">{$shire.state_context|escape}</td>
                             {elseif $shire.state == 2}
-                              <td width="16%" height=30 class="table-body red" align="center">{$shire.feedback|escape|truncate:30:":..."}</td>
+                              <td width="16%" height=30 class="table-body red" align="center">{$shire.feedback|escape}</td>
                             {else}
                               <td width="16%" height=30 class="table-body" align="center">&nbsp;</td>
                             {/if}
