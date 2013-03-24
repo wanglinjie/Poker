@@ -124,6 +124,12 @@
               </td>
             </tr>
             <tr>
+              <td height=30 width=175 align="right" class="m">期待完成时间:</td>
+              <td height=30 width=175>
+                <input type="text" id="wish_time" name="wish_time">
+              </td>
+            </tr>
+            <tr>
               <td height=30 width=175 align="right" class="m">上传故障图片:</td>
               <td height=30>
                 <input type="file" id="upload_pics" name="upload_pics" data-url="upload.php" multiple>
@@ -165,6 +171,8 @@
 {literal}
   <script>
   $(function(){
+    $.datepicker.setDefaults($.datepicker.regional["zh-CN"]);
+    $('#wish_time').datepicker({dateFormat: 'yy-mm-dd'});
     var const_broken_item = {
       'fs': {
         'fwfs': '房屋防水',
@@ -239,6 +247,7 @@
       var broken_item = $('#broken_item');
       var place = $('#place').val().trim();
       var reason = $('#reason').val().trim();
+      var wish_time = $('#wish_time').val().trim();
 
       department = item_decode(department);
       if(department == '请选择'){ department = null; }
