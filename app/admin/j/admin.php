@@ -25,8 +25,9 @@ if($type == 'admin'){
     change_shire_state($shire_id, $state, $state_context, $feedback);
 }elseif($type == 'assign'){
     $role_id = escape($_POST['role_id']);
+    $extra_data = escape($_POST['extra_data']);
 
-    assign_shire_to_role($shire_id, $role_id);
+    assign_shire_to_role($shire_id, $role_id, $extra_data);
 }elseif($type == 'permit'){
     do_admin_permit($shire_id);
 }elseif($type == 'reject'){
