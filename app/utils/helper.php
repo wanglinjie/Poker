@@ -58,6 +58,7 @@ function shires_to_export($department, $from, $to){
             'department'    =>  $db->f('department'),
             'place' =>  $db->f('place'),
             'reason'    =>  $db->f('reason'),
+            'wish_time' =>  $db->f('wish_time'), 
             'detail'    =>  $db->f('detail'),
             'broken_item_class' =>  $db->f('broken_item_class'),
             'broken_item'   =>  $db->f('broken_item'),
@@ -129,6 +130,7 @@ function admin_get_shires_with_assign_feedback($assign_feedback, $page, $broken_
             'department'    =>  $db->f('department'),
             'place' =>  $db->f('place'),
             'reason'    =>  $db->f('reason'),
+            'wish_time' =>  $db->f('wish_time'),
             'detail'    =>  $db->f('detail'),
             'broken_item_class' =>  $db->f('broken_item_class'),
             'broken_item'   =>  $db->f('broken_item'),
@@ -188,6 +190,7 @@ function admin_get_all_shires($page=1, $broken_class=NULL){
             'department'    =>  $db->f('department'),
             'place' =>  $db->f('place'),
             'reason'    =>  $db->f('reason'),
+            'wish_time' =>  $db->f('wish_time'),
             'detail'    =>  $db->f('detail'),
             'broken_item_class' =>  $db->f('broken_item_class'),
             'broken_item'   =>  $db->f('broken_item'),
@@ -309,6 +312,7 @@ function user_get_shires_with_admin_feedback($role_id, $page, $broken_class){
             'department'    =>  $db->f('department'),
             'place' =>  $db->f('place'),
             'reason'    =>  $db->f('reason'),
+            'wish_time' =>  $db->f('wish_time'),
             'detail'    =>  $db->f('detail'),
             'broken_item_class' =>  $db->f('broken_item_class'),
             'broken_item'   =>  $db->f('broken_item'),
@@ -369,6 +373,7 @@ function user_get_shires_with_repair_feedback($role_id, $page, $broken_class){
             'department'    =>  $db->f('department'),
             'place' =>  $db->f('place'),
             'reason'    =>  $db->f('reason'),
+            'wish_time' =>  $db->f('wish_time'),
             'detail'    =>  $db->f('detail'),
             'broken_item_class' =>  $db->f('broken_item_class'),
             'broken_item'   =>  $db->f('broken_item'),
@@ -429,6 +434,7 @@ function user_get_shires($role_id, $page, $broken_class){
             'department'    =>  $db->f('department'),
             'place' =>  $db->f('place'),
             'reason'    =>  $db->f('reason'),
+            'wish_time' =>  $db->f('wish_time'),
             'detail'    =>  $db->f('detail'),
             'broken_item_class' =>  $db->f('broken_item_class'),
             'broken_item'   =>  $db->f('broken_item'),
@@ -484,6 +490,7 @@ function get_shires_not_refused($page=1, $limit=20){
             'department'    =>  $db->f('department'),
             'place' =>  $db->f('place'),
             'reason'    =>  $db->f('reason'),
+            'wish_time' =>  $db->f('wish_time'),
             'detail'    =>  $db->f('detail'),
             'broken_item'   =>  $db->f('broken_item'),
             'filename'      =>  $db->f('filename'),
@@ -498,14 +505,14 @@ function get_shires_not_refused($page=1, $limit=20){
 }
 
 function update_shire($reporter, $report_id, $report_time, $contact_num, $department, $place,
-        $broken_item_class, $broken_item, $reason, $detail, $filename, $state, $state_context, 
+        $broken_item_class, $broken_item, $reason, $wish_time,$detail, $filename, $state, $state_context, 
         $repair_time, $feedback, $auth_check, $ip){
     if($reporter){
         $sql = "INSERT INTO shire(reporter, report_id, report_time, contact_num, department, "
-             . " place, broken_item_class, broken_item, reason, detail, filename, state, state_context, "
+             . " place, broken_item_class, broken_item, reason, wish_time, detail, filename, state, state_context, "
              . " repair_time, feedback, auth_check, ip) VALUES('$reporter', '$report_id', '$report_time',"
-             . " '$contact_num', '$department', '$place', '$broken_item_class', '$broken_item', '$reason',"
-             . "'$detail', '$filename', $state, '$state_context', '$report_time', '$feedback', $auth_check, '$ip');";
+             . " '$contact_num', '$department', '$place', '$broken_item_class', '$broken_item', '$reason', '$wish_time',"
+             . "'$detail', '$filename', $state, '$state_context', '$repair_time', '$feedback', $auth_check, '$ip');";
 
         $db = new DB;
         $db->connect();
@@ -586,6 +593,7 @@ function get_shire_by_id($shire_id){
        'department'    =>  $db->f('department'),
        'place' =>  $db->f('place'),
        'reason'    =>  $db->f('reason'),
+       'wish_time' =>  $db->f('wish_time'),
        'detail'    =>  $db->f('detail'),
        'broken_item'   =>  $db->f('broken_item'),
        'filename'      =>  $db->f('filename'),
@@ -722,6 +730,7 @@ function find_shires($shire_id, $limit=20){
             'department'    =>  $db->f('department'),
             'place' =>  $db->f('place'),
             'reason'    =>  $db->f('reason'),
+            'wish_time' =>  $db->f('wish_time'),
             'detail'    =>  $db->f('detail'),
             'broken_item'   =>  $db->f('broken_item'),
             'filename'      =>  $db->f('filename'),

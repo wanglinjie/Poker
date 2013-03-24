@@ -36,6 +36,7 @@
                               <td width="13%" height=30 class="table-title" align="center"><strong>报修原因</strong></td>
                               <td width="10%" height=30 class="table-title" align="center"><strong>报修物品</strong></td>
                               <td width="10%" height=30 class="table-title" align="center"><strong>报修时间</strong></td>
+                              <td width="10%" height=30 class="table-title" align="center"><strong>期待完成时间</strong></td>
                               <td width="16%" height=30 class="table-title" align="center"><strong>查看</strong></td>
                             </tr>
                             {foreach from=$shires item=shire}
@@ -46,6 +47,7 @@
                               <td width="13%" height=30 class="table-body" align="center">{$shire.reason|escape}</td>
                               <td width="10%" height=30 class="table-body" align="center">{$shire.broken_item|escape}</td>
                               <td width="10%" height=30 class="table-body" align="center">{$shire.report_time}</td>
+                              <td width="10%" height=30 class="table-body" align="center">{$shire.wish_time}</td>
                               <td width="6%" height=30 class="table-body" align="center">
                                 {if $shire.filename}
                                   <a class="show_pic" href="#" data-url="{$shire.filename}" data-domain="{$domain}">点击查看图片</a></td>
@@ -60,6 +62,7 @@
                                   报修人工号: {$shire.report_id|escape}<br>
                                   报修人联系方式: {$shire.contact_num|escape}<br>
                                   报修时间: {$shire.report_time}<br>
+                                  期待完成时间：{$shire.wish_time}<br>
                                   报修原因: {$shire.reason|escape}<br>
                                   详细原因: {$shire.detail|escape}<br>
                                   {if $shire.role_id}
@@ -80,7 +83,8 @@
                                   {/if}
                                 </p>
                               </td>
-                              <td colspan=3 class="table-body">
+                              <td colspan=4
+                               class="table-body">
                                 <table width="100%" border=0>
                                   <tr>
                                     <td>
