@@ -46,7 +46,7 @@
                               <td width="13%" height=30 class="table-body" align="center">{$shire.reason|escape}</td>
                               <td width="10%" height=30 class="table-body" align="center">{$shire.broken_item|escape}</td>
                               <td width="10%" height=30 class="table-body" align="center">{$shire.report_time}</td>
-                              <td width="6%" height=30 class="table-body" align="center">
+                              <td width="16%" height=30 class="table-body" align="center">
                                 {if $shire.filename}
                                   <a class="show_pic" href="#" data-url="{$shire.filename}" data-domain="{$domain}">点击查看图片</a></td>
                                 {else}
@@ -58,10 +58,14 @@
                                 <p style="text-align:left;">
                                   报修人: {$shire.reporter|escape}<br>
                                   报修人工号: {$shire.report_id|escape}<br>
+                                  报修人联系方式: {$shire.contact_num|escape}<br>
                                   报修时间: {$shire.report_time}<br>
                                   报修原因: {$shire.reason|escape}<br>
                                   详细原因: {$shire.detail|escape}<br>
                                   <font color="red">后勤管理员分配时间: {$shire.assign_time}</font><br>
+                                  {if $shire.extra_data}
+                                  <font color="red">后勤管理员分配备注:{$shire.extra_data|escape}</font><br>
+                                  {/if}
                                   <font color="red">维修申请时间: {$shire.request_days}</font><br>
                                   <font color="red">后勤管理员通过报修审批时间: {$shire.assign_feedback_time}</font><br>
                                 </p>

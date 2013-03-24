@@ -42,8 +42,8 @@
                             <tr class="data-line">
                               <td width="10%" height=30 class="table-body" align="center">#2013{$shire.shire_id}</td>
                               <td width="14%" height=30 class="table-body" align="center">{$shire.department|escape}</td>
-                              <td width="13%" height=30 class="table-body" align="center">{$shire.place|escape|truncate:30:"..."}</td>
-                              <td width="13%" height=30 class="table-body" align="center">{$shire.reason|escape|truncate:30:"..."}</td>
+                              <td width="13%" height=30 class="table-body" align="center">{$shire.place|escape}</td>
+                              <td width="13%" height=30 class="table-body" align="center">{$shire.reason|escape}</td>
                               <td width="10%" height=30 class="table-body" align="center">{$shire.broken_item|escape}</td>
                               <td width="10%" height=30 class="table-body" align="center">{$shire.report_time}</td>
                               <td width="6%" height=30 class="table-body" align="center">
@@ -58,12 +58,16 @@
                                 <p style="text-align:left;">
                                   报修人: {$shire.reporter|escape}<br>
                                   报修人工号: {$shire.report_id|escape}<br>
+                                  报修人联系方式: {$shire.contact_num|escape}<br>
                                   报修时间: {$shire.report_time}<br>
                                   报修原因: {$shire.reason|escape}<br>
                                   详细原因: {$shire.detail|escape}<br>
-                                  {if $shire.assign_time}
+                                  {if $shire.role_id}
                                     <font color="red">后勤管理员分配时间:{$shire.assign_time}</font><br>
                                     <font color="red">此报修事件分配给 {$shire.role_type|escape}</font><br>
+                                    {if $shire.extra_data}
+                                    <font color="red">后勤管理员分配备注:{$shire.extra_data|escape}</font><br>
+                                    {/if}
                                   {/if}
                                   {if $shire.assign_feedback_time}
                                     <font color="red">后勤管理员确认维修请求时间:{$shire.assign_feedback_time}</font><br>
@@ -94,15 +98,24 @@
                                         {elseif $shire.assign_feedback == 1}
                                           后勤管理员分配此报修到{$shire.role_type|escape}进行维修.<br>
                                           后勤人员接受了此报修，预计消耗{$shire.request_days}天数进行维修<br>
+                                          {if $shire.assign_extra_data}
+                                            维修人员备注:{$shire.assign_extra_data|escape}<br>
+                                          {/if}
                                           {$shire.role_type|escape}正在等待后勤管理员的确认.<br>
                                         {/if}
                                       {elseif $shire.state == 1}
                                         此报修处于在修状态，由{$shire.role_type|escape}进行维修.<br>
-                                        维修预计消耗:{$shire.request_days}天.
+                                        维修预计消耗:{$shire.request_days}天.<br>
+                                        {if $shire.assign_extra_data}
+                                          维修人员备注:{$shire.assign_extra_data|escape}<br>
+                                        {/if}
                                       {else} 
                                         此报修处于已修缮完毕状态，由{$shire.role_type|escape}进行维修.<br>
-                                        维修完成时间:{$shire.repair_time}
-                                        维修反馈:{$shire.feedback|escape}
+                                        维修完成时间:{$shire.repair_time}<br>
+                                        {if $shire.assign_extra_data}
+                                          维修人员备注:{$shire.assign_extra_data|escape}<br>
+                                        {/if}
+                                        维修反馈:{$shire.feedback|escape}<br>
                                       {/if}
                                       </font>
                                     </td>

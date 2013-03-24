@@ -1,5 +1,12 @@
 {config_load file="main.conf"}
 {include file="navs.tpl"}
+  {if $server_error}
+    {literal}
+    <script>
+    $(function(){ alert("错误!."); });
+    </script>
+    {/literal}
+  {/if}
   {if $check_msg}
     {literal}
     <script>
