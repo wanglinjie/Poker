@@ -11,6 +11,7 @@ if($_POST){
     $broken_item_class = escape($_POST['broken_item_class_decode']);
     $broken_item = escape($_POST['broken_item_decode']);
     $reason = escape($_POST['reason']);
+    $wish_time = escape($_POST['wish_time']);
     $detail = escape($_POST['detail']);
     $filename = escape($_POST['filename']);
     $ip = $_SERVER['REMOTE_ADDR'];
@@ -20,9 +21,13 @@ if($_POST){
         $smarty->assign('check_msg', '提交的工号/学生号与姓名不符.将由工作人员进行审核.');
     }
     $check = $check == True?1:0;
-    update_shire($reporter,$report_id,$report_time,$contact_num,$department,
-        $place, $broken_item_class, $broken_item,$reason,$detail, $filename, 0,'','','', $check, $ip);
-    $smarty->assign('server_msg', '申报成功!');
+    
+    if(!($reporter && $report_id && $reason)){
+        $smarty->assign('server_error', 'error');
+    }else{
+        update_shire($reporter,$report_id,$report_time,$contact_num,$department,$place, $broken_item_class, $broken_item,$reason,$wish_time,$detail, $filename, 0,'','','', $check, $ip);
+        $smarty->assign('server_msg', '申报成功!');
+    }   
 }
 
 $smarty->display('update.tpl');
