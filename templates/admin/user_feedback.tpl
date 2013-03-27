@@ -189,7 +189,7 @@ $(function(){
             broken_class_select.find('option').attr('selected', false);
             broken_class_select.find('option[data-value=' + broken_class + ']').attr('selected', true);
         }
-    })();
+    });
 });
 </script>
 {/literal}
