@@ -159,7 +159,7 @@
                                       </tr>
                                     {/if}
                                     <tr>
-                                      <td>冻结此保修,理由&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text"></td>
+                                      <td>冻结此报修,理由&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text"></td>
                                       <td><button class="btn btn-danger btn-admin" data-id="{$shire.shire_id}" data-state=-1>冻结</button></td>
                                     </tr>
                                   </table>
@@ -236,7 +236,7 @@ $(function(){
         var data_line = hidden_line.prev();
         var shire_id = btn.attr('data-id');
         var reject_reason = btn.closest('td').prev().find('input').val().trim();
-        $.post('j/admin.php', {type:'reject', shire_id:shire_id, reject_reason:reject_reason}, function(d){
+        $.post('j/admin.php', {type:'reject', shire_id:shire_id,role_id:'2', reject_reason:reject_reason}, function(d){
           if(d.r){
             alert("成功!");
             data_line.remove();
@@ -270,7 +270,7 @@ $(function(){
         var hidden_line = btn.closest('.hidden');
         var data_line = hidden_line.prev();
         var shire_id = btn.attr('data-id');
-        $.post('j/admin.php', {type:'permit', shire_id:shire_id}, function(d){
+        $.post('j/admin.php', {type:'permit', shire_id:shire_id,role_id:'2'}, function(d){
           if(d.r){
             alert("成功!");
             data_line.remove();
