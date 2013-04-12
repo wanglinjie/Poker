@@ -6,7 +6,9 @@ $db = new DB;
 $db->connect();
 $db->query($sql);
 $barrack = array();
-while ($db->next_record()) {	
+
+while ($db->next_record()) {
+	
 	array_push($barrack, array(
 		'role_id' => $db->f('role_id'),
 		'telephone' => $db->f('telephone'),
@@ -27,5 +29,4 @@ while ($db->next_record()) {
 		}
 	}
 }
-
 ?>
