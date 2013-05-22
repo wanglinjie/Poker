@@ -579,6 +579,14 @@ function do_user_repair_feedback($shire_id, $feedback){
     $db->query($sql);
 }
 
+function do_user_repair_freeze($shire_id, $extra_data){
+    $sql = "UPDATE shire SET state=-1, extra_data='$extra_data' "
+         . "WHERE shire_id=$shire_id;";
+    $db = new DB;
+    $db->connect();
+    $db->query($sql);
+}
+
 function get_shire_by_id($shire_id){
     $sql = "SELECT shire_id, reporter, report_id, report_time, contact_num, department, place, reason, detail, " 
          . "broken_item, filename, state, state_context, role_type, repair_time, feedback FROM shire,role ";
