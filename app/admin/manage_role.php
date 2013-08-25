@@ -10,7 +10,7 @@ $role = cache_role();
 $smarty->assign('role_id', $role['role_id']);
 $smarty->assign('role_type', $role['role_type']);
 
-$all_role_types = get_all_role_types();
-$smarty->assign('roles', $all_role_types);
+$part_role_types = get_part_role_types();
+$smarty->assign('roles', $part_role_types);
 $smarty->display('admin/manage_role.tpl');
 ?>

@@ -679,6 +679,20 @@ function get_all_role_types(){
     return $all_role_types;
 }
 
+function get_part_role_types(){
+    $db = new DB;
+    $db->connect();
+    $db->query("SELECT role_id, role_type FROM role WHERE role_id!=1;");
+    $all_role_types = Array();
+    while($db->next_record()){
+        array_push($all_role_types, Array(
+            'role_id'   =>  $db->f('role_id'),
+            'role_type' =>  $db->f('role_type')
+        ));
+    }
+    return $all_role_types;
+}
+
 function add_role_type($role_type){
     $db = new DB;
     $db->connect();

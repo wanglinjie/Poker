@@ -6,6 +6,7 @@ define('SMARTY_APP_ROOT', dirname(APP_ROOT));
 define('SMARTY_LIB_ROOT', SMARTY_APP_ROOT . '/libs');
 include(ADMIN_AJAX_ROOT . '/helper.php');
 include(APP_ADMIN_ROOT . '/middleware.php');
+include(ADMIN_AJAX_ROOT . '/helpfun.php');
 
 if(auth_check() == false){
     return jsonize(Array(
@@ -21,6 +22,7 @@ if($type == 'repair'){
     do_user_repair($shire_id);
 }elseif($type == 'feedback'){
     $feedback = escape($_POST['feedback']);
+    update_notice(1, $shire_id, 'done');
     do_user_repair_feedback($shire_id, $feedback);
 }elseif ($type == 'feed') {
 	$feedback = escape($_POST['feedback']);

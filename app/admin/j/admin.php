@@ -23,7 +23,8 @@ if($type == 'admin'){
     $state = escape($_POST['state']);
     $state_context = escape($_POST['state_context']);
     $feedback = escape($_POST['feedback']);
-  
+    $role_id=find_role_id($shire_id);
+    update_notice($role_id, $shire_id, 'freeze');
     change_shire_state($shire_id, $state, $state_context, $feedback);
 }elseif($type == 'assign'){
     $role_id = escape($_POST['role_id']);
